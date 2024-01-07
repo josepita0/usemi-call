@@ -6,6 +6,11 @@ export const initialModalSchema = z.object({
     imageUrl: z.string().min(1, {message: "La imagen del servidor es requerida"})
 })
 
+export const messageFileModalSchema = z.object({
+  fileUrl: z.string().min(1, {message: "El soporte es requerida"})
+})
+
+
 export const channelModalSchema = z.object({
     name: z.string().min(1, {
         message: "El nombre del canal es requerido"
@@ -19,3 +24,4 @@ export const channelModalSchema = z.object({
 
 export interface IInitialModal extends z.infer<typeof initialModalSchema> {}
 export interface IChannelModal extends z.infer<typeof channelModalSchema> {}
+export interface IMessageFileModal extends z.infer<typeof messageFileModalSchema> {}
