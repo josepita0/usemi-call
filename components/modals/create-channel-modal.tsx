@@ -14,6 +14,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/use-modal-store';
 import { ChannelType } from '@prisma/client';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { useEffect } from 'react';
 
 
 export const CreateChannelModal = () => {
@@ -24,21 +25,33 @@ export const CreateChannelModal = () => {
         VIDEO: 'Video'
     }
     
-    const defaultValues = {
-        name: "",
-        type: ChannelType.TEXT,
-    }
-
+    
     const router = useRouter()
     const params = useParams()
-
-    const { isOpen, onClose, type } = useModal()
-
+    
+    const { isOpen, onClose, type, data } = useModal()
+    
+    const { channelType } = data
+    
     const isModalOpen = isOpen && type === "createChannel";
-
+    
+    const defaultValues = {
+        name: "",
+        type: channelType || ChannelType.TEXT,
+    }
 
 
     const form = useForm({defaultValues:defaultValues,resolver: zodResolver(channelModalSchema)})
+
+    useEffect(() => {
+
+        if(channelType){
+            form.setValue("type",channelType)
+        }else{
+            form.setValue("type", ChannelType.TEXT)
+        }
+
+    }, [channelType, form])
 
     const isLoading = form.formState.isSubmitting;
 
