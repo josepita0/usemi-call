@@ -3,13 +3,15 @@
 import { IChatInput, chatInputSchema } from "@/lib/schemas/chat.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Form, FormControl, FormField, FormItem } from "../ui/form"
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Plus, Send, Smile } from "lucide-react"
-import { Input } from "../ui/input"
+import { Input } from "@/components/ui/input"
 import axios from "axios"
 import qs from "query-string"
-import { ActionTooltip } from "../action-tooltip"
+import { ActionTooltip } from "@/components/action-tooltip"
 import { useModal } from "@/hooks/use-modal-store"
+import { EmojiPicker } from "@/components/emoji-picker"
+import { useRouter } from "next/navigation"
 
 
 interface IChatInputProps {
@@ -28,13 +30,14 @@ export const ChatInput = ({apiUrl, name, query, type}: IChatInputProps) => {
 
     const { onOpen } = useModal()
 
+    const router = useRouter()
+
     const form = useForm<IChatInput>({resolver: zodResolver(chatInputSchema), defaultValues: defaultValues})
 
     const isLoading = form.formState.isSubmitting
 
     const onSubmit = async (values: IChatInput) => {
         
-        console.log({values});
         
         try {
             
@@ -45,6 +48,9 @@ export const ChatInput = ({apiUrl, name, query, type}: IChatInputProps) => {
 
             await axios.post(url, values)
 
+            form.reset()
+            router.refresh()
+            
         } catch (error) {
             
             console.log(error);
@@ -85,9 +91,14 @@ export const ChatInput = ({apiUrl, name, query, type}: IChatInputProps) => {
                                         {...field}
                                     />
 
-                                    <div className="absolute top-7 right-16">
-                                        <Smile />
-                                    </div>
+                                    <ActionTooltip label="Emojis">
+                                        <div className="absolute top-7 right-16">
+                                            <EmojiPicker
+                                            onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)}
+                                            />                                    
+                        
+                                        </div>
+                                    </ActionTooltip>
 
                                     <ActionTooltip label="Enviar">
                                         <div className="absolute top-5 right-4 rounded-full hover:bg-[#02327c] transition p-2">
