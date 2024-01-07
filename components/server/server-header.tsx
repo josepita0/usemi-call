@@ -106,6 +106,7 @@ export const ServerHeader = ({server, role}:IServerHeaderProps) => {
                 {
                     !isAdmin && (
                         <DropdownMenuItem
+                            onClick={() => onOpen("leaveServer", {server})}
                             className="text-rose-500 px-3 py-2 text-sm cursor-pointer"
                         >
                             Abandonar servidor
@@ -119,6 +120,7 @@ export const ServerHeader = ({server, role}:IServerHeaderProps) => {
                 {   
                     isAdmin && (
                         <DropdownMenuItem
+                            onClick={() => onOpen("deleteServer", {server})}
                             className="text-rose-500 px-3 py-2 text-sm cursor-pointer"
                         >
                             Eliminar servidor
