@@ -13,6 +13,7 @@ import { ServerHeader } from "./server-header";
 import { ServerSection } from "./server-section";
 import { ServerChannel } from "./server-channel";
 import { ServerMember } from "./server-member";
+import { useEffect } from "react";
 
 interface IServerSidebarProps{
     serverId: string;
@@ -72,8 +73,6 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
     }
 
     const role = server?.members.find((m) => m.profileId === profile.id)?.role;
-
-
 
     return ( 
         <div className="flex flex-col h-full text-primary w-full dark:bg-[#2B2D31] bg-[#F2F3F5]">

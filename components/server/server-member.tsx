@@ -46,6 +46,7 @@ export const ServerMember = ({member, server}:IServerMember) =>{
             >
                 {member.profile.name}
             </p>
+                {icon}
         </button>
     )
 }

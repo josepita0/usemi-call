@@ -6,7 +6,7 @@ import { NavigationAction } from "./navigation-actions";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { NavigationItem } from "./navigation-item";
-import { ModeToggle } from "../mode-toggle";
+import { ModeToggle } from "../../mode-toggle";
 import { UserButton } from "@clerk/nextjs";
 
 export const NavigationSidebar = async () => {
@@ -33,7 +33,7 @@ export const NavigationSidebar = async () => {
 
     return(
         <div
-            className="space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-[#1E1F22]"
+            className="space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-[#1E1F22] bg-[#E3E5E8]"
         >
             <NavigationAction />
             <Separator
