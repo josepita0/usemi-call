@@ -1,6 +1,8 @@
+"use client"
+
 import { Menu } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
-import { Button } from "./ui/button"
+import { Button } from "@/components/ui/button"
 import { NavigationSidebar } from "./modals/navigation/navigation-sidebar"
 import { ServerSidebar } from "./server/server-sidebar"
 
