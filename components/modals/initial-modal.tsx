@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useEffect, useState } from 'react';
 import axios from 'axios'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { IInitialModal, initialModalSchema } from '@/lib/schemas/initialModal.schema';
+import { IInitialModal, initialModalSchema } from '@/lib/schemas/modals.schema';
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
