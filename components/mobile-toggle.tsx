@@ -1,4 +1,3 @@
-"use client"
 
 import { Menu } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
