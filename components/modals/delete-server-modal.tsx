@@ -23,7 +23,7 @@ export const DeleteServerModal = () => {
 
     const onClick = async () => {
         try {
-            setIsLoading(false)
+            setIsLoading(true)
             
             await axios.delete(`/api/servers/${server?.id}`)
 

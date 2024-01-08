@@ -5,18 +5,16 @@ import { useModal } from '@/hooks/use-modal-store';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import qs from "query-string"
 
 
-export const LeaveServerModal = () => {
+export const DeleteMessageModal = () => {
 
     const { isOpen, onClose, type, data } = useModal()
 
-    const router = useRouter()
+    const isModalOpen = isOpen && type === "deleteMessage";
 
-    const isModalOpen = isOpen && type === "leaveServer";
-
-    const {server} = data;
+    const { apiUrl, query } = data;
 
     const [ isLoading, setIsLoading ] = useState(false)
 
@@ -24,14 +22,15 @@ export const LeaveServerModal = () => {
     const onClick = async () => {
         try {
             setIsLoading(true)
+
+            const url = qs.stringifyUrl({
+                url: apiUrl || "",
+                query: query
+            })
             
-            await axios.patch(`/api/servers/${server?.id}/leave`)
+            await axios.delete(url)
 
             onClose()
-
-            router.refresh()
-            // window.location.reload()
-            router.push("/")
         } catch (error) {
             console.log(error);
             
@@ -49,12 +48,12 @@ export const LeaveServerModal = () => {
                 <DialogHeader className='pt-8 px-6'>
 
                     <DialogTitle className='text-2xl text-center font-bold'>
-                        Abandonar servidor
+                        Eliminar mensaje
                     </DialogTitle>
 
                     <DialogDescription>
-                        ¿Está seguro que desea abandonar <span 
-                        className='font-semibold text-indigo-500'>{server?.name}</span>?
+                        ¿Está seguro que desea eliminar su mensaje?
+                        Toda la información será eliminada permanentemente
                     </DialogDescription>
 
                 </DialogHeader>

@@ -25,7 +25,7 @@ export const DeleteChannelModal = () => {
 
     const onClick = async () => {
         try {
-            setIsLoading(false)
+            setIsLoading(true)
 
             const url = qs.stringifyUrl({
                 url: `/api/channels/${channel?.id}`,

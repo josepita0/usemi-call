@@ -16,6 +16,7 @@ import { Input } from "../ui/input";
 import qs from "query-string"
 import { Button } from "../ui/button";
 import axios from "axios";
+import { useModal } from "@/hooks/use-modal-store";
 
 interface IChatItemProps {
     id: string;
@@ -59,7 +60,8 @@ export const ChatItem = ({
 }:IChatItemProps) => {
 
     const [ isEditing, setIsEditing ] = useState(false)
-    const [ isDeleting, setIsDeleting ] = useState(false)
+
+    const { onOpen } = useModal()
 
     const defaultValues = {
         content: content
@@ -249,6 +251,7 @@ export const ChatItem = ({
                     )}
                     <ActionTooltip label="Eliminar">
                         <Trash 
+                            onClick={() => onOpen("deleteMessage",{ apiUrl:`${socketUrl}/${id}`, query:socketQuery })}
                             className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
                         />
                     </ActionTooltip>
