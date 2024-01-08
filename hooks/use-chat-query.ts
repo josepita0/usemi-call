@@ -22,10 +22,7 @@ export const useChatQuery = ({
   
 
   const fetchMessages = async ({ pageParam = undefined } ) => {
-
-    console.log({pageParam});
     
-
     const url = qs.stringifyUrl({
       url: apiUrl,
       query: {
