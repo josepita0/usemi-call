@@ -28,7 +28,7 @@ export const ChatWelcome = ({name, type}:IChatWelcomeProps) => {
             <p className="text-zinc-600 dark:text-zinc-400 text-sm">
                {type === "channel" 
                     ? `Inicio del canal #${name}`
-                    : `Inicio del su conversación con ${name}`
+                    : `Inicio de su conversación con ${name}`
                }
             </p>
 

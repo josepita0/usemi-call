@@ -1,4 +1,6 @@
 import { ChatHeader } from "@/components/chat/chat-header"
+import { ChatInput } from "@/components/chat/chat-input"
+import { ChatMessages } from "@/components/chat/chat-messages"
 import { getOrCreateConversation } from "@/lib/conversation"
 import { currentProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db"
@@ -53,6 +55,30 @@ const MemberIdPage = async ({params}:IMemberIdPage) => {
                 serverId={params.serverId}
                 type="conversation"
                 imageUrl={otherMember.profile.imageUrl}
+            />
+
+            <ChatMessages
+                member={currentMember}
+                name={otherMember.profile.name}
+                type="conversation"
+                chatId={conversation.id}
+                apiUrl="/api/direct-messages"
+                paramKey="conversationsId"
+                paramValue={conversation.id}
+                socketUrl="/api/socket/direct-messages"
+                socketQuery={{
+                    conversationsId: conversation.id
+                }}
+
+            />
+
+            <ChatInput 
+                name={otherMember.profile.name}
+                type="conversation"
+                apiUrl="/api/socket/direct-messages"
+                query={{
+                    conversationsId: conversation.id
+                }}
             />
 
         </div>

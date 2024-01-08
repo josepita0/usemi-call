@@ -24,7 +24,7 @@ interface IChatMessagesProps {
     apiUrl: string
     socketUrl: string
     socketQuery: Record<string, string>
-    paramKey: "channelId" | "conversationId"
+    paramKey: "channelId" | "conversationsId"
     paramValue: string
     type: "channel" | "conversation"
 }

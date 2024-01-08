@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Message } from "@prisma/client";
+import { DirectMessage } from "@prisma/client";
 
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -14,27 +14,27 @@ export async function GET(
     const { searchParams } = new URL(req.url);
 
     const cursor = searchParams.get("cursor");
-    const channelId = searchParams.get("channelId");
+    const conversationsId = searchParams.get("conversationsId");
 
     if (!profile) {
-      return new NextResponse("Operación no permitida", { status: 401 });
+        return new NextResponse("Operación no permitida", { status: 401 });
     }
   
-    if (!channelId) {
-      return new NextResponse("No se encontro el ID del canal", { status: 400 });
+    if (!conversationsId) {
+        return new NextResponse("No se encontro el ID de la conversación", { status: 400 });
     }
 
-    let messages: Message[] = [];
+    let messages: DirectMessage[] = [];
 
     if (cursor) {
-      messages = await db.message.findMany({
+      messages = await db.directMessage.findMany({
         take: MESSAGES_BATCH,
         skip: 1,
         cursor: {
           id: cursor,
         },
         where: {
-          channelId,
+            conversationsId,
         },
         include: {
           member: {
@@ -48,10 +48,10 @@ export async function GET(
         }
       })
     } else {
-      messages = await db.message.findMany({
+      messages = await db.directMessage.findMany({
         take: MESSAGES_BATCH,
         where: {
-          channelId,
+            conversationsId,
         },
         include: {
           member: {
@@ -77,7 +77,7 @@ export async function GET(
       nextCursor
     });
   } catch (error) {
-    console.log("[MESSAGES_GET]", error);
+    console.log("[DIRECT_MESSAGES_GET]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

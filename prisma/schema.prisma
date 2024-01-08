@@ -153,6 +153,8 @@ model DirectMessage {
   conversationsId String
   conversation Conversation @relation(fields: [conversationsId], references: [id], onDelete: Cascade)
 
+  deleted Boolean @default(false)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
