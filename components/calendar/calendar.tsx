@@ -127,7 +127,7 @@ export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
         >     
 
         {
-          dataCalendar?.length && 
+          dataCalendar && 
         <Scheduler 
           locale={"es"} 
           // data={appointments.map(a=>{
