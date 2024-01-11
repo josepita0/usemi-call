@@ -1,6 +1,6 @@
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { ChannelType, MemberRole } from "@prisma/client";
-import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
+import { Calendar, Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { currentProfile } from "@/lib/current-profile";
@@ -22,7 +22,8 @@ interface IServerSidebarProps{
 const iconMap: Record<ChannelType, React.ReactNode> = {
     TEXT: <Hash className="mr-2 h-4 w-4"/>,
     AUDIO: <Mic className="mr-2 h-4 w-4"/>,
-    VIDEO: <Video className="mr-2 h-4 w-4"/>
+    VIDEO: <Video className="mr-2 h-4 w-4"/>,
+    CALENDAR: <Calendar className="mr-2 h-4 w-4"/>,
 }
 
 const roleIconMap: Record<MemberRole, React.ReactNode | null > = {
@@ -32,8 +33,6 @@ const roleIconMap: Record<MemberRole, React.ReactNode | null > = {
 }
 
 export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
-
-
 
     const profile = await currentProfile()
 
@@ -131,6 +130,35 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
                 </div>
 
             <Separator className="bg-zinc-200 dark:bg-zinc-700 rounded-md my-2"/>
+
+            <div className="mb-2">
+                    <ServerSection
+                        sectionType="channels"
+                        channelType={"CALENDAR"}
+                        role={role}
+                        label="Recursos"
+                    />
+
+                    <div
+                        className="space-y-[2px]"
+                    >
+
+                        <ServerChannel 
+                            channel={{
+                                type:"CALENDAR" as "TEXT",
+                                name: "Calendario",
+                                createdAt: new Date,
+                                id: '',
+                                profileId: profile.id,
+                                serverId, 
+                                updatedAt:new Date()
+                            }}
+                            server={server}
+                            role={role}
+                        />
+                    </div>
+
+            </div>
 
             {!!textChannels?.length && (
                 <div className="mb-2">

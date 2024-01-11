@@ -13,6 +13,7 @@ import { DeleteChannelModal } from "@/components/modals/delete-channel-modal"
 import { EditChannelModal } from "@/components/modals/edit-channel-modal"
 import { MessageFileModal } from "@/components/modals/message-file-modal"
 import { DeleteMessageModal } from "@/components/modals/delete-message-modal"
+import { CreateCalendarEventModal } from "../modals/calendar/create-calendar-event-modal"
 
 export const ModalProvider = () => {
 
@@ -39,6 +40,7 @@ export const ModalProvider = () => {
             <EditChannelModal />
             <DeleteMessageModal />
             <MessageFileModal />
+            <CreateCalendarEventModal />
         </>
     )
 }

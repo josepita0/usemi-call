@@ -7,7 +7,7 @@ import { Plus, Settings } from "lucide-react"
 import { useModal } from "@/hooks/use-modal-store"
 
 interface IServerSection {
-    label: string
+    label?: string
     role?: MemberRole
     sectionType: "channels" | "members"
     channelType?: ChannelType
@@ -20,10 +20,15 @@ export const ServerSection = ({label, sectionType, channelType, role, server }:I
 
     return (
         <div className="flex items-center justify-between py-2">
-            <p className="text-xs uppercase font-semibold text-zinc-500 dark:text-zinc-400">
-                {label}
-            </p>
-            {role !== MemberRole.GUEST && sectionType === "channels" && (
+            {
+                !!label &&
+
+                <p className="text-xs uppercase font-semibold text-zinc-500 dark:text-zinc-400">
+                    {label}
+                </p>
+                
+            }
+            {role !== MemberRole.GUEST && sectionType === "channels" && channelType !== "CALENDAR" && (
                 <ActionTooltip label="Crear canal" side="top">
                     <button 
                         onClick={() => onOpen("createChannel", {channelType})}

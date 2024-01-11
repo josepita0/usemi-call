@@ -22,7 +22,8 @@ export const EditChannelModal = () => {
     const typeChannelEs: Record<ChannelType, string> = {
         TEXT: 'Texto',
         AUDIO: 'Audio',
-        VIDEO: 'Video'
+        VIDEO: 'Video',
+        CALENDAR: 'Calendario'
     }
     
     

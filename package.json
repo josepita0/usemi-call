@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.1",
+    "@devexpress/dx-react-core": "^4.0.6",
+    "@devexpress/dx-react-scheduler": "^4.0.6",
+    "@devexpress/dx-react-scheduler-material-ui": "^4.0.6",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
     "@hookform/resolvers": "^3.3.4",
@@ -48,6 +51,7 @@
     "postcss": "8.4.32",
     "query-string": "^8.1.0",
     "react": "18.2.0",
+    "react-day-picker": "^8.10.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.49.2",
