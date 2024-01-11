@@ -89,7 +89,7 @@ export const ServerChannel = ({channel, server, role}: IServerChannelProps) => {
             )}
 
             {
-                channel.type === "CALENDAR" && (
+                channel.type === "CALENDAR" && (role === MemberRole.ADMIN || role === MemberRole.MODERATOR) && (
 
                     <div className="ml-auto flex items-center gap-x-2">
                         <ActionTooltip label="Crear evento">

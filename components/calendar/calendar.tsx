@@ -14,7 +14,7 @@ import {
   ConfirmationDialog,
 
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { EditingState, ViewState } from '@devexpress/dx-react-scheduler';
+import { AppointmentMeta, EditingState, ViewState } from '@devexpress/dx-react-scheduler';
 import { Edit, Trash, X } from "lucide-react";
 
 
@@ -23,6 +23,7 @@ import { IAppoinments } from '@/lib/interface/appointnments';
 import { Member, Profile } from '@prisma/client';
 import { useCalendar } from '@/hooks/use-calendar';
 import { db } from '@/lib/db';
+import { useModal } from '@/hooks/use-modal-store';
 
 
 interface ICalendarProps {
@@ -37,12 +38,16 @@ interface CommandButtonProps {
 
 export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
 
-      const { data: dataCalendar } = useCalendar({apiUrl: "/api/calendar", paramValue: member.serverId, queryKey: "serverId"})
+      const { data: dataCalendar } = useCalendar({apiUrl: `/api/calendar`, paramValue: member.serverId, queryKey: "serverId"})
 
       console.log({dataCalendar});
     
+      const { onOpen } = useModal()
+
+      const [ isVisible, setIsVisible ] = useState(false)      
+
       const [data, setData] = useState(appointments);
-      const [editData, setEditData] = useState<any>();
+      const [editData, setEditData] = useState<AppointmentMeta>();
       const [currentDate, setCurrentDate] = useState<Date>();
       const [addedAppointment, setAddedAppointment] = useState({});
       const [appointmentChanges, setAppointmentChanges] = useState({});
@@ -95,9 +100,21 @@ export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
       const myAppointment = (props: CommandButtonProps)=> {
         
             const onClick = () => {
-                console.log({props});
-                
+
+              console.log({props});
+              
+                setIsVisible(false)
+
                 props.onExecute && props.onExecute()
+
+                if(props.id === 'delete'){
+
+                  const { data } = editData!
+
+                  const { startDate, title, id, endDate } = data 
+
+                  onOpen('deleteCalendarEvent', { apiUrl: `/api/calendar/${id}`, query: {title, startDate, endDate, serverId: member.serverId } })
+                }
             }
                         
             return (
@@ -124,24 +141,17 @@ export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
       
         <div
             className="flex-1 flex flex-col overflow-y-auto"
-        >     
+        >
 
         {
           dataCalendar && 
         <Scheduler 
-          locale={"es"} 
-          // data={appointments.map(a=>{
-          //     console.log(a);
-              
-          //   return a
-          // })}
+          locale={"es"}
           data={(dataCalendar as {serverId:string, id:string,endDate:string, startDate:string, title:string}[])?.map((d,i)=>{
 
             const { serverId,  startDate, endDate, id, title } = d
 
-            const obj = {title: title, id: i, startDate: new Date(startDate), endDate: new Date(endDate)}
-
-            console.log({obj});
+            const obj = {title: title, id ,startDate: new Date(startDate), endDate: new Date(endDate)}
             
             return obj
           })} 
@@ -192,8 +202,13 @@ export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
             showCloseButton={ isAdmin || isModerator || isGuest }
   
             commandButtonComponent={myAppointment}
-  
+
+
+
+            visible={isVisible}
+
             onAppointmentMetaChange={(d)=>{
+              setIsVisible(true)
               setEditData(d)
             }}  
           />
