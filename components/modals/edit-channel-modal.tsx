@@ -163,17 +163,20 @@ export const EditChannelModal = () => {
 
                                                 <SelectContent>
                                                     {
-                                                        Object.values(ChannelType).map((type) => (
+                                                        Object.values(ChannelType).map((type) => {
 
-                                                            <SelectItem
-                                                                key={typeChannelEs[type]}
-                                                                value={type}
-                                                                className='capitalize'
-                                                            >
-                                                                {typeChannelEs[type]}
-                                                            </SelectItem>
+                                                            if(type !== "CALENDAR"){
+                                                                return    <SelectItem
+                                                                    key={typeChannelEs[type]}
+                                                                    value={type}
+                                                                    className='capitalize'
+                                                                >
+                                                                    {typeChannelEs[type]}
+                                                                </SelectItem>
 
-                                                        ))
+                                                            }
+
+                                                        })
 
                                                     }
                                                 </SelectContent>
