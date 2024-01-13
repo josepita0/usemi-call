@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Scheduler,
   WeekView,
@@ -39,8 +39,6 @@ interface CommandButtonProps {
 export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
 
       const { data: dataCalendar } = useCalendar({apiUrl: `/api/calendar`, paramValue: member.serverId, queryKey: "serverId"})
-
-      console.log({dataCalendar});
     
       const { onOpen } = useModal()
 
@@ -107,14 +105,25 @@ export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
 
                 props.onExecute && props.onExecute()
 
+                if(props.id === 'open'){
+
+                  const { data } = editData!
+  
+                  const { startDate, title, id, endDate } = data 
+  
+                  onOpen('editCalendarEvent', { apiUrl: `/api/calendar/${id}`, calendar: editData, query: {title, startDate, endDate, serverId: member.serverId } })
+
+                }
+
                 if(props.id === 'delete'){
 
                   const { data } = editData!
-
+  
                   const { startDate, title, id, endDate } = data 
-
-                  onOpen('deleteCalendarEvent', { apiUrl: `/api/calendar/${id}`, query: {title, startDate, endDate, serverId: member.serverId } })
-                }
+  
+                  onOpen('deleteCalendarEvent', { apiUrl: `/api/calendar/${id}` ,query: {title, startDate, endDate, serverId: member.serverId, calendarId: id} })
+                  
+                } 
             }
                         
             return (
@@ -136,6 +145,10 @@ export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
 
 
       }
+
+    useEffect(()=> {
+
+    }, [dataCalendar])
 
     return (
       

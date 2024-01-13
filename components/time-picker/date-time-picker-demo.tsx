@@ -15,16 +15,31 @@ import {
 import { TimePickerDemo } from "./time-picker-demo";
 import { FormLabel } from "../ui/form";
 import { UseFormReturn } from "react-hook-form";
+import { es } from 'date-fns/locale';
 
 interface IState {
     startDate?: Date | undefined;
     endDate?: Date;
 } 
-import { es } from 'date-fns/locale';
+
+interface IDateTimePickerDemoProps {
+    id:string,
+    label: string, 
+    setState: Dispatch<SetStateAction<any>>, 
+    initDate?:  any
+}
 
  
-export function DateTimePickerDemo({label, setState, id}:{label: string, id:string,setState: Dispatch<SetStateAction<any>>}) {
+export function DateTimePickerDemo({ id, label, setState, initDate}:IDateTimePickerDemoProps) {
   const [date, setDate] = useState<Date>();
+
+    useEffect(()=> {
+
+        if(initDate){
+            setDate(initDate)
+        }
+
+    }, [initDate])
  
     useEffect(() => {
 
