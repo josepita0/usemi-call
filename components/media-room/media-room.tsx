@@ -35,6 +35,7 @@ export const MediaRoom = ({
   const [token, setToken] = useState("");
   
   const haveAssistance:boolean = member.role === MemberRole.ADMIN || member.role === MemberRole.MODERATOR 
+  const isClass:boolean = member.role === MemberRole.ADMIN
 
   const microphoneOnChange = useCallback(
     (enabled: boolean, isUserInitiated: boolean) =>
@@ -97,6 +98,7 @@ export const MediaRoom = ({
         member={member}
         controls={{
           camera: true,
+          initClass:isClass,
           assistance: haveAssistance,
           microphone: true,
           screenShare: true,
