@@ -5,10 +5,9 @@ import {
   GridLayout, 
   LiveKitRoom, MediaDeviceMenu, ParticipantLoop, ParticipantName,  ParticipantTile, RoomAudioRenderer, Toast, TrackToggle, VideoConference, useParticipantInfo, useParticipants, usePersistentUserChoices, useTracks } from "@livekit/components-react";
 import "@livekit/components-styles";
-import { Channel } from "@prisma/client";
+import { Channel, Member, MemberRole, Server } from "@prisma/client";
 import { useUser } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
-import { TestParticipants } from "./PreJoin";
 import { Track } from 'livekit-client';
 import { ControlBar } from "@/components/media-room/controlBar";
 
@@ -19,10 +18,12 @@ interface MediaRoomProps {
 };
 
 export const MediaRoom = ({
+  member,
   chatId,
   video,
   audio
-}: MediaRoomProps) => {
+}: MediaRoomProps & { member: Member & {server: Server} }) => {
+
   const { user } = useUser();
 
   const {
@@ -33,6 +34,7 @@ export const MediaRoom = ({
   } = usePersistentUserChoices({ preventSave: !true });
   const [token, setToken] = useState("");
   
+  const haveAssistance:boolean = member.role === MemberRole.ADMIN || member.role === MemberRole.MODERATOR 
 
   const microphoneOnChange = useCallback(
     (enabled: boolean, isUserInitiated: boolean) =>
@@ -42,16 +44,23 @@ export const MediaRoom = ({
 
   useEffect(() => {
     if (!user?.firstName || !user?.lastName) return;
+    
+    const metadata = {
+      firstName: user?.firstName ? user?.firstName : "N/A",
+      lastName: user?.lastName ? user?.lastName : "N/A",
+      pid: user?.unsafeMetadata?.pid ? user?.unsafeMetadata?.pid : "N/A",
+      role: member.role,
+      email: user?.primaryEmailAddress?.emailAddress ? user?.primaryEmailAddress?.emailAddress : "N/A"
+    }
 
-    const name = `${user.firstName} ${user.lastName}`;
+    const name = `${user.lastName}, ${user.firstName}`;
     
     (async () => {
       try {
-        const resp = await fetch(`/api/livekit?room=${chatId}&username=${name}`);
+        const resp = await fetch(`/api/livekit?room=${chatId}&username=${name}&metadata=${JSON.stringify(metadata)}`);
         const data = await resp.json();
         setToken(data.token);
       } catch (e) {
-        console.log(e);
       }
     })()
   }, [user?.firstName, user?.lastName, chatId]);
@@ -84,10 +93,11 @@ export const MediaRoom = ({
       <MyVideoConference />
       {/* The RoomAudioRenderer takes care of room-wide audio for you. */}
       <RoomAudioRenderer />
-      <TestParticipants/>
       <ControlBar
+        member={member}
         controls={{
           camera: true,
+          assistance: haveAssistance,
           microphone: true,
           screenShare: true,
           leave: true

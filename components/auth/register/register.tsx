@@ -69,7 +69,10 @@ export default function SignUpForm() {
         password,
         firstName,
         lastName,
-        username: `${username} ${pid}`,
+        username,
+        unsafeMetadata: {
+            pid
+        }
       });
  
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });

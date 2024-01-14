@@ -33,9 +33,13 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
         where:{
             serverId: params.serverId,
             profileId: profile.id
+        },
+        include:{
+            server: true
         }
     })
  
+    
 
     if(!channel || !member){
         redirect(`/`)
@@ -70,6 +74,7 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
                     />
 
                     <ChatInput
+                        member={member}
                         apiUrl="/api/socket/messages"
                         type="channel"
                         name={channel.name}
@@ -85,6 +90,7 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
             {
                 channel.type === ChannelType.AUDIO && (
                     <MediaRoom
+                        member={member}
                         chatId={channel.id}
                         video={false}
                         audio={true}
@@ -95,6 +101,7 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
             {
                 channel.type === ChannelType.VIDEO && (
                     <MediaRoom
+                        member={member}
                         chatId={channel.id}
                         video={true}
                         audio={true}
