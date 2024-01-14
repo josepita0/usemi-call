@@ -15,6 +15,7 @@ import { useModal } from '@/hooks/use-modal-store';
 import { ChannelType } from '@prisma/client';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { useEffect } from 'react';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const CreateChannelModal = () => {
@@ -66,16 +67,29 @@ export const CreateChannelModal = () => {
                     serverId: params?.serverId
                 }
             })
+            
+            showToast({
+                type:'loading', 
+                message: 'Creando recurso'
+            })
 
             await axios.post(url, values)
+
+            dismissToast()
 
             form.reset()
             router.refresh()
             onClose();
-            
-        } catch (error) {
+            showToast({
+                type:'success', 
+                message: 'Canal creado exitosamente!'
+            })
 
-            console.log({error});
+        } catch (error) {
+            showToast({
+                type:'error', 
+                message: 'El canal no pudo ser creado'
+            })
             
         }
         

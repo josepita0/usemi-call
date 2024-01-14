@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const LeaveServerModal = () => {
@@ -24,15 +25,32 @@ export const LeaveServerModal = () => {
     const onClick = async () => {
         try {
             setIsLoading(true)
+
+            showToast({
+                type:'loading', 
+                message: 'Saliendo del servidor'
+            })
             
             await axios.patch(`/api/servers/${server?.id}/leave`)
 
-            onClose()
+            dismissToast()
 
             router.refresh()
-            // window.location.reload()
             router.push("/")
+
+            onClose()
+
+            showToast({
+                type:'success', 
+                message: 'Servidor abandonado exitosamente!'
+            })
+            
         } catch (error) {
+
+            showToast({
+                type:'error', 
+                message: 'No se pudo abandonar el servidor'
+            })
             console.log(error);
             
         } finally {

@@ -11,6 +11,7 @@ import { Form, FormControl, FormItem, FormField} from '@/components/ui/form'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/use-modal-store';
+import { showToast } from '@/lib/showToast';
 
 
 export const MessageFileModal = () => {
@@ -46,7 +47,13 @@ export const MessageFileModal = () => {
                 query
             })
 
+            
             await axios.post(url, {...values, content: values.fileUrl})
+           
+            showToast({
+                type:'success', 
+                message: 'Recurso cargado exitosamente!'
+            })
 
             form.reset()
             router.refresh()
@@ -54,6 +61,12 @@ export const MessageFileModal = () => {
             handleClose()
             
         } catch (error) {
+
+            showToast({
+                type:'error', 
+                message: 'El recurso no pudo ser cargado'
+            })
+
 
             console.log({error});
             

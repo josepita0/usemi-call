@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import axios from 'axios';
 import qs from "query-string"
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const DeleteMessageModal = () => {
@@ -27,11 +28,27 @@ export const DeleteMessageModal = () => {
                 url: apiUrl || "",
                 query: query
             })
+
+            showToast({
+                type:'loading', 
+                message: 'Eliminando recurso'
+            })
             
             await axios.delete(url)
 
+            dismissToast()
+
+
             onClose()
+            showToast({
+                type:'success', 
+                message: 'Mensaje eliminado exitosamente!'
+            })
         } catch (error) {
+            showToast({
+                type:'error', 
+                message: 'El mensaje no pudo ser eliminado'
+            })
             console.log(error);
             
         } finally {

@@ -16,6 +16,7 @@ import { ChannelType } from '@prisma/client';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEffect, useState } from 'react';
 import { DateTimePickerDemo } from '@/components/time-picker/date-time-picker-demo';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const CreateCalendarEventModal = () => {
@@ -67,13 +68,32 @@ export const CreateCalendarEventModal = () => {
                 }
             })
 
+            showToast({
+                type:'loading', 
+                message: 'Creando evento'
+            })
+
+
             await axios.post(url, values)
+
+            dismissToast()
+
+            showToast({
+                type:'success', 
+                message: 'Evento creado exitosamente!'
+            })
+
 
             form.reset()
             router.refresh()
             onClose();
             
         } catch (error) {
+
+            showToast({
+                type:'success', 
+                message: 'El evento no pudo ser creado'
+            })
 
             console.log({error});
             

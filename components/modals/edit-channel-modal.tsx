@@ -15,6 +15,7 @@ import { useModal } from '@/hooks/use-modal-store';
 import { ChannelType } from '@prisma/client';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { useEffect } from 'react';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const EditChannelModal = () => {
@@ -66,13 +67,31 @@ export const EditChannelModal = () => {
                 }
             })
 
+            showToast({
+                type:'loading', 
+                message: 'Actualizando recurso'
+            })
+
             await axios.patch(url, values)
+
+            dismissToast()
 
             form.reset()
             router.refresh()
             onClose();
+
+            showToast({
+                type:'success', 
+                message: 'Canal actualizado exitosamente!'
+            })
             
         } catch (error) {
+
+
+            showToast({
+                type:'error', 
+                message: 'El canal no puedo ser actualizado'
+            })
 
             console.log({error});
             

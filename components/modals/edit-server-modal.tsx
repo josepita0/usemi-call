@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/use-modal-store';
 import { useEffect } from 'react';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const EditServerModal = () => {
@@ -46,13 +47,30 @@ export const EditServerModal = () => {
 
         try {
 
+            showToast({
+                type:'loading', 
+                message: 'Actualizando recurso'
+            })
+
             await axios.patch(`/api/servers/${server?.id}`, values)
+
+            dismissToast()
 
             form.reset()
             router.refresh()
             onClose();
+
+            showToast({
+                type:'success', 
+                message: 'Servidor actualizado exitosamente!'
+            })
             
         } catch (error) {
+
+            showToast({
+                type:'error', 
+                message: 'El servidor no pudo ser actualizado'
+            })
 
             console.log({error});
             
@@ -74,7 +92,7 @@ export const EditServerModal = () => {
                 <DialogHeader className='pt-8 px-6'>
 
                     <DialogTitle className='text-2xl text-center font-bold'>
-                        Crear servidor
+                        Actualizar servidor
                     </DialogTitle>
 
                     <DialogDescription className='text-center text-zinc-500'>

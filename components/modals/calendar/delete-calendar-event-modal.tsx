@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import axios from 'axios';
 import qs from "query-string"
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const DeleteCalendarEventModal = () => {
@@ -25,6 +26,11 @@ export const DeleteCalendarEventModal = () => {
         try {
             setIsLoading(true)
 
+            showToast({
+                type:'loading', 
+                message: 'Eliminando evento'
+            })
+
             const url = qs.stringifyUrl({
                 url: apiUrl || "",
                 query: query
@@ -32,8 +38,19 @@ export const DeleteCalendarEventModal = () => {
             
             await axios.delete(url)
 
+            dismissToast()
+
             onClose()
+
+            showToast({
+                type:'success', 
+                message: 'Evento eliminado exitosamente!'
+            })
         } catch (error) {
+            showToast({
+                type:'error', 
+                message: 'El evento no pudo ser eliminado'
+            })
             console.log(error);
             
         } finally {

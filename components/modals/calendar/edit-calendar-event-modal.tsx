@@ -16,6 +16,7 @@ import { ChannelType } from '@prisma/client';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEffect, useState } from 'react';
 import { DateTimePickerDemo } from '@/components/time-picker/date-time-picker-demo';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const EditCalendarEventModal = () => {
@@ -79,6 +80,11 @@ const params = useParams()
 
         try {
 
+            showToast({
+                type:'loading', 
+                message: 'Actualizando evento'
+            })
+
             const url = qs.stringifyUrl({
                 url: apiUrl || "",
                 query: {
@@ -88,11 +94,24 @@ const params = useParams()
 
             await axios.patch(url, values)
 
+            dismissToast()
+
             form.reset()
             router.refresh()
             onClose();
+
+            showToast({
+                type:'success', 
+                message: 'Evento actualizado exitosamente!'
+            })
+
             
         } catch (error) {
+
+            showToast({
+                type:'error', 
+                message: 'El evento no pudo ser actualizado'
+            })
 
             console.log({error});
             

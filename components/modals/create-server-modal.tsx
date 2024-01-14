@@ -12,6 +12,7 @@ import { Form, FormControl, FormLabel, FormItem, FormField, FormMessage} from '@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/use-modal-store';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const CreateServerModal = () => {
@@ -37,14 +38,29 @@ export const CreateServerModal = () => {
 
         try {
 
+            showToast({
+                type:'loading', 
+                message: 'Creando recurso'
+            })
+            
             await axios.post("/api/servers", values)
+            
+            dismissToast()
 
             form.reset()
             router.refresh()
             onClose();
-            
+            showToast({
+                type:'success', 
+                message: 'Servidor creado exitosamente!'
+            })
+
         } catch (error) {
 
+            showToast({
+                type:'error', 
+                message: 'El servidor no pudo ser creado'
+            })
             console.log({error});
             
         }
