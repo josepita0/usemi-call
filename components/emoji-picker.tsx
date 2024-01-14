@@ -12,22 +12,30 @@ import i18n from '@emoji-mart/data/i18n/es.json'
 import { useTheme } from "next-themes"
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { cn } from "d4t-ui-demo"
 
 interface IEmojiPickerProps {
-
+    disabled: boolean
     onChange: (value: string) => void
 }
 
-export const EmojiPicker = ({ onChange }: IEmojiPickerProps) => {
+export const EmojiPicker = ({ onChange, disabled }: IEmojiPickerProps) => {
 
     const { resolvedTheme } = useTheme()
     
     return (
 
         <Popover>
-            <PopoverTrigger>
+            <PopoverTrigger
+                disabled={disabled}
+
+            >
                 <Smile
-                    className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
+                    className={cn(
+                        "text-zinc-500  dark:text-zinc-400",
+                        disabled ? "cursor-no-drop" : "cursor-pointer hover:text-zinc-600 dark:hover:text-zinc-300"
+
+                    )}
                 >
 
                 </Smile>
