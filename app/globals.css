@@ -20,7 +20,7 @@ body,
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
  
-    --primary: 24 9.8% 10%;
+    --primary: 222 68% 27%;
     --primary-foreground: 60 9.1% 97.8%;
  
     --secondary: 60 4.8% 95.9%;
@@ -137,7 +137,62 @@ code {
   border-left-color: #6ab04c;
 }
 
- 
+
+/* DriverJs */
+.my-custom-popover-class{
+
+}
+
+/* Class assigned to popover wrapper */
+.driver-popover {}
+
+/* Arrow pointing towards the highlighted element */
+.driver-popover-arrow {}
+
+/* Title and description */
+.driver-popover-title {
+  
+  font-size: 25px !important
+
+}
+.driver-popover-description {
+  font-size: 16px !important;
+  
+}
+
+/* Close button displayed on the top right corner */
+.driver-popover-close-btn {
+
+}
+
+/* Footer of the popover displaying progress and navigation buttons */
+.driver-popover-footer {}
+.driver-popover-progress-text {}
+
+.driver-popover-prev-btn,
+.driver-popover-next-btn{
+  /* background-color: hsl(var(--primary)) !important;
+  color: #ffffff !important; 
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  border-radius: 0.375rem !important; 
+  font-size: 1rem !important; 
+  font-weight: 500 !important;
+  --tw-ring-offset-color: var(--background) !important;
+  transition-property: background-color, border-color, color, fill, stroke !important;
+  transition-duration: 150ms !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important; */
+}
+
+.driver-popover-prev-btn,
+.driver-popover-next-btn
+:hover{
+  background-color: var(--primary-foreground) !important;
+  
+}
+
 @layer base {
   * {
     @apply border-border;

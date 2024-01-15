@@ -10,7 +10,7 @@ export const NavigationAction = () => {
     const { onOpen } = useModal()
 
     return(
-        <div>
+        <div id="create-server">
 
             <ActionTooltip
                 side="right"
