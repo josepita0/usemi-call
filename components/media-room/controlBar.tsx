@@ -105,7 +105,7 @@ export function ControlBar({
 
         {/* <ScrollArea className='h-[10rem]'> */}
 
-            <div className="flex sm:flex-row flex-col gap-2 justify-center items-center p-2">
+            <div className="flex flex-row gap-1 justify-center items-center p-2">
 
               <div className="flex flex-row gap-2">
 
