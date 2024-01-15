@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useSignUp } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { formatCI } from "d4t-ui-demo";
+import { Label, formatCI } from "d4t-ui-demo";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 import { handleOnlyNumbers } from "@/lib/handleNumbers";
@@ -18,6 +18,7 @@ import { VerificateEmailCode } from "./validateEmail";
 import { AuthCard } from "@/components/auth/components/auth-card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 const registerDefaultValues: IFormRegister = {
     username: "",
@@ -43,6 +44,8 @@ export default function SignUpForm() {
     defaultValues: registerDefaultValues,
     resolver: zodResolver(registerSchema)
   });
+
+  const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setConfirmShowPassword] = useState(false)
@@ -494,7 +497,13 @@ export default function SignUpForm() {
 
         )}
 
-  
+        <Label
+            className='text-xs text-zinc-500 dark:text-secondary/70'
+        >
+            ¿Ya posees una cuenta? <span 
+              onClick={() => {router.push("/auth")}}
+              className="font-bold underline hover:text-primary hover:cursor-pointer">Iniciar sesión</span> 
+        </Label>
     </AuthCard>
 
   

@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { Label } from "d4t-ui-demo";
  
 const loginDefaultValues: IFormLogin = {
   password: "",
@@ -180,6 +181,13 @@ export const  SignInForm = () => {
 
             </form> 
         </Form>
+        <Label
+            className='text-xs text-zinc-500 dark:text-secondary/70'
+        >
+            ¿Aún sin cuenta? <span 
+              onClick={() => {router.push("/registro")}}
+              className="font-bold underline hover:text-primary hover:cursor-pointer">Registrarse</span> 
+        </Label>
       {/* <div>
         <form>
           <div>
