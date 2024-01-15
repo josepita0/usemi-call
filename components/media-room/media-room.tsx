@@ -3,13 +3,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { 
   GridLayout, 
-  LiveKitRoom, MediaDeviceMenu, ParticipantLoop, ParticipantName,  ParticipantTile, RoomAudioRenderer, Toast, TrackToggle, VideoConference, useParticipantInfo, useParticipants, usePersistentUserChoices, useTracks } from "@livekit/components-react";
+  LiveKitRoom, MediaDeviceMenu, ParticipantLoop, ParticipantName,  ParticipantTile, RoomAudioRenderer, Toast, TrackToggle, VideoConference, useParticipantInfo, useParticipants, usePersistentUserChoices, useTrack, useTracks } from "@livekit/components-react";
 import "@livekit/components-styles";
 import { Channel, Member, MemberRole, Server } from "@prisma/client";
 import { useUser } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
 import { Track } from 'livekit-client';
 import { ControlBar } from "@/components/media-room/controlBar";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { Drawing } from "@/components/drawing/drawing";
+import { cn } from "d4t-ui-demo";
 
 interface MediaRoomProps {
   chatId: string;
@@ -26,6 +29,8 @@ export const MediaRoom = ({
 
   const { user } = useUser();
 
+  const [isDrawing, setIsDrawing] = useState(false)
+
   const {
     saveAudioInputEnabled,
     saveVideoInputEnabled,
@@ -35,7 +40,7 @@ export const MediaRoom = ({
   const [token, setToken] = useState("");
   
   const haveAssistance:boolean = member.role === MemberRole.ADMIN || member.role === MemberRole.MODERATOR 
-  const isClass:boolean = member.role === MemberRole.ADMIN
+  const drawing:boolean = member.role === MemberRole.ADMIN
 
   const microphoneOnChange = useCallback(
     (enabled: boolean, isUserInitiated: boolean) =>
@@ -81,38 +86,63 @@ export const MediaRoom = ({
   }
 
   return (
-    <LiveKitRoom
-      video={true}
-      audio={true}
-      token={token}
-      serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
-      // Use the default LiveKit theme for nice styles.
-      data-lk-theme="default"
-      style={{ height: '100dvh' }}
-    >
-      {/* Your custom component with basic video conferencing functionality. */}
-      <MyVideoConference />
-      {/* The RoomAudioRenderer takes care of room-wide audio for you. */}
-      <RoomAudioRenderer />
-      <ControlBar
-        member={member}
-        controls={{
-          camera: true,
-          initClass:isClass,
-          assistance: haveAssistance,
-          microphone: true,
-          screenShare: true,
-          leave: true
-        }}
-      />    
-    </LiveKitRoom>
+
+
+    <ResizablePanelGroup  direction="vertical">
+
+      <ResizablePanel>
+          <LiveKitRoom
+          video={true}
+          audio={true}
+          token={token}
+          serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
+          // Use the default LiveKit theme for nice styles.
+          data-lk-theme="default"
+          style={{ height: '100dvh' }}
+        >
+          <div className={cn("flex flex-col", isDrawing && "flex-col-reverse")}>
+
+            <RoomAudioRenderer />
+            <MyVideoConference />
+            <ControlBar
+              member={member}
+              controls={{
+                camera: true,
+                drawing:drawing,
+                assistance: haveAssistance,
+                microphone: true,
+                screenShare: drawing,
+                leave: true
+              }}
+              activeDrawing={setIsDrawing}
+              />    
+          </div>
+        </LiveKitRoom>
+
+      </ResizablePanel>
+
+      {
+          isDrawing && (
+            <>
+              <ResizableHandle withHandle />
+              <ResizablePanel>
+                <Drawing/>
+              </ResizablePanel>
+            </>
+          )
+        }
+
+
+      
+    </ResizablePanelGroup>
+
+   
   )
 }
 
 
 function MyVideoConference() {
-  // `useTracks` returns all camera and screen share tracks. If a user
-  // joins without a published camera track, a placeholder track is returned.
+
   const tracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
@@ -122,8 +152,6 @@ function MyVideoConference() {
   );
   return (
     <GridLayout tracks={tracks} style={{ height: 'calc(90vh - var(--lk-control-bar-height))' }}>
-      {/* The GridLayout accepts zero or one child. The child is used
-      as a template to render all passed in tracks. */}
       <ParticipantTile />
     </GridLayout>
   );

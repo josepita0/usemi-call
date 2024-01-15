@@ -1,13 +1,10 @@
-import { ChatIcon, ChatToggle, ControlBarControls, ControlBarProps, DisconnectButton, LeaveIcon, MediaDeviceMenu, TrackToggle, useLocalParticipantPermissions, useMaybeLayoutContext, usePersistentUserChoices } from "@livekit/components-react";
+import { DisconnectButton, LeaveIcon, MediaDeviceMenu, TrackToggle, useLocalParticipantPermissions, useMaybeLayoutContext, usePersistentUserChoices } from "@livekit/components-react";
 import { Track } from "livekit-client";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { Member, Server } from "@prisma/client";
-import { Button } from "../ui/button";
-import { FileDown } from "lucide-react";
-import { ActionTooltip } from "../action-tooltip";
 import { AssistanceButton } from "./asistanceButton";
+import { DrawingButton } from "./drawingButton";
 
 interface IControlBarProps {
   variation?: 'minimal' | 'verbose' | 'textOnly';
@@ -15,18 +12,22 @@ interface IControlBarProps {
     microphone?: boolean;
     camera?: boolean;
     chat?: boolean;
+    drawing: boolean;
     assistance: boolean;
     screenShare?: boolean;
     leave?: boolean;
   }
   saveUserChoices?: boolean,
-  member: Member & {server: Server}
+  member: Member & {server: Server},
+  activeDrawing: Dispatch<SetStateAction<boolean>>
+
 }
 
 export function ControlBar({
     variation,
     controls,
     member,
+    activeDrawing,
     saveUserChoices = true,
   }: IControlBarProps) {
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -71,6 +72,9 @@ export function ControlBar({
   
     const onScreenShareChange = useCallback(
       (enabled: boolean) => {
+        activeDrawing((prev) => {
+          return !prev
+        })
         setIsScreenShareEnabled(enabled);
       },
       [setIsScreenShareEnabled],
@@ -163,12 +167,32 @@ export function ControlBar({
                       className={member.server.name}
                     />
                 )}
+
                 {/* {visibleControls.chat && (
                 <ChatToggle>
                     {showIcon && <ChatIcon />}
                     {showText && 'Chat'}
                 </ChatToggle>
                 )} */}
+
+                {visibleControls.drawing && browserSupportsScreenSharing && (
+
+                    <>
+
+                      <TrackToggle
+                      source={Track.Source.ScreenShare}
+                      captureOptions={{ audio: true, selfBrowserSurface: 'include' }}
+                      showIcon={false}
+                      onChange={onScreenShareChange}
+                      >
+                      <DrawingButton 
+                        // onClick={onScreenShareChange}
+                        activeDrawing={activeDrawing as Dispatch<SetStateAction<boolean>>}
+                      />
+           
+                    </TrackToggle>
+                    </>
+                )}
                 {visibleControls.leave && (
 
 

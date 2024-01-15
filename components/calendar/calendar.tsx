@@ -38,7 +38,7 @@ interface CommandButtonProps {
 
 export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
 
-      const { data: dataCalendar } = useCalendar({apiUrl: `/api/calendar`, paramValue: member.serverId, queryKey: "serverId"})
+      const { data: dataCalendar } = useCalendar({apiUrl: `/api/calendar/`, paramValue: member.serverId, queryKey: "serverId"})
     
       const { onOpen } = useModal()
 
@@ -146,9 +146,7 @@ export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
 
       }
 
-    useEffect(()=> {
 
-    }, [dataCalendar])
 
     return (
       
@@ -157,77 +155,84 @@ export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
         >
 
         {
-          dataCalendar && 
-        <Scheduler 
-          locale={"es"}
-          data={(dataCalendar as {serverId:string, id:string,endDate:string, startDate:string, title:string}[])?.map((d,i)=>{
+          dataCalendar && (
+            <Scheduler 
 
-            const { serverId,  startDate, endDate, id, title } = d
+              locale={"es"}
+              data={(dataCalendar as {serverId:string, id:string,endDate:string, startDate:string, title:string}[])?.map((d,i)=>{
 
-            const obj = {title: title, id ,startDate: new Date(startDate), endDate: new Date(endDate)}
+                const { serverId,  startDate, endDate, id, title } = d
+
+                const obj = {title: title, id ,startDate: new Date(startDate), endDate: new Date(endDate)}
+                
+                return obj
+              })} 
+              height={'auto'}  >
+                
+                <ViewState
+                  currentDate={currentDate}
+                  onCurrentDateChange={(c)=>{
+                    setCurrentDate(c)
+                  }}
+                  defaultCurrentViewName="Week"
+                />
             
-            return obj
-          })} 
-          height={'auto'}  >
-            
-            <ViewState
-              currentDate={currentDate}
-              onCurrentDateChange={(c)=>{
-                setCurrentDate(c)
-              }}
-              defaultCurrentViewName="Week"
-            />
-        
-          <EditingState
-            onCommitChanges={commitChanges}
-            addedAppointment={addedAppointment}
-            onAddedAppointmentChange={changeAddedAppointment}
-            appointmentChanges={appointmentChanges}
-            onAppointmentChangesChange={changeAppointmentChanges}
-            editingAppointment={editingAppointment}
-            onEditingAppointmentChange={changeEditingAppointment}
-          />
-  
-          <WeekView 
-            startDayHour={7} 
-            endDayHour={20} 
-            displayName="Semana" />
-  
-          <MonthView  
-            displayName="Mes"
-            name="Mes"
-          />
-  
-          <Toolbar />
-  
-          <ViewSwitcher />
+              <EditingState
+                onCommitChanges={commitChanges}
+                addedAppointment={addedAppointment}
+                onAddedAppointmentChange={changeAddedAppointment}
+                appointmentChanges={appointmentChanges}
+                onAppointmentChangesChange={changeAppointmentChanges}
+                editingAppointment={editingAppointment}
+                onEditingAppointmentChange={changeEditingAppointment}
+              />
+      
+              <WeekView 
+                startDayHour={7} 
+                endDayHour={20} 
+                displayName="Semana" />
+      
+              <MonthView  
+                displayName="Mes"
+                name="Mes"
+              />
+      
+              <Appointments />
+              <Toolbar />
+      
+              <ViewSwitcher />
+                  
+              <DateNavigator />
+              <TodayButton messages={{today: "Hoy"}} />
+      
+              <ConfirmationDialog />
               
-          <DateNavigator />
-          <TodayButton messages={{today: "Hoy"}} />
-  
-          <ConfirmationDialog />
-          
-          <Appointments />
-  
-          <AppointmentTooltip  
-            showDeleteButton={ isAdmin }
-            showOpenButton={ isAdmin || isModerator }
-            showCloseButton={ isAdmin || isModerator || isGuest }
-  
-            commandButtonComponent={myAppointment}
+      
+              <AppointmentTooltip  
+                showDeleteButton={ isAdmin }
+                showOpenButton={ isAdmin || isModerator }
+                showCloseButton={ isAdmin || isModerator || isGuest }
+      
+                commandButtonComponent={myAppointment}
 
 
 
-            visible={isVisible}
+                visible={isVisible}
 
-            onAppointmentMetaChange={(d)=>{
-              setIsVisible(true)
-              setEditData(d)
-            }}  
-          />
-  
-        </Scheduler>
-        }   
+                onAppointmentMetaChange={(d)=>{
+                  setIsVisible(true)
+                  setEditData(d)
+                }}  
+              />
+      
+            </Scheduler>
+          ) 
+        }
+
+        {
+
+
+        }
         
     </div>
       );
