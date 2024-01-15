@@ -6,7 +6,7 @@ import { useSignUp } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Label, formatCI } from "d4t-ui-demo";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 
 import { handleOnlyNumbers } from "@/lib/handleNumbers";
 import { IFormRegister, registerSchema } from "@/lib/schemas/auth.schema";
@@ -19,6 +19,7 @@ import { AuthCard } from "@/components/auth/components/auth-card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
+import { showToast } from "@/lib/showToast";
 
 const registerDefaultValues: IFormRegister = {
     username: "",
@@ -31,14 +32,25 @@ const registerDefaultValues: IFormRegister = {
     confirmPassword: ""
 };
 
+
 const pidType = {
     V: "V",
     E: "E"
-} 
+}
+
+interface errors {
+    code: "form_identifier_exists" | "form_username_invalid_character"
+    longMessage: string 
+    message: string
+    meta:{
+        paramName: "username" | "email_address"
+    }
+}
 
 export default function SignUpForm() {
 
   const { isLoaded, signUp } = useSignUp();
+  const [ isLoading, setIsLoading ] = useState(false)
 
   const form = useForm<IFormRegister>({
     defaultValues: registerDefaultValues,
@@ -53,6 +65,7 @@ export default function SignUpForm() {
   const [pendingVerification, setPendingVerification] = useState(false);
 
   const onSubmit = async (values:IFormRegister) => {
+    setIsLoading(true)
 
     console.log({values});
 
@@ -79,10 +92,41 @@ export default function SignUpForm() {
       });
  
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
- 
+      showToast({
+        type: "success",
+        message: "El codigo de verificación fue enviado exitosamente!"
+      })
       setPendingVerification(true);
     } catch (err: any) {
-      console.error(JSON.stringify(err, null, 2));
+        console.log({err});
+        
+        for (let e of err.errors){
+
+            if(e.code === "form_identifier_exists" && e.meta.paramName === "email_address"){
+                showToast({
+                    type: "error",
+                    message: "El correo electronico ya fue usado, por favor selecionar otro"
+                })
+            }
+    
+            if(e.code === "form_identifier_exists" && e.meta.paramName === "username"){
+                showToast({
+                    type: "error",
+                    message: "El nombre de usuario ya fue usado, por favor selecionar otro"
+                })
+            }
+    
+            if(e.code === "form_username_invalid_character" && e.meta.paramName === "username"){
+                showToast({
+                    type: "error",
+                    message: "El nombre de usuario solo puede contener letras, números y '-' o '_'"
+                })
+            }
+        }
+    
+        // if(err)
+    } finally {
+        setIsLoading(false)
     }
   };
  
@@ -109,6 +153,7 @@ export default function SignUpForm() {
                 <div className="flex flex-col gap-2 sm:flex-row w-full">
 
                     <FormField 
+                    disabled={isLoading}
                         control={form.control}
                         name='firstName'
                         render={({field}) => (
@@ -141,6 +186,8 @@ export default function SignUpForm() {
                     />
 
                     <FormField 
+                    disabled={isLoading}
+
                         control={form.control}
                         name='lastName'
                         render={({field}) => (
@@ -177,6 +224,7 @@ export default function SignUpForm() {
 
                 <div className="flex flex-col gap-2 sm:flex-row w-full">
                     <FormField 
+                    disabled={isLoading}
                         control={form.control}
                         name='username'
                         render={({field}) => (
@@ -219,6 +267,7 @@ export default function SignUpForm() {
                     <div className="flex flex-row justify-start items-start gap-1 w-full">
 
                         <FormField 
+                        disabled={isLoading}
                             control={form.control}
                             name='pidType'
                             render={({field}) => (
@@ -275,6 +324,7 @@ export default function SignUpForm() {
 
 
                         <FormField 
+                        disabled={isLoading}
                             control={form.control}
                             name='pid'
                             render={({field}) => (
@@ -314,6 +364,7 @@ export default function SignUpForm() {
 
                 <div className="flex flex-col gap-2 sm:flex-row w-full">
                     <FormField 
+                    disabled={isLoading}
                         control={form.control}
                         name='emailAddress'
                         render={({field}) => (
@@ -351,6 +402,8 @@ export default function SignUpForm() {
                 
                 <div className="flex flex-col gap-2 sm:flex-row w-full">
                     <FormField 
+                    disabled={isLoading}
+
                         control={form.control}
                         name='password'
                         render={({field}) => (
@@ -415,7 +468,9 @@ export default function SignUpForm() {
                         )}
                     />
 
-                    <FormField 
+                    <FormField
+                    disabled={isLoading}
+
                         control={form.control}
                         name='confirmPassword'
                         render={({field}) => (
@@ -482,8 +537,18 @@ export default function SignUpForm() {
 
                 </div>
 
-                <Button variant={"primary"} disabled={!isLoaded}>
-                    Registrarse
+                <Button 
+                    disabled={isLoading}
+                    variant={"primary"}
+                    >
+                    {
+                        !isLoading 
+                        ?
+                            ("Registrarse")
+                        :
+                            (<Loader2 className="w-6 h-6 text-white animate-spin my-4"/>)
+                    }
+                    
                 </Button>
     
             </form>
@@ -506,35 +571,6 @@ export default function SignUpForm() {
         </Label>
     </AuthCard>
 
-  
-    // <div>
-    //   {!pendingVerification && (
-    //     <form>
-    //       <div>
-    //         <label htmlFor="email">Email</label>
-    //         <input onChange={(e) => setEmailAddress(e.target.value)} id="email" name="email" type="email" />
-    //       </div>
-    //       <div>
-    //         <label htmlFor="password">Password</label>
-    //         <input onChange={(e) => setPassword(e.target.value)} id="password" name="password" type="password" />
-    //       </div>
-    //       <button onClick={handleSubmit}>Sign up</button>
-    //     </form>
-    //   )}
-    //   {pendingVerification && (
-    //     <div>
-    //       <form>
-    //         <input
-    //           value={code}
-    //           placeholder="Code..."
-    //           onChange={(e) => setCode(e.target.value)}
-    //         />
-    //         <button onClick={onPressVerify}>
-    //           Verify Email
-    //         </button>
-    //       </form>
-    //     </div>
-    //   )}
-    // </div>
+
   );
 }

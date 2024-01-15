@@ -11,8 +11,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import { Label } from "d4t-ui-demo";
+import { showToast } from "@/lib/showToast";
  
 const loginDefaultValues: IFormLogin = {
   password: "",
@@ -29,12 +30,15 @@ export const  SignInForm = () => {
   });
 
   const { isLoaded, signIn, setActive } = useSignIn();
+  const [ isLoading, setIsLoading ] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
 
   const onSubmit = async (values: IFormLogin) => {
 
     const { password, emailAddress } = values
+
+    setIsLoading(true)
 
     if (!isLoaded) {
       return;
@@ -47,17 +51,33 @@ export const  SignInForm = () => {
       });
  
       if (result.status === "complete") {
-        console.log(result);
+        console.log({success:result});
         await setActive({ session: result.createdSessionId });
+        
+        showToast({
+          type: "success",
+          message: "Inicio de sesión exitoso!"
+        })
+
         router.push("/")
       }
       else {
         /*Investigate why the login hasn't completed */
-        console.log(result);
+        console.log({error:result});
       }
  
     } catch (err: any) {
+
+      if(err.errors[0].code === "form_identifier_not_found" || err.errors[0].code === "form_password_incorrect"){
+        showToast({
+          type:"error",
+          message:"Credenciales invalidas"
+        })
+      }
+      
       console.error("error", err.errors[0].longMessage)
+    } finally {
+      setIsLoading(false)
     }
   };
 
@@ -76,6 +96,7 @@ export const  SignInForm = () => {
             <div className="flex flex-col gap-2 w-full">
 
                 <FormField 
+                    disabled={isLoading}
                     control={form.control}
                     name='emailAddress'
                     render={({field}) => (
@@ -108,6 +129,7 @@ export const  SignInForm = () => {
                 />
 
                 <FormField 
+                    disabled={isLoading}
                     control={form.control}
                     name='password'
                     render={({field}) => (
@@ -174,8 +196,18 @@ export const  SignInForm = () => {
 
             </div>
 
-            <Button variant={"primary"} disabled={!isLoaded}>
-              Iniciar sesión
+            <Button 
+              disabled={isLoading}
+              variant={"primary"}
+            >
+              {
+                !isLoading 
+                  ?
+                    ("Iniciar sesión")
+                  :
+                    (<Loader2 className="w-6 h-6 text-white animate-spin my-4"/>)
+              }
+              
             </Button>
     
 
