@@ -9,8 +9,8 @@ export const objMatch:{
     insult:  "El mensaje contiene un insulto",
     obscene: "El mensaje contiene una obscenidad",
     severe_toxicity: "El mensaje es severamente tóxico",
-    sexual_explicit: "El mensaje contiene contido sexual explícito",
-    toxicity: "El mensaje contiene contido tóxico",
+    sexual_explicit: "El mensaje posee contenido sexual explícito",
+    toxicity: "El mensaje posee contenido tóxico",
 }
 
 export const translateText = (sourceText:string): Promise<AxiosResponse<any>> => {
