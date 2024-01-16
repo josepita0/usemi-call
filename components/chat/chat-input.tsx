@@ -15,6 +15,8 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Member, MemberRole } from "@prisma/client"
 import { cn } from "d4t-ui-demo"
+import { classifyToxicity, objMatch, translateText } from "@/lib/services/validateMessage"
+import { showToast } from "@/lib/showToast"
 
 
 interface IChatInputProps {
@@ -45,18 +47,49 @@ export const ChatInput = ({
   
     const [isLoading, setIsLoading] = useState(false)
     
+
+
     const onSubmit = async (values: IChatInput) => {
       try {
+        
         setIsLoading(true)
-        const url = qs.stringifyUrl({
-          url: apiUrl,
-          query,
+        const t = await translateText(values.content)
+        const response = await classifyToxicity(0.5, t.data.responseData.translatedText)
+
+        let hasMatch = false;
+        let matchedLabel: string[] = [];
+
+        response.forEach(result => {
+            const matchResult = result.results.find(result => result.match === true);
+
+            if (matchResult) {
+                hasMatch = true;
+                matchedLabel.push(result.label);
+            }
         });
-  
-        await axios.post(url, values);
+        
+        if(!hasMatch){
+          const url = qs.stringifyUrl({
+            url: apiUrl,
+            query,
+          });
+    
+          await axios.post(url, values);
+        }else{
+          matchedLabel.forEach( (l:string) => {
+
+            showToast({
+              type: "error",
+              message: objMatch[l]
+            })
+            
+          })
+        }
+
   
         form.reset();
         router.refresh();
+
       } catch (error) {
         console.log(error);
       } finally {
@@ -108,8 +141,8 @@ export const ChatInput = ({
                       )
                     }
                     <Input
-                      className="px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
-                      placeholder={`Message ${type === "conversation" ? name : "#" + name}`}
+                      className="px-14 py-6 pr-20 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
+                      placeholder={`Enviar mensaje a ${type === "conversation" ? name : "#" + name}`}
                       {...field}
                     />
                     <div className="absolute top-7 right-8">
