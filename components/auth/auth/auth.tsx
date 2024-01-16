@@ -150,7 +150,7 @@ export const  SignInForm = () => {
                                         maxLength={15}
                                         disabled={isLoaded}
                                         id='password'
-                                        placeholder='Ingrese su nombre de usuario'
+                                        placeholder='Ingrese su contraseña'
                                         tabIndex={1}
                                         {...field}
 
