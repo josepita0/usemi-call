@@ -247,9 +247,6 @@ export const ChatItem = ({
 
                             </form>
 
-                            <span className="text-[10px] mt-1 text-zinc-500 dark:text-zinc-400">
-                                Seleccione 
-                            </span>
                         </Form>
                     )}
 

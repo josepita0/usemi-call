@@ -37,6 +37,7 @@
     "@types/react": "18.2.46",
     "@types/react-dom": "18.2.18",
     "@uploadthing/react": "^6.1.0",
+    "@xenova/transformers": "^2.14.0",
     "autoprefixer": "10.4.16",
     "axios": "^1.6.4",
     "class-variance-authority": "^0.7.0",

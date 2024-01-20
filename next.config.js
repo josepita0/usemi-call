@@ -13,6 +13,13 @@ const nextConfig = {
         
     },
     webpack: (config) => {
+
+
+        config.resolve.alias = {
+          ...config.resolve.alias,
+          "sharp$": false,
+          "onnxruntime-node$": false,
+      }
         config.externals.push({
             "utf-8-validate": "commonjs utf-8-validate",
             bufferutil: "commonjs bufferutil"
@@ -25,6 +32,10 @@ const nextConfig = {
     compiler: {
       removeConsole: process.env.NODE_ENV !== "development", // Remove console.log in production
     },
+    // output: 'standalone', 
+    // experimental: {
+    //     serverComponentsExternalPackages: ['sharp', 'onnxruntime-node'],
+    // },
 }
 
   
