@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Member, Server } from "@prisma/client";
 import { AssistanceButton } from "./asistanceButton";
 import { DrawingButton } from "./drawingButton";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 interface IControlBarProps {
   variation?: 'minimal' | 'verbose' | 'textOnly';
@@ -17,6 +18,7 @@ interface IControlBarProps {
     screenShare?: boolean;
     leave?: boolean;
   }
+  drawing?: boolean
   saveUserChoices?: boolean,
   member: Member & {server: Server},
   activeDrawing: Dispatch<SetStateAction<boolean>>
@@ -28,6 +30,7 @@ export function ControlBar({
     controls,
     member,
     activeDrawing,
+    drawing,
     saveUserChoices = true,
   }: IControlBarProps) {
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -72,9 +75,9 @@ export function ControlBar({
   
     const onScreenShareChange = useCallback(
       (enabled: boolean) => {
-        activeDrawing((prev) => {
-          return !prev
-        })
+
+        // drawing ? activeDrawing(false) : activeDrawing(true) 
+
         setIsScreenShareEnabled(enabled);
       },
       [setIsScreenShareEnabled],
@@ -103,7 +106,7 @@ export function ControlBar({
     return (
       <div className=" " >
 
-        {/* <ScrollArea className='h-[10rem]'> */}
+        <ScrollArea className='min-h-max flex items-center justify-center'>
 
             <div className="flex flex-row gap-1 justify-center items-center p-2">
 
@@ -168,12 +171,6 @@ export function ControlBar({
                     />
                 )}
 
-                {/* {visibleControls.chat && (
-                <ChatToggle>
-                    {showIcon && <ChatIcon />}
-                    {showText && 'Chat'}
-                </ChatToggle>
-                )} */}
 
                 {visibleControls.drawing && browserSupportsScreenSharing && (
 
@@ -186,7 +183,7 @@ export function ControlBar({
                       onChange={onScreenShareChange}
                       >
                       <DrawingButton 
-                        // onClick={onScreenShareChange}
+                        drawing={drawing}
                         activeDrawing={activeDrawing as Dispatch<SetStateAction<boolean>>}
                       />
            
@@ -207,8 +204,8 @@ export function ControlBar({
 
             </div>
 
-      {/* //       <ScrollBar orientation="horizontal" />
-      //   </ScrollArea> */}
+           <ScrollBar orientation="horizontal" />
+        </ScrollArea>
 
       </div>
     );

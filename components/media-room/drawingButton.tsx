@@ -8,7 +8,7 @@ interface IAssistanceButton {
 
 
 
-export const DrawingButton = ({activeDrawing, onClick}:{  activeDrawing: Dispatch<SetStateAction<boolean>>, onClick?: (enabled: boolean) => void}) => {
+export const DrawingButton = ({activeDrawing,drawing}:{  activeDrawing: Dispatch<SetStateAction<boolean>>, drawing?: boolean } ) => {
 
     return (
         <ActionTooltip
@@ -16,10 +16,9 @@ export const DrawingButton = ({activeDrawing, onClick}:{  activeDrawing: Dispatc
         >
             <button 
             onClick={() => {
-                activeDrawing((prev) => {
-                    return !prev
-                }
-            )}}
+
+                drawing ? activeDrawing(false) : activeDrawing(true) 
+            }}
             style={{alignItems: "center"}}
             // className="lk-button-group lk-button flex"
             >

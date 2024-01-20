@@ -64,36 +64,41 @@ export const generatePDFStudents = async (info: IInfo) =>{
         }
     
         const font = pdf.getFont()
+        console.log('hola puta');
+        const imageUrl = '/icon-512.png';
 
 
-        pdf.setFontSize(16).setFont(font.fontName, 'bold').setTextColor('#000000')
-        pdf.text('Universidad Santa María',  pdf.internal.pageSize.getWidth() / 2, 20, { align: 'center'} )
+        urlToBase64(imageUrl, function (base64String) {
+            pdf.addImage(base64String, 'JPEG', 13, 5, 35, 35); 
     
-        // pdf.setFontSize(12).setFont(font.fontName, 'bold').setTextColor('#000000')
-        // pdf.text(`Catedra:`,25, 22);
-        pdf.setFontSize(12).setFont(font.fontName, 'bold').setTextColor('#163273')
-        pdf.text(`${info.dataAssistance.class}`,  pdf.internal.pageSize.getWidth() / 2, 25, { align: 'center'} )
-    
-        pdf.setFontSize(14).setFont(font.fontName, 'bold').setTextColor('#000000')
-        pdf.text(`Asistencia`, pdf.internal.pageSize.getWidth() / 2, 40,{ align:'center'});
-
-        pdf.setFontSize(11).setFont(font.fontName, 'normal').setTextColor('#000000')
-        pdf.text(`${info.dataAssistance.date}`,  pdf.internal.pageSize.getWidth() / 2, 45,{ align:'center'});
-    
-        autoTable(pdf, {
-            margin:{ top:50, right:15, left: 15 },
-            headStyles: { fillColor:"#163273", halign: "center", valign: "middle", fontSize: 10, minCellHeight: 12 },
-            columnStyles,
-            head,
-            body,
-            styles: {
-            font: "helvetica"
-            }
-            
-        });
+            pdf.setFontSize(16).setFont(font.fontName, 'bold').setTextColor('#000000')
+            pdf.text('Universidad Santa María',  pdf.internal.pageSize.getWidth() / 2, 20, { align: 'center'} )
         
+            pdf.setFontSize(13).setFont(font.fontName, 'bold').setTextColor('#163273')
+            pdf.text(`Catedra: ${info.dataAssistance.class}`,  pdf.internal.pageSize.getWidth() / 2, 25, { align: 'center'} )
+        
+            pdf.setFontSize(14).setFont(font.fontName, 'bold').setTextColor('#000000')
+            pdf.text(`Asistencia`, pdf.internal.pageSize.getWidth() / 2, 40,{ align:'center'});
+    
+            pdf.setFontSize(10).setFont(font.fontName, 'normal').setTextColor('#000000')
+            pdf.text(`${info.dataAssistance.date}`,  pdf.internal.pageSize.getWidth() / 2, 45,{ align:'center'});
+        
+            autoTable(pdf, {
+                margin:{ top:50, right:15, left: 15 },
+                headStyles: { fillColor:"#163273", halign: "center", valign: "middle", fontSize: 10, minCellHeight: 12 },
+                columnStyles,
+                head,
+                body,
+                styles: {
+                font: "helvetica"
+                }
+                
+            });
             
-        pdf.save(`Asistencia-${info.dataAssistance.class}-${info.dataAssistance.date}.pdf`)
+                
+            pdf.save(`Asistencia-${info.dataAssistance.class}-${info.dataAssistance.date}.pdf`)
+        });
+ 
 
         showToast({
             type: "success",
@@ -111,7 +116,25 @@ export const generatePDFStudents = async (info: IInfo) =>{
       console.error('Error al crear la asistencia:', error);
 
     }
+
+
       
+}
+
+const urlToBase64 = (imagePath: string, callback: (base64String: string) => void) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        if (reader.result) {
+          callback(reader.result.toString().split(',')[1]);
+        }
+      };
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open('GET', imagePath);
+    xhr.responseType = 'blob';
+    xhr.send();
   }
 
   

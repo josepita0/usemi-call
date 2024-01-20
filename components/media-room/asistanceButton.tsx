@@ -1,7 +1,6 @@
-import { ParticipantLoop, ParticipantName, useParticipants } from "@livekit/components-react"
+import { useParticipants } from "@livekit/components-react"
 import { FileDown } from "lucide-react";
 import { ActionTooltip } from "../action-tooltip";
-import { db } from "@/lib/db";
 import { format } from "date-fns"
 import { generatePDFStudents } from "@/lib/services/generatePdf.services";
 import { useUser } from "@clerk/nextjs";
@@ -76,8 +75,6 @@ export const AssistanceButton = ({
         }
     })
 
-    console.log({participantsMapped});
-
     const onClick = async (values: IStudents[]) => {
 
         const sortedValues = values.sort((a, b) => {
@@ -89,7 +86,7 @@ export const AssistanceButton = ({
         const info: IInfo = {
             students:sortedValues.filter( s => s.role !== MemberRole.ADMIN),
             dataAssistance: {
-                date: format(new Date(), "dd/MM/yyyy"),
+                date: format(new Date(), "dd/MM/yyyy hh:mm aaaaa'm'"),
                 class: className
             }
         }
@@ -109,9 +106,6 @@ export const AssistanceButton = ({
             className="lk-button-group lk-button flex"
             >
             <FileDown size={20} />
-            {/* <span className="hidden sm:block ">
-            {showText && ('Tomar asistencia')}
-            </span> */}
             </button>
         </ActionTooltip>
     )

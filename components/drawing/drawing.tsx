@@ -2,18 +2,23 @@
 
 import { useDraw } from '@/hooks/use-drawing'
 import { Draw } from '@/type'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChromePicker } from 'react-color'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Eraser, Gavel, Palette, Pencil } from 'lucide-react'
 import { cn } from 'd4t-ui-demo'
 import { ActionTooltip } from '../action-tooltip'
+import { useTheme } from 'next-themes'
 
 interface pageProps {}
 
 export const Drawing = ({}:pageProps) => {
   const [color, setColor] = useState<string>('#000')
+  const { theme } = useTheme()
+
+  console.log({theme});
+  
   const { canvasRef, onMouseDown, clear } = useDraw(drawLine)
 
   function drawLine({ prevPoint, currentPoint, ctx }: Draw) {
@@ -35,12 +40,20 @@ export const Drawing = ({}:pageProps) => {
     ctx.fill()
   }
 
+  useEffect(() => {
+
+        if(theme){
+            theme === 'dark' ? setColor('#fff') : setColor('#000')
+        }
+
+  }, [theme])
+
   return (
 
     <>
-        <div className=' w-full bg-white flex flex-col justify-center items-center overflow-hidden'>
+        <div className=' w-full bg-white dark:bg-[#313338] flex flex-col justify-center items-center overflow-hidden'>
             <div
-                className='dark:bg-[#2B2D31] bg-[#F2F3F5] w-full flex flex-row items-center justify-center gap-4 p-4'
+                className='dark:bg-[#2B2D31]  bg-[#F2F3F5] w-full flex flex-row items-center justify-center gap-4 p-4'
             >
 
 
@@ -92,7 +105,7 @@ export const Drawing = ({}:pageProps) => {
                 onMouseDown={onMouseDown}
                 width={1000}
                 height={1000}
-                className=' border rounded-md'
+                className='rounded-md'
             />
 
         </div>

@@ -3,9 +3,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { 
   GridLayout, 
-  LiveKitRoom, MediaDeviceMenu, ParticipantLoop, ParticipantName,  ParticipantTile, RoomAudioRenderer, Toast, TrackToggle, VideoConference, useParticipantInfo, useParticipants, usePersistentUserChoices, useTrack, useTracks } from "@livekit/components-react";
+  LiveKitRoom,  ParticipantTile, RoomAudioRenderer, usePersistentUserChoices, useTracks } from "@livekit/components-react";
 import "@livekit/components-styles";
-import { Channel, Member, MemberRole, Server } from "@prisma/client";
+import { Member, MemberRole, Server } from "@prisma/client";
 import { useUser } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
 import { Track } from 'livekit-client';
@@ -114,6 +114,7 @@ export const MediaRoom = ({
                 screenShare: drawing,
                 leave: true
               }}
+              drawing={isDrawing}
               activeDrawing={setIsDrawing}
               />    
           </div>
@@ -124,7 +125,7 @@ export const MediaRoom = ({
       {
           isDrawing && (
             <>
-              <ResizableHandle withHandle />
+              <ResizableHandle withHandle  />
               <ResizablePanel>
                 <Drawing/>
               </ResizablePanel>
