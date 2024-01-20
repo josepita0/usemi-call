@@ -1,4 +1,4 @@
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { ChannelType, MemberRole } from "@prisma/client";
 import { Calendar, Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { useSignUp } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next-nprogress-bar';
 
 import { CodeVerification } from "d4t-ui-demo";
 import { useState } from "react";

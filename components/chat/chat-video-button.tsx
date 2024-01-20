@@ -2,7 +2,9 @@
 
 import qs from "query-string";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+
+import { useRouter } from 'next-nprogress-bar';
 
 import { Video, VideoOff } from "lucide-react";
 

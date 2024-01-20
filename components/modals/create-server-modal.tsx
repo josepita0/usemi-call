@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { FileUpload } from '@/components/file-upload';
 import { Form, FormControl, FormLabel, FormItem, FormField, FormMessage} from '@/components/ui/form'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 import { useModal } from '@/hooks/use-modal-store';
 import { dismissToast, showToast } from '@/lib/showToast';
 

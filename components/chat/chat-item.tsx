@@ -17,7 +17,9 @@ import qs from "query-string"
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useModal } from "@/hooks/use-modal-store";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useRouter } from 'next-nprogress-bar';
+
 
 interface IChatItemProps {
     id: string;

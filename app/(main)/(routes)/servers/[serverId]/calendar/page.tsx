@@ -29,7 +29,7 @@ const CalendarPage = async ({params}:IChannelIdPage) => {
       
       
 
-      const profile = await currentProfile()
+      const profile = await currentProfile()      
 
       if(!profile){
           return redirectToSignIn()
@@ -50,8 +50,6 @@ const CalendarPage = async ({params}:IChannelIdPage) => {
       })
    
       
-      
-      console.log({member: member?.server.calendar});
       if(!member){
           redirect(`/`)
       }
@@ -65,7 +63,7 @@ const CalendarPage = async ({params}:IChannelIdPage) => {
                 serverId={params.serverId}
                 type="channel"
             />
-            <CalendarEvents member={member} appointments={appointments} ></CalendarEvents>
+            <CalendarEvents member={member} appointments={appointments} />
         </div>
      );
 }

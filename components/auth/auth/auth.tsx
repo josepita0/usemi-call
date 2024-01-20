@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useSignIn } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
 import AuthCard from "@/components/auth/components/auth-card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -14,7 +13,9 @@ import { cn } from "@/lib/utils";
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import { Label } from "d4t-ui-demo";
 import { showToast } from "@/lib/showToast";
+import { useRouter } from 'next-nprogress-bar';
  
+
 const loginDefaultValues: IFormLogin = {
   password: "",
   emailAddress: ""

@@ -1,9 +1,10 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { Channel, ChannelType, MemberRole, Server } from "@prisma/client"
+import { Channel, MemberRole, Server } from "@prisma/client"
 import { Calendar, Edit, Hash, Lock, Mic, Plus, Trash, Video } from "lucide-react"
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
+import { useRouter } from 'next-nprogress-bar';
 import { ActionTooltip } from "@/components/action-tooltip"
 import { ModalType, useModal } from "@/hooks/use-modal-store"
 

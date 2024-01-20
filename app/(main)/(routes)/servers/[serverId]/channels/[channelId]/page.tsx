@@ -1,5 +1,6 @@
 import { ChatHeader } from "@/components/chat/chat-header"
 import { ChatInput } from "@/components/chat/chat-input"
+import { ChatItemVerify } from "@/components/chat/chat-item-verify"
 import { ChatMessages } from "@/components/chat/chat-messages"
 import { MediaRoom } from "@/components/media-room/media-room"
 import { currentProfile } from "@/lib/current-profile"
@@ -35,7 +36,8 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
             profileId: profile.id
         },
         include:{
-            server: true
+            server: true,
+            profile: true
         }
     })
  
@@ -55,6 +57,8 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
                 type="channel"
             />
 
+            {/* <Test/> */}
+
             {
                 channel.type === ChannelType.TEXT && (
                     <>
@@ -73,16 +77,16 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
                         paramValue={channel.id}
                     />
 
-                    <ChatInput
-                        member={member}
-                        apiUrl="/api/socket/messages"
-                        type="channel"
-                        name={channel.name}
-                        query={{
-                            channelId: channel.id,
-                            serverId: channel.serverId
-                        }}
-                    />
+                        <ChatInput
+                            member={member}
+                            apiUrl="/api/socket/messages"
+                            type="channel"
+                            name={channel.name}
+                            query={{
+                                channelId: channel.id,
+                                serverId: channel.serverId
+                            }}
+                        />
                     </>
                 )
             }

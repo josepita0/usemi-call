@@ -2,22 +2,13 @@
 
 import { Member, MemberRole, Profile } from "@prisma/client"
 import { UserAvatar } from "@/components/user-avatar";
-import { ActionTooltip } from "@/components/action-tooltip";
-import { Circle, Edit, FileIcon, Loader2, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Circle, ShieldAlert, ShieldCheck } from "lucide-react";
+import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { IChatItem, chatItemSchema } from "@/lib/schemas/chat.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 
-import qs from "query-string"
-import { Button } from "@/components/ui/button";
-import axios from "axios";
-import { useModal } from "@/hooks/use-modal-store";
-import { useParams, useRouter } from "next/navigation";
 
 interface IChatItemProps {
     id: string;

@@ -1,9 +1,9 @@
 {
     "name": "USEMI CALL",
     "short_name": "USEMI",
-    "theme_color": "#2196f3",
-    "background_color": "#2196f3",
-    "display": "standalone",
+    "theme_color": "#163273",
+    "background_color": "#163273",
+    "display": "fullscreen",
     "orientation": "portrait",
     "scope": "/",
     "start_url": "/",

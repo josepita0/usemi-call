@@ -10,10 +10,9 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormLabel, FormItem, FormField, FormMessage} from '@/components/ui/form'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 import { useModal } from '@/hooks/use-modal-store';
-import { ChannelType } from '@prisma/client';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEffect, useState } from 'react';
 import { DateTimePickerDemo } from '@/components/time-picker/date-time-picker-demo';
 import { dismissToast, showToast } from '@/lib/showToast';

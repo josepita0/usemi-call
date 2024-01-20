@@ -10,7 +10,7 @@ import axios from "axios"
 import qs from "query-string"
 import { useModal } from "@/hooks/use-modal-store"
 import { EmojiPicker } from "@/components/emoji-picker"
-import { useRouter } from "next/navigation"
+import { useRouter } from 'next-nprogress-bar';
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Member, MemberRole, Profile } from "@prisma/client"
 import { cn } from "d4t-ui-demo"

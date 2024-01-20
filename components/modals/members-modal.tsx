@@ -12,7 +12,7 @@ import { Check, Gavel, Loader2, MoreHorizontal, Shield, ShieldAlert, ShieldCheck
 import { useState } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 import { showToast } from '@/lib/showToast';
 
 const roleIconMap: Record<MemberRole, React.ReactNode | null > = {

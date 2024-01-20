@@ -24,7 +24,8 @@ export const HelpButton = () => {
                     description: 'Aquí puedes crear tus servidores, para ver tus clases!', 
                     side: "left", 
                     align: 'start',
-                    popoverClass: 'my-custom-popover-class'
+                    popoverClass: 'my-custom-popover-class',
+                    
                 },
 
             },

@@ -3,7 +3,6 @@ import { jsPDF } from 'jspdf';
 import autoTable, { Styles } from 'jspdf-autotable';
 
 import { showToast } from '@/lib/showToast';
-import Logo from "@/public/icon-512x512.png";
 
 interface IAssistance {
     class: string,

@@ -18,7 +18,7 @@ import { VerificateEmailCode } from "./validateEmail";
 import { AuthCard } from "@/components/auth/components/auth-card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next-nprogress-bar';
 import { showToast } from "@/lib/showToast";
 
 const registerDefaultValues: IFormRegister = {

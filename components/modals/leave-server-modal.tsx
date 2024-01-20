@@ -5,7 +5,7 @@ import { useModal } from '@/hooks/use-modal-store';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 import { dismissToast, showToast } from '@/lib/showToast';
 
 
