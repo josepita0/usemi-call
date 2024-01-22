@@ -10,6 +10,7 @@ import { SocketProvider } from '@/components/providers/socket-provider'
 import { QueryProvider } from '@/components/providers/query-provider'
 import { Toaster } from 'sonner'
 import { ProgressBarPleas } from '@/components/progress-bar';
+import { esES } from "@clerk/localizations";
 
 const font = Open_Sans({ subsets: ['latin'] })
 
@@ -33,11 +34,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider localization={esES}>
       <html lang="es" suppressHydrationWarning>
         <body className={cn(
             font.className,
-            'bg-white dark:bg-[#313338]' 
+            'bg-[#F2F3F5] dark:bg-[#313338]' 
           )} >
           <ProgressBarPleas/>
           <ThemeProvider
