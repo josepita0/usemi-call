@@ -45,8 +45,8 @@ export const HelpButton = () => {
     }, [])      
     return (
 
-        <Button className="bg-transparent border-0" variant="outline" size="icon">
-            <HelpCircle size={25} id="help-button" onClick={() => driverObj2.drive()}/>
+        <Button className="bg-transparent border-0 group" variant="outline" size="icon">
+            <HelpCircle size={25} id="help-button" className="text-white group-hover:dark:text-white group-hover:text-black" onClick={() => driverObj2.drive()}/>
         </Button>
 
     )

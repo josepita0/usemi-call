@@ -15,6 +15,12 @@ import { Label } from "d4t-ui-demo";
 import { showToast } from "@/lib/showToast";
 import { useRouter } from 'next-nprogress-bar';
  
+import Logo from "@/public/Untitled-3.png";
+import dummy from "@/public/imgInitWithoutColor.png";
+import dummy2 from "@/public/imgRegister.png";
+import Image from "next/image";
+import SignUpForm from "../register/register";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const loginDefaultValues: IFormLogin = {
   password: "",
@@ -22,6 +28,8 @@ const loginDefaultValues: IFormLogin = {
 };
 
 export const  SignInForm = () => {
+
+  const [isAnimated, setIsAnimated] = useState(true);
 
   const router = useRouter();
 
@@ -34,6 +42,8 @@ export const  SignInForm = () => {
   const [ isLoading, setIsLoading ] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
+  const title = 'Iniciar sesión'
+  const description = 'Listo para empezar ver tus clases!'
 
   const onSubmit = async (values: IFormLogin) => {
 
@@ -86,153 +96,268 @@ export const  SignInForm = () => {
   return (
 
     <AuthCard 
-        className="sm:w-[30%] w-[90%]"
+        className="sm:w-[80%] h-[70%] w-full"
         title={'Iniciar sesión'} 
         description={'Iniciar sesión ahora'}
     >
 
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col space-y-4 mt-4'>
-            
-            <div className="flex flex-col gap-2 w-full">
+        <div className="h-full w-full bg-transparent relative overflow-hidden rounded-lg">
 
-                <FormField 
-                    disabled={isLoading}
-                    control={form.control}
-                    name='emailAddress'
-                    render={({field}) => (
-                        <FormItem
-                            className="w-full"
-                        >
-                            <FormLabel
-                                className=' text-sm font-bold text-zinc-500 dark:text-secondary/70'
-                            >
-                                Correo electronico
-                            </FormLabel>
 
-                            <FormControl>
-                                    <Input
-                                        minLength={3}
-                                        maxLength={30}
-                                        disabled={isLoaded}
-                                        id='emailAddress'
-                                        type='text'
-                                        placeholder='Ingrese su correo'
-                                        tabIndex={1}
-                                        {...field}
-                                    />
 
-                            </FormControl>
-                            <FormMessage />
+          <div 
+              id="signin"
+              className={`bg-transparent absolute top-0 left-0 h-full sm:w-1/2 px-7 flex flex-col justify-center items-center transition-all duration-700 ease-in-out z-20 ${
+                isAnimated ? "translate-x-full opacity-0" : ""
+              }`}
+          >
 
-                        </FormItem>
-                    )}
-                />
+                <div className="sm:hidden w-full rounded-3xl">
+                    <div className='container my-6'>
+                      <Image src={Logo} width={200} alt='univ-santa-maria' />
+                    </div>
+                </div>
 
-                <FormField 
-                    disabled={isLoading}
-                    control={form.control}
-                    name='password'
-                    render={({field}) => (
-                        <FormItem
-                            className="w-full"
-                        >
-                            <FormLabel
-                                className=' text-sm font-bold text-zinc-500 dark:text-secondary/70'
-                            >
-                                Contraseña 
-                            </FormLabel>
+                <div className="w-full sm:mt-4">
+                  <h5 className='font-bold text-2xl'>Registro</h5>
+                  <p className='text-sm text-zinc-400'>Unete a la familia de la USM!</p>
+                </div>
 
-                            <FormControl>
+                <ScrollArea
+                  className="h-full w-full flex flex-col justify-around items-center mb-2"
+                >
 
-                                <div className="flex relative">
-                                    <Input
-                                        minLength={9}
-                                        maxLength={15}
-                                        disabled={isLoaded}
-                                        id='password'
-                                        placeholder='Ingrese su contraseña'
-                                        tabIndex={1}
-                                        {...field}
+                  <SignUpForm
+                    setIsAnimated={setIsAnimated}
+                  />
+                
+                </ScrollArea>
 
-                                        type={showPassword ? "text" : "password"}
-                                        className={cn("hide-password-toggle pr-10")}
+
+              {/* <div className="h-full w-full flex flex-col justify-around items-center mb-2">
+          
+            </div> */}
+
+          </div>
+
+          <div
+            id="signup"
+            className={`absolute top-0 left-0 h-full w-full sm:w-1/2 flex flex-col px-7 justify-center items-center transition-all duration-700 ease-in-out ${
+              isAnimated
+                ? "sm:translate-x-full opacity-100 z-50 animate-show"
+                : "opacity-0 z-10"
+            }`}
+          >
+            <div className="h-full w-full flex flex-col justify-around items-center">
+
+               <div className="sm:hidden w-full rounded-3xl">
+                    <div className='container my-6'>
+                      <Image src={Logo} width={200} alt='univ-santa-maria' />
+                    </div>
+                </div>
+
+              <div className="w-full ">
+                <h5 className='font-bold text-2xl'>{title}</h5>
+                <p className='text-sm text-zinc-400'>Bienvenido!</p>
+                {description && <p className='text-sm text-zinc-400'>{description}</p>}
+              </div>
+
+              <div className="w-full">
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col space-y-4 mt-4'>
+                    
+                    <div className="flex flex-col gap-5 w-full">
+
+                        <FormField 
+                            disabled={isLoading}
+                            control={form.control}
+                            name='emailAddress'
+                            render={({field}) => (
+                                <FormItem
+                                    className="w-full"
+                                >
+                                    <FormLabel
+                                        className=' text-sm font-bold text-zinc-500 dark:text-white'
                                     >
+                                        Correo electronico
+                                    </FormLabel>
 
+                                    <FormControl>
+                                            <Input
+                                                minLength={3}
+                                                maxLength={30}
+                                                disabled={isLoaded}
+                                                id='emailAddress'
+                                                type='text'
+                                                placeholder='Ingrese su correo'
+                                                tabIndex={1}
+                                                {...field}
+                                            />
+
+                                    </FormControl>
+                                    <FormMessage />
+
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField 
+                            disabled={isLoading}
+                            control={form.control}
+                            name='password'
+                            render={({field}) => (
+                                <FormItem
+                                    className="w-full"
+                                >
+                                    <FormLabel
+                                        className=' text-sm font-bold text-zinc-500 dark:text-white'
+                                    >
+                                        Contraseña 
+                                    </FormLabel>
+
+                                    <FormControl>
+
+                                        <div className="flex relative">
+                                            <Input
+                                                minLength={9}
+                                                maxLength={15}
+                                                disabled={isLoaded}
+                                                id='password'
+                                                placeholder='Ingrese su contraseña'
+                                                tabIndex={1}
+                                                {...field}
+
+                                                type={showPassword ? "text" : "password"}
+                                                className={cn("hide-password-toggle pr-10")}
+                                            >
+
+                                                
+                                            </Input>
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="sm"
+                                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                                                onClick={() => setShowPassword((prev) => !prev)}
+                                                disabled={!isLoaded}
+                                            >
+                                                {!showPassword ? (
+                                                    <EyeIcon
+                                                        className="h-5 w-5"
+                                                        aria-hidden="true"
+                                                    />
+                                                ) : (
+                                                    <EyeOffIcon
+                                                        className="h-5 w-5"
+                                                        aria-hidden="true"
+                                                    />
+                                                )}
+                                                <span className="sr-only">
+                                                    {showPassword ? "Esconder contraseña" : "Mostrar contraseña"}
+                                                </span>
+                                            </Button>
                                         
-                                    </Input>
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        size="sm"
-                                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                                        onClick={() => setShowPassword((prev) => !prev)}
-                                        disabled={!isLoaded}
-                                    >
-                                        {!showPassword ? (
-                                            <EyeIcon
-                                                className="h-5 w-5"
-                                                aria-hidden="true"
-                                            />
-                                        ) : (
-                                            <EyeOffIcon
-                                                className="h-5 w-5"
-                                                aria-hidden="true"
-                                            />
-                                        )}
-                                        <span className="sr-only">
-                                            {showPassword ? "Esconder contraseña" : "Mostrar contraseña"}
-                                        </span>
-                                    </Button>
-                                
-                                </div>
+                                        </div>
 
 
-                            </FormControl>
-                            <FormMessage />
+                                    </FormControl>
+                                    <FormMessage />
 
-                        </FormItem>
-                    )}
-                />
+                                </FormItem>
+                            )}
+                        />
+
+                    </div>
+
+                    <Button 
+                      disabled={isLoading}
+                      variant={"primary"}
+                    >
+                      {
+                        !isLoading 
+                          ?
+                            ("Iniciar sesión")
+                          :
+                            (<Loader2 className="w-6 h-6 text-white animate-spin my-4"/>)
+                      }
+                      
+                    </Button>
+            
+
+                    </form> 
+                </Form>
+                <Label
+                    className='text-xs text-zinc-500 dark:text-white'
+                >
+                    ¿Aún sin cuenta? <span 
+                      onClick={() => setIsAnimated(prev => !prev)}
+                      className="font-bold underline dark:text-white hover:dark:text-[#DCE4F9] hover:text-primary hover:cursor-pointer">Registrarse</span> 
+                </Label>
+
+              </div>
 
             </div>
+          </div>
 
-            <Button 
-              disabled={isLoading}
-              variant={"primary"}
+
+          <div
+            id="overlay-container"
+            className={`hidden sm:block absolute top-0 left-1/2 w-1/2 h-full overflow-hidden transition transition-transform duration-700 ease-in-out z-100 ${
+              isAnimated ? "-translate-x-full" : ""
+            }`}
+          >
+
+            <div
+              id="overlay"
+              className={`relative -left-full h-full w-[200%] transform transition transition-transform duration-700 ease-in-out ${
+                isAnimated ? "translate-x-1/2" : "translate-x-0"
+              }`}
             >
-              {
-                !isLoading 
-                  ?
-                    ("Iniciar sesión")
-                  :
-                    (<Loader2 className="w-6 h-6 text-white animate-spin my-4"/>)
-              }
-              
-            </Button>
-    
 
-            </form> 
-        </Form>
-        <Label
-            className='text-xs text-zinc-500 dark:text-secondary/70'
-        >
-            ¿Aún sin cuenta? <span 
-              onClick={() => {router.push("/registro")}}
-              className="font-bold underline hover:text-primary hover:cursor-pointer">Registrarse</span> 
-        </Label>
-      {/* <div>
-        <form>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input onChange={(e) => setEmailAddress(e.target.value)} id="email" name="email" type="email" />
+              <div  
+                id="overlay-left"
+                className={`w-1/2 h-full absolute flex justify-center items-center top-0 transform -translate-x-[20%] transition transition-transform duration-700 ease-in-out ${
+                  isAnimated ? "translate-x-0" : "-translate-x-[20%]"
+                }`}
+              >
+
+                  <div className="w-full bg-[#EEF2FC] h-full rounded-tl-3xl rounded-bl-3xl">
+                    <div className='container my-6'>
+                      <Image src={Logo} width={200} alt='univ-santa-maria' />
+                    </div>
+                    <div className='w-full flex items-center justify-center'>
+                      <Image src={dummy} width={550} alt='univ-santa-maria' />
+                    </div>
+
+                  </div>
+
+
+              </div>
+
+              <div
+                id="overlay-right"
+                className={`w-1/2 h-full absolute flex justify-center items-center top-0 right-0 transform transition transition-transform duration-700 ease-in-out ${
+                  isAnimated ? "translate-x-[20%]" : "translate-x-0"
+                }`}
+              >
+                  <div className="w-full bg-[#EEF2FC] rounded-tr-3xl h-full rounded-br-3xl flex flex-col justify-evenly">
+                    <div className='container flex justify-end'>
+                      <Image src={Logo} width={200} alt='univ-santa-maria' />
+                    </div>
+                    <div className='w-full flex items-center justify-center'>
+                      <Image src={dummy2} width={350} alt='univ-santa-maria' />
+                    </div>
+
+                  </div>
+              </div>
+            
+            </div>
+          
           </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input onChange={(e) => setPassword(e.target.value)} id="password" name="password" type="password" />
-          </div>
-        </form>
-      </div> */}
+
+        </div>
+
+
     </AuthCard>
   );
 }

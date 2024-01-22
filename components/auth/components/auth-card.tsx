@@ -13,14 +13,7 @@ interface Props extends PropsWithChildren {
 export const AuthCard = ({children, title, description,className}: Props) => {
 
   return (
-    <Card className={cn('p-7 border-2 shadow-md', className)}>
-      <div className='container mb-5'>
-        <Image src={Logo} alt='controls-group' />
-      </div>
-
-      <h5 className='font-bold text-2xl'>{title}</h5>
-      {description && <p className='text-sm text-primary-gray'>{description}</p>}
-
+    <Card className={cn('border-2 rounded-3xl shadow-md', className)}>
       {children}
     </Card>
   );

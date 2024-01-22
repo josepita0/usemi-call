@@ -3,7 +3,7 @@
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from 'next-nprogress-bar';
 
-import { CodeVerification } from "d4t-ui-demo";
+import { CodeVerification, Label } from "d4t-ui-demo";
 import { useState } from "react";
 import { showToast } from "@/lib/showToast";
 
@@ -62,7 +62,17 @@ export const VerificateEmailCode = () => {
 
   return (
 
-        <div className='w-full h-full mt-4'>
+        <div className='w-full h-full mt-4 flex flex-col items-center gap-2 justify-center'>
+
+          <div className="flex flex-col items-center w-full gap-1">
+            <Label                                         
+              className=' text-sm font-bold text-zinc-500 dark:text-secondary/70'
+            >
+              Codigo de confirmación
+            </Label>
+            <p className='text-xs text-zinc-400'>El codigo de confirmación fue enviado al correo</p>
+          </div>
+
           <CodeVerification
             onComplete={onPressVerify}
             mode='numeric'

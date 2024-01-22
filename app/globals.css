@@ -40,6 +40,11 @@ body,
     --ring: 20 14.3% 4.1%;
  
     --radius: 0.5rem;
+
+    --primary-brand: 222 68% 27%;
+    --primary-brand-text: 222 68% 27%;
+    --secondary-brand:223 71% 92%
+
   }
  
   .dark {
@@ -70,6 +75,10 @@ body,
     --border: 12 6.5% 15.1%;
     --input: 12 6.5% 15.1%;
     --ring: 24 5.7% 82.9%;
+
+    --primary-brand: 207 85% 21%;
+    --primary-brand-text: 207 85% 21%;
+    --secondary-brand:223 71% 92%
   }
 }
 
@@ -191,6 +200,29 @@ code {
 :hover{
   background-color: var(--primary-foreground) !important;
   
+}
+
+.authLayout-container {
+  position: relative;
+}
+
+.authLayout_sidebar {
+  /* background-color: var(--secondary) !important; */
+  display: none;
+  width: 100%;
+  position: fixed;
+  @apply w-full h-screen overflow-y-auto hidden transform top-0 left-0 overflow-auto ease-in-out transition-all duration-300 text-gray-700 z-10 xl:flex flex-col justify-start items-center;
+}
+
+@media screen and (min-width: 1040px) {
+  .authLayout-container {
+      display: grid;
+      /* grid-template-columns: 250px minmax(0,1fr); */
+  }
+
+  .authLayout_sidebar {
+      position: sticky;
+  }
 }
 
 @layer base {

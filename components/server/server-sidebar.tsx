@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { ChannelType, MemberRole } from "@prisma/client";
-import { Calendar, Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
+import { Calendar, ChevronRight, ChevronRightCircle, ChevronUpCircle, Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { currentProfile } from "@/lib/current-profile";
@@ -14,6 +14,7 @@ import { ServerSection } from "./server-section";
 import { ServerChannel } from "./server-channel";
 import { ServerMember } from "./server-member";
 import { useEffect } from "react";
+import { Button } from "../ui/button";
 
 interface IServerSidebarProps{
     serverId: string;
@@ -128,8 +129,10 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
                         ]}
                     />
                 </div>
+            
+                <Separator className="bg-brand dark:bg-zinc-700 rounded-md my-2"/>
 
-            <Separator className="bg-zinc-200 dark:bg-zinc-700 rounded-md my-2"/>
+
 
             <div className="mb-2">
                     <ServerSection

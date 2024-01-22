@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSignUp } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,7 +47,7 @@ interface errors {
     }
 }
 
-export default function SignUpForm() {
+export default function SignUpForm({setIsAnimated}: {setIsAnimated: Dispatch<SetStateAction<boolean>>}) {
 
   const { isLoaded, signUp } = useSignUp();
   const [ isLoading, setIsLoading ] = useState(false)
@@ -140,15 +140,12 @@ export default function SignUpForm() {
 
   return (
 
-    <AuthCard 
-        className="md:w-[40%]"
-        title={pendingVerification ? 'Codigo de confirmación' : 'Registro'} 
-        description={pendingVerification ? 'El codigo de confirmación fue enviado al correo' : 'Registrarse ahora'}>
+    <>
     
         {!pendingVerification && (
         
             <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col space-y-4 mt-4'>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col space-y-4 mt-5 w-full overflow-auto '>
     
                 <div className="flex flex-col gap-2 sm:flex-row w-full">
 
@@ -161,7 +158,7 @@ export default function SignUpForm() {
                                 className="w-full"
                             >
                                 <FormLabel
-                                    className=' text-sm font-bold text-zinc-500 dark:text-secondary/70'
+                                    className=' text-sm font-bold text-zinc-500 dark:text-white'
                                 >
                                     Nombre
                                 </FormLabel>
@@ -195,7 +192,7 @@ export default function SignUpForm() {
                                 className="w-full"
                             >
                                 <FormLabel
-                                    className=' text-sm font-bold text-zinc-500 dark:text-secondary/70'
+                                    className=' text-sm font-bold text-zinc-500 dark:text-white'
                                 >
                                     Apellido
                                 </FormLabel>
@@ -232,7 +229,7 @@ export default function SignUpForm() {
                                 className="w-full"
                             >
                                 <FormLabel
-                                    className=' text-sm font-bold text-zinc-500 dark:text-secondary/70'
+                                    className=' text-sm font-bold text-zinc-500 dark:text-white'
                                 >
                                     Nombre de usuario 
                                 </FormLabel>
@@ -259,7 +256,7 @@ export default function SignUpForm() {
                     
                     <div className="flex flex-col gap-1 w-full justify-end">
                                 <FormLabel
-                                        className=' text-sm font-bold text-zinc-500 dark:text-secondary/70'
+                                        className=' text-sm font-bold text-zinc-500 dark:text-white'
                                     >
                                         Documento de identidad
                                     </FormLabel>
@@ -372,7 +369,7 @@ export default function SignUpForm() {
                                 className="w-full"
                             >
                                 <FormLabel
-                                    className=' text-sm font-bold text-zinc-500 dark:text-secondary/70'
+                                    className=' text-sm font-bold text-zinc-500 dark:text-white'
                                 >
                                     Correo electronico 
                                 </FormLabel>
@@ -411,7 +408,7 @@ export default function SignUpForm() {
                                 className="w-full"
                             >
                                 <FormLabel
-                                    className=' text-sm font-bold text-zinc-500 dark:text-secondary/70'
+                                    className=' text-sm font-bold text-zinc-500 dark:text-white'
                                 >
                                     Contraseña 
                                 </FormLabel>
@@ -478,7 +475,7 @@ export default function SignUpForm() {
                                 className="w-full"
                             >
                                 <FormLabel
-                                    className=' text-sm font-bold text-zinc-500 dark:text-secondary/70'
+                                    className=' text-sm font-bold text-zinc-500 dark:text-white'
                                 >
                                     Confirmar contraseña 
                                 </FormLabel>
@@ -551,6 +548,13 @@ export default function SignUpForm() {
                     
                 </Button>
     
+                <Label
+                    className='text-xs text-zinc-500 dark:text-white'
+                >
+                    ¿Ya posees una cuenta? <span 
+                    onClick={() => setIsAnimated(prev => !prev)}
+                    className="font-bold underline dark:text-white hover:dark:text-[#DCE4F9] hover:text-primary hover:cursor-pointer">Iniciar sesión</span> 
+                </Label>
             </form>
             </Form>
 
@@ -562,14 +566,7 @@ export default function SignUpForm() {
 
         )}
 
-        <Label
-            className='text-xs text-zinc-500 dark:text-secondary/70'
-        >
-            ¿Ya posees una cuenta? <span 
-              onClick={() => {router.push("/auth")}}
-              className="font-bold underline hover:text-primary hover:cursor-pointer">Iniciar sesión</span> 
-        </Label>
-    </AuthCard>
+    </>
 
 
   );

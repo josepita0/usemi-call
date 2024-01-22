@@ -194,8 +194,8 @@ export const ChatInput = ({
                             disabled={isLoading}
                             onClick={() => onOpen("messageFile", { apiUrl, query })}
                             className={cn(
-                              "absolute top-7 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 z-30 transition rounded-full p-1 flex items-center justify-center",
-                              isLoading ? "cursor-no-drop" : "hover:bg-zinc-600 dark:hover:bg-zinc-300",
+                              "absolute top-7 left-8 h-[24px] w-[24px] bg-[#163273]/70  dark:bg-zinc-400 z-30 transition rounded-full p-1 flex items-center justify-center",
+                              isLoading ? "cursor-no-drop" : "hover:bg-[#163273]  dark:hover:bg-zinc-300",
                               result?.score! > 0.60  && 'animate-shake transition'
 
                               )}>
@@ -239,8 +239,8 @@ export const ChatInput = ({
                           <Send 
                             onClick={() => onSubmit(form.getValues())}
                             className={cn(
-                                "text-zinc-500  dark:text-zinc-400",
-                                isLoading ? "cursor-no-drop" : "cursor-pointer hover:text-zinc-600 dark:hover:text-zinc-300"
+                                "text-[#163273]/70  dark:text-zinc-400",
+                                isLoading ? "cursor-no-drop" : "cursor-pointer hover:text-[#163273] dark:hover:text-zinc-300"
 
                               )}
                             size={25}/>

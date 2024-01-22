@@ -32,8 +32,8 @@ export const EmojiPicker = ({ onChange, disabled }: IEmojiPickerProps) => {
             >
                 <Smile
                     className={cn(
-                        "text-zinc-500  dark:text-zinc-400",
-                        disabled ? "cursor-no-drop" : "cursor-pointer hover:text-zinc-600 dark:hover:text-zinc-300"
+                        "text-[#163273]/70  dark:text-zinc-400",
+                        disabled ? "cursor-no-drop" : "cursor-pointer hover:text-[#163273] dark:hover:text-zinc-300"
 
                     )}
                 >

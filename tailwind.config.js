@@ -17,15 +17,40 @@ module.exports = {
       },
     },
     extend: {
+      gridTemplateColumns: {
+        sidebar: "250px minmax(0,1fr)",
+        "sidebar-collapsed": "106px auto",
+      },
+      backgroundColor: {
+        main: "var(--background)",
+        "main-hover": "hsl(var(--background-hover) / 68%)",
+        brand: "hsl(var(--primary-brand))",
+        "brand-secondary": "hsl(var(--secondary-brand))"
+      },
+      backgroundImage: {
+        'fondo1': "url('/Fondo1.jpg')",
+        'fondo2': "url('/Fondo2.jpg')",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        brand: {
+          text: {
+            DEFAULT: "hsl(var(--primary-brand-text))",
+          },
+          primary: {
+            DEFAULT: "var(var(--primary-brand))",
+            lighter: "var(--primary-brand-lighter)",
+            opaque: "hsl(var(--primary-brand-opaque))",
+          },
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          brand: "hsl(var(--brand)"
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
