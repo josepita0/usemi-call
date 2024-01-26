@@ -14,12 +14,12 @@ interface IChatHeaderProps {
 export const ChatHeader = ({name, serverId, type, imageUrl}:IChatHeaderProps) => {
 
     return(
-        <div className="gap-1 sm:bg-white bg-brand text-md font-semibold px-3 flex items-center h-12 border-[#163273] dark:border-neutral-800 border-b-2">
+        <div className="gap-1 bg-brand text-md font-semibold px-3 flex items-center h-12 border-[#163273] dark:border-neutral-800 border-b-2">
 
             <div className="flex flex-row items-center">
                 <MobileToggle serverId={serverId}/>
                 {type === "channel" && (
-                    <Hash className="w-5 h-5 text-white sm:text-zinc-500 dark:text-zinc-400 mr-2"/>
+                    <Hash className="w-5 h-5 text-white dark:text-zinc-400 mr-2"/>
                 )}
 
                 {
@@ -30,7 +30,7 @@ export const ChatHeader = ({name, serverId, type, imageUrl}:IChatHeaderProps) =>
                         />
                     )
                 }
-                <p className="font-semibold text-md text-white sm:text-black dark:text-white">
+                <p className="font-semibold text-md text-white dark:text-white">
                     {name}
                 </p>
             </div>

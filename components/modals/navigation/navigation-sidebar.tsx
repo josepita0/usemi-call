@@ -31,7 +31,7 @@ export const NavigationSidebar = async () => {
 
     return(
         <div
-            className="space-y-4 flex flex-col items-center h-full text-primary w-full bg-brand rounded-tr-2xl rounded-br-2xl"
+            className="space-y-4 flex flex-col items-center h-full text-primary w-full bg-brand rounded-br-2xl"
         >
             <NavigationAction />
             <Separator

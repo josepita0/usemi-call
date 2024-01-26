@@ -83,7 +83,7 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
             />
 
             <ScrollArea
-                className="flex-1 px-3"
+                className="flex-1 px-3 border-r-2 border-[#163273]"
             >
                 <div
                     className="mt-2"
