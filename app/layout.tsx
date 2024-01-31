@@ -43,7 +43,7 @@ export default function RootLayout({
           <ProgressBarPleas/>
           <ThemeProvider
             attribute='class'
-            defaultTheme='dark'
+            defaultTheme='light'
             enableSystem={false}
             storageKey='usemi-theme'
           >
