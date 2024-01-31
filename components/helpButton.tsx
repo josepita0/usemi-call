@@ -20,8 +20,44 @@ export const HelpButton = () => {
             { 
                 element: '#create-server',
                 popover: { 
-                    title: 'Crear servidor', 
-                    description: 'Aquí puedes crear tus servidores, para ver tus clases!', 
+                    title: 'Crear salón', 
+                    description: 'Aquí puedes crear tus salones, para ver tus clases!', 
+                    side: "left", 
+                    align: 'start',
+                    popoverClass: 'my-custom-popover-class',
+                    
+                },
+
+            },
+            { 
+                element: '#server-header',
+                popover: { 
+                    title: 'Gestionar salón', 
+                    description: 'Podras actualizar y gestionar tu salón como prefieras!', 
+                    side: "left", 
+                    align: 'start',
+                    popoverClass: 'my-custom-popover-class',
+                    
+                },
+
+            },
+            { 
+                element: '#channels-text',
+                popover: { 
+                    title: 'Canales', 
+                    description: 'Aquí estarán tus canales, donde podrás hablar con tus estudiantes!', 
+                    side: "left", 
+                    align: 'start',
+                    popoverClass: 'my-custom-popover-class',
+                    
+                },
+
+            },
+            { 
+                element: '#mode-toggle',
+                popover: { 
+                    title: 'Oscuro o claro?', 
+                    description: 'Podrás cambiar tu modo para que se vea mejor!', 
                     side: "left", 
                     align: 'start',
                     popoverClass: 'my-custom-popover-class',

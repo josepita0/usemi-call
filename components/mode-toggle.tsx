@@ -18,7 +18,7 @@ export function ModeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-transparent border-0 group group-hover:bg-white" variant="outline" size="icon">
+        <Button id="mode-toggle" className="bg-transparent border-0 group group-hover:bg-white" variant="outline" size="icon">
           <Sun size={25} className="text-white group-hover:text-black rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon size={25} className="text-white group-hover:dark:text-white group-hover:text-black absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
         </Button>

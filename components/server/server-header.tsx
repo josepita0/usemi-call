@@ -51,6 +51,7 @@ export const ServerHeader = ({server, role}:IServerHeaderProps) => {
                     asChild
                 >
                     <button 
+                        id="server-header"
                         className="w-full text-md text-white font-semibold px-3 flex items-center bg-brand h-12  border-[#163273]
                         dark:border-neutral-800 border-b-2  hover:bg-brand/80 dark:hover:bg-brand/40 transition"
                     >
