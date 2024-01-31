@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import { Channel, MemberRole, Server } from "@prisma/client"
-import { Calendar, Edit, Hash, Lock, Mic, Plus, Trash, Video } from "lucide-react"
+import { Calendar, Edit, Hash, Home, Lock, Mic, Plus, Trash, Video } from "lucide-react"
 import { useParams } from "next/navigation"
 import { useRouter } from 'next-nprogress-bar';
 import { ActionTooltip } from "@/components/action-tooltip"
@@ -18,7 +18,7 @@ const iconMap = {
     TEXT: Hash,
     AUDIO: Mic,
     VIDEO: Video,
-    CALENDAR: Calendar
+    CALENDAR: Home
 }
 
 

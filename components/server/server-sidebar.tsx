@@ -149,7 +149,7 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
                         <ServerChannel 
                             channel={{
                                 type:"CALENDAR" as "TEXT",
-                                name: "Calendario",
+                                name: "Inicio",
                                 createdAt: new Date,
                                 id: '',
                                 profileId: profile.id,

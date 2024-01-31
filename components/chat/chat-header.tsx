@@ -18,7 +18,7 @@ export const ChatHeader = ({name, serverId, type, imageUrl}:IChatHeaderProps) =>
 
             <div className="flex flex-row items-center">
                 <MobileToggle serverId={serverId}/>
-                {type === "channel" && (
+                {(type === "channel" && name !== 'Inicio') && (
                     <Hash className="w-5 h-5 text-white dark:text-zinc-400 mr-2"/>
                 )}
 

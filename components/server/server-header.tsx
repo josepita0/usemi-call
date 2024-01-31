@@ -40,10 +40,10 @@ export const ServerHeader = ({server, role}:IServerHeaderProps) => {
     return (
 
         <>
-            <InfoModal
+            {/* <InfoModal
                 open={open}
                 setOpen={setOpen}
-            />
+            /> */}
 
             <DropdownMenu>
                 <DropdownMenuTrigger
