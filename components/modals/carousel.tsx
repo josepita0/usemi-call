@@ -26,12 +26,13 @@ export const CarouselHome = () => {
                         align: "start",
                     }}
                     orientation="horizontal"
-                    className="sm:w-[80%]"
+                    className="sm:w-[50%]"
             >
             <CarouselContent>
                 <CarouselItem>
 
                     <Image
+                        
                         src={dummy1}
                         alt='dumycito'
                     />

@@ -133,7 +133,7 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
             
                 <Separator className="bg-brand dark:bg-zinc-700 rounded-md my-2"/>
 
-            <div className="mb-2">
+            <div className="mb-2" id="home-btn">
                     <ServerSection
                         sectionType="channels"
                         channelType={"HOME"}
@@ -162,7 +162,7 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
 
             </div>
 
-            <div className="mb-2">
+            <div className="mb-2" id="calendar-btn">
                     <ServerSection
                         sectionType="channels"
                         channelType={"CALENDAR"}

@@ -7,6 +7,7 @@ import { ChevronDown, LogOut, PlusCircle, Settings, Trash, UserPlus, Users } fro
 import { useModal } from "@/hooks/use-modal-store"
 import { useEffect, useState } from "react"
 import { InfoModal } from "../modals/drawer-carousel-modal"
+import { Config, driver } from "driver.js"
 
 interface IServerHeaderProps {
     server: ServerWithMembersWithProfiles
@@ -23,14 +24,129 @@ export const ServerHeader = ({server, role}:IServerHeaderProps) => {
 
     const [open, setOpen] = useState(false)
 
+
     useEffect(() => {
-        const init = localStorage.getItem('firstInit') 
-        console.log({init});
-        
+        const init = localStorage.getItem('firstInit')         
 
         if(!init){
             setOpen(true)
             localStorage.setItem('firstInit', 'true')
+
+            let config: Config = {
+                doneBtnText: "Finalizar",
+                smoothScroll: true,
+                showButtons: [
+                    "close"
+                ],
+                steps: [
+                    { 
+                        element: '#help-button',
+                        popover: { 
+                            title: 'Dudas?', 
+                            description: 'Si tienes dudas, acá podrás ver nuestras funciones!', 
+                            side: "left", 
+                            align: 'start',
+                            popoverClass: 'my-custom-popover-class',
+                            
+                        },
+        
+                    },
+        
+                ]
+              }
+            
+            let driverObj2 = driver(config);
+            
+
+            setTimeout(() => {
+                driverObj2.drive()
+    
+                config = {
+                    doneBtnText: "Finalizar",
+                    prevBtnText: "Anterior",
+                    nextBtnText: "Siguiente",
+                    smoothScroll: true,
+            
+                    steps:  [
+                        { 
+                            element: '#create-server',
+                            popover: { 
+                                title: 'Crear salón', 
+                                description: 'Aquí puedes crear tus salones, para ver tus clases!', 
+                                side: "left", 
+                                align: 'start',
+                                popoverClass: 'my-custom-popover-class',
+                                
+                            },
+            
+                        },
+                        { 
+                            element: '#server-header',
+                            popover: { 
+                                title: 'Gestionar salón', 
+                                description: 'Podras actualizar y gestionar tu salón como prefieras!', 
+                                side: "left", 
+                                align: 'start',
+                                popoverClass: 'my-custom-popover-class',
+                                
+                            },
+            
+                        },
+                        { 
+                            element: '#home-btn',
+                            popover: { 
+                                title: 'Inicio', 
+                                description: 'Acá el profesor podrá dejar comentarios y documentos para que sea lo primero a ver!', 
+                                side: "left", 
+                                align: 'start',
+                                popoverClass: 'my-custom-popover-class',
+                                
+                            },
+            
+                        },
+                        { 
+                            element: '#calendar-btn',
+                            popover: { 
+                                title: 'Calendario', 
+                                description: 'Organiza tus eventos como mejor prefieras!', 
+                                side: "left", 
+                                align: 'start',
+                                popoverClass: 'my-custom-popover-class',
+                                
+                            },
+            
+                        },
+                        { 
+                            element: '#channels-text',
+                            popover: { 
+                                title: 'Canales', 
+                                description: 'Aquí estarán tus canales, donde podrás hablar con los integrantes del salón!', 
+                                side: "left", 
+                                align: 'start',
+                                popoverClass: 'my-custom-popover-class',
+                                
+                            },
+            
+                        },
+                        { 
+                            element: '#mode-toggle',
+                            popover: { 
+                                title: 'Oscuro o claro?', 
+                                description: 'Podrás cambiar tu modo para que se vea mejor!', 
+                                side: "left", 
+                                align: 'start',
+                                popoverClass: 'my-custom-popover-class',
+                                
+                            },
+            
+                        },
+                    ]
+                }
+    
+                driverObj2 = driver(config)
+            }, 3500);
+
+            
         }else{
             setOpen(false)
         }
