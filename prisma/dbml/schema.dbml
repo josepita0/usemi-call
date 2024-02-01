@@ -116,6 +116,7 @@ Enum ChannelType {
   AUDIO
   VIDEO
   CALENDAR
+  HOME
 }
 
 Ref: Server.profileId > Profile.id [delete: Cascade]

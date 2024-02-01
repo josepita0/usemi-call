@@ -24,7 +24,8 @@ export const EditChannelModal = () => {
         TEXT: 'Texto',
         AUDIO: 'Audio',
         VIDEO: 'Video',
-        CALENDAR: 'Calendario'
+        CALENDAR: 'Calendario',
+        HOME: 'Inicio'
     }
     
     

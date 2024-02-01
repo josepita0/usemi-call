@@ -25,18 +25,6 @@ import { useCalendar } from '@/hooks/use-calendar';
 import { db } from '@/lib/db';
 import { useModal } from '@/hooks/use-modal-store';
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import Image from 'next/image';
-
-import dummy1 from "@/public/Comparte Ideas.png";
-import dummy2 from "@/public/Ver Clase.png";
-import dumm3 from "@/public/Organizate.png";
 
 interface ICalendarProps {
     member: Member
@@ -163,39 +151,8 @@ export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
     return (
       
         <div
-            className="flex flex-row overflow-y-auto"
+            className="flex-1 flex flex-col overflow-y-auto"
         >
-
-          <div className="p-4 pb-0 bg-zinc-300/80 rounded-md flex  ">
-            <Carousel
-                        opts={{
-                            align: "start",
-                        }}
-                        orientation="horizontal"
-                        className="w-full"
-                >
-                <CarouselContent>
-                    <CarouselItem>
-
-                        <Image
-                            src={dummy1}
-                            alt='dumycito'
-                        />
-
-                    </CarouselItem>
-                    <CarouselItem>  <Image
-                            src={dummy2}
-                            alt='dumycito'
-                        /></CarouselItem>
-                    <CarouselItem>  <Image
-                            src={dumm3}
-                            alt='dumycito'
-                        /></CarouselItem>
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-                </Carousel>
-          </div>
 
         {
           dataCalendar && (
@@ -270,6 +227,11 @@ export const CalendarEvents = ({appointments, member}:ICalendarProps) => {
       
             </Scheduler>
           ) 
+        }
+
+        {
+
+
         }
         
     </div>

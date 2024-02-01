@@ -18,7 +18,8 @@ const iconMap = {
     TEXT: Hash,
     AUDIO: Mic,
     VIDEO: Video,
-    CALENDAR: Home
+    CALENDAR: Calendar, 
+    HOME: Home
 }
 
 
@@ -40,9 +41,16 @@ export const ServerChannel = ({channel, server, role}: IServerChannelProps) => {
 
             router.push(`/servers/${params?.serverId}/channels/${channel.id}`)
             
-        } else {
+        } 
+        if (channel.type === 'CALENDAR') {
 
             router.push(`/servers/${params?.serverId}/calendar`)
+            
+        }
+
+        if (channel.type === 'HOME') {
+
+            router.push(`/servers/${params?.serverId}/home`)
             
         }
 
@@ -72,7 +80,7 @@ export const ServerChannel = ({channel, server, role}: IServerChannelProps) => {
                 {channel.name}
             </p>
 
-            {channel.name !== "general" && role !== MemberRole.GUEST && channel.type !== "CALENDAR" && (
+            {channel.name !== "general" && role !== MemberRole.GUEST && channel.type !== "CALENDAR" && channel.type !== "HOME" && (
                 <div className="ml-auto flex items-center gap-x-2">
                     <ActionTooltip label="Editar">
                         <Edit 

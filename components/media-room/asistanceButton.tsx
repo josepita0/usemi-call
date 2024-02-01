@@ -13,7 +13,8 @@ interface IAssistanceButton {
 
 interface IAssistance {
     class: string,
-    date: string
+    date: string,
+    teacher: string
 }
 
 interface IStudents {
@@ -27,7 +28,7 @@ interface IStudents {
 
 interface IInfo {
     dataAssistance: IAssistance 
-    students: IStudents[]
+    students: IStudents[],
 }
 
 
@@ -82,12 +83,14 @@ export const AssistanceButton = ({
             return lastNameComparison !== 0 ? lastNameComparison : a.firstName.localeCompare(b.firstName);
         });
         
-        
+        const teacherData = sortedValues.find( s => s.role === MemberRole.ADMIN)
+
         const info: IInfo = {
             students:sortedValues.filter( s => s.role !== MemberRole.ADMIN),
             dataAssistance: {
                 date: format(new Date(), "dd/MM/yyyy hh:mm aaaaa'm'"),
-                class: className
+                class: className,
+                teacher: `${teacherData?.lastName}, ${teacherData?.firstName} `
             }
         }
 

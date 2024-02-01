@@ -81,6 +81,7 @@ enum ChannelType{
   AUDIO
   VIDEO
   CALENDAR
+  HOME
 }
 
 model Channel {

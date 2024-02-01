@@ -6,7 +6,8 @@ import { showToast } from '@/lib/showToast';
 
 interface IAssistance {
     class: string,
-    date: string
+    date: string,
+    teacher?: string
 }
 
 interface IStudents {
@@ -40,14 +41,14 @@ export const generatePDFStudents = async (info: IInfo) =>{
         [key:string]: Partial<Styles>
         } = {}
     
-        const head = [['NOMBRE', 'APELLIDO', 'CEDULA', 'CORREO ELECTRONICO','INICIO DE LLAMADA']]
+        const head = [['APELLIDO', 'NOMBRE', 'CEDULA', 'CORREO ELECTRONICO','INICIO DE LLAMADA']]
     
         
         const body = info.students.map( (r) => {
         
         const arr = [
-            r.firstName,
             r.lastName,
+            r.firstName,
             r.pid,
             r.email,
             r.initClass,
@@ -64,7 +65,6 @@ export const generatePDFStudents = async (info: IInfo) =>{
         }
     
         const font = pdf.getFont()
-        console.log('hola puta');
         const imageUrl = '/icon-512.png';
 
 
@@ -76,15 +76,19 @@ export const generatePDFStudents = async (info: IInfo) =>{
         
             pdf.setFontSize(13).setFont(font.fontName, 'bold').setTextColor('#163273')
             pdf.text(`Catedra: ${info.dataAssistance.class}`,  pdf.internal.pageSize.getWidth() / 2, 25, { align: 'center'} )
+   
         
             pdf.setFontSize(14).setFont(font.fontName, 'bold').setTextColor('#000000')
             pdf.text(`Asistencia`, pdf.internal.pageSize.getWidth() / 2, 40,{ align:'center'});
     
             pdf.setFontSize(10).setFont(font.fontName, 'normal').setTextColor('#000000')
             pdf.text(`${info.dataAssistance.date}`,  pdf.internal.pageSize.getWidth() / 2, 45,{ align:'center'});
+
+            pdf.setFontSize(10).setFont(font.fontName, 'normal').setTextColor('#000000')
+            pdf.text(`Profesor: ${info.dataAssistance.teacher}`,  pdf.internal.pageSize.getWidth() / 2, 50,{ align:'center'});
         
             autoTable(pdf, {
-                margin:{ top:50, right:15, left: 15 },
+                margin:{ top:55, right:15, left: 15 },
                 headStyles: { fillColor:"#163273", halign: "center", valign: "middle", fontSize: 10, minCellHeight: 12 },
                 columnStyles,
                 head,

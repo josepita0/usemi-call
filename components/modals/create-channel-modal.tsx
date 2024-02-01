@@ -27,7 +27,8 @@ export const CreateChannelModal = () => {
         TEXT: 'Texto',
         AUDIO: 'Audio',
         VIDEO: 'Video',
-        CALENDAR: 'Calendario'
+        CALENDAR: 'Calendario',
+        HOME: 'Inicio'
     }
     
     
@@ -183,7 +184,7 @@ export const CreateChannelModal = () => {
                                                     {
                                                         Object.values(ChannelType).map((type) => {
 
-                                                            if(type !== "CALENDAR"){
+                                                            if(type !== "CALENDAR" && type !== "HOME"){
                                                                 return    <SelectItem
                                                                     key={typeChannelEs[type]}
                                                                     value={type}

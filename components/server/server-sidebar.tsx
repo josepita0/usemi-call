@@ -21,10 +21,11 @@ interface IServerSidebarProps{
 }
 
 const iconMap: Record<ChannelType, React.ReactNode> = {
-    TEXT: <Hash className="mr-2 h-4 w-4"/>,
-    AUDIO: <Mic className="mr-2 h-4 w-4"/>,
-    VIDEO: <Video className="mr-2 h-4 w-4"/>,
-    CALENDAR: <Calendar className="mr-2 h-4 w-4"/>,
+    TEXT: <Hash className="mr-2 h-4 w-4" />,
+    AUDIO: <Mic className="mr-2 h-4 w-4" />,
+    VIDEO: <Video className="mr-2 h-4 w-4" />,
+    CALENDAR: <Calendar className="mr-2 h-4 w-4" />,
+    HOME: undefined
 }
 
 const roleIconMap: Record<MemberRole, React.ReactNode | null > = {
@@ -132,7 +133,34 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
             
                 <Separator className="bg-brand dark:bg-zinc-700 rounded-md my-2"/>
 
-            
+            <div className="mb-2">
+                    <ServerSection
+                        sectionType="channels"
+                        channelType={"HOME"}
+                        role={role}
+                        label=""
+                    />
+
+                    <div
+                        className="space-y-[2px]"
+                    >
+
+                        <ServerChannel 
+                            channel={{
+                                type:"HOME" as "TEXT",
+                                name: "Inicio",
+                                createdAt: new Date,
+                                id: '',
+                                profileId: profile.id,
+                                serverId, 
+                                updatedAt:new Date()
+                            }}
+                            server={server}
+                            role={role}
+                        />
+                    </div>
+
+            </div>
 
             <div className="mb-2">
                     <ServerSection
@@ -149,7 +177,7 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
                         <ServerChannel 
                             channel={{
                                 type:"CALENDAR" as "TEXT",
-                                name: "Inicio",
+                                name: "Calendario",
                                 createdAt: new Date,
                                 id: '',
                                 profileId: profile.id,
@@ -176,14 +204,21 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
                         className="space-y-[2px]"
                     >
 
-                    {textChannels.map((channel)=> (
-                        <ServerChannel 
-                            key={channel.id}
-                            channel={channel}
-                            server={server}
-                            role={role}
-                        />
-                    ))}
+                    {textChannels.map((channel)=> {
+
+                        if(channel.name!== 'wall'){
+                            return (
+                                <ServerChannel 
+                                    key={channel.id}
+                                    channel={channel}
+                                    server={server}
+                                    role={role}
+                                />
+                            )
+                        } 
+                        
+                        }
+                    )}
                     </div>
 
                 </div>

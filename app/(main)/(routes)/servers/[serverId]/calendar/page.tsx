@@ -59,7 +59,7 @@ const CalendarPage = async ({params}:IChannelIdPage) => {
     return ( 
         <div className="bg-white dark:bg-[#313338] flex flex-col justify-between h-full">
              <ChatHeader
-                name={"Inicio"}
+                name={"Calendario"}
                 serverId={params.serverId}
                 type="channel"
             />
