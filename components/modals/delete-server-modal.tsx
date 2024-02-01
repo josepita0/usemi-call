@@ -41,13 +41,13 @@ export const DeleteServerModal = () => {
 
             showToast({
                 type:'success', 
-                message: 'Servidor eliminado exitosamente!'
+                message: 'Salón eliminado exitosamente!'
             })
 
         } catch (error) {
             showToast({
                 type:'error', 
-                message: 'El servidor no pudo ser eliminado'
+                message: 'El salón no pudo ser eliminado'
             })
             console.log(error);
             
@@ -65,7 +65,7 @@ export const DeleteServerModal = () => {
                 <DialogHeader className='pt-8 px-6'>
 
                     <DialogTitle className='text-2xl text-center font-bold'>
-                        Eliminar servidor
+                        Eliminar salón
                     </DialogTitle>
 
                     <DialogDescription>

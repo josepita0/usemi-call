@@ -44,7 +44,7 @@ const roleIconMap: Record<MemberRole, React.ReactNode | null > = {
 
 const roleEs: Record<MemberRole, string> = {
     ADMIN: 'Administrador',
-    MODERATOR: 'Moderador',
+    MODERATOR: 'Delegado',
     GUEST: 'Invitado'
 }
 

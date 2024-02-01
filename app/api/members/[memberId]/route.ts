@@ -22,7 +22,7 @@ export async function PATCH(req: Request,{params}:{params: {memberId: string}}) 
         
         if(!serverId){
 
-            return new NextResponse("No se encontro el ID del servidor", {status: 400})
+            return new NextResponse("No se encontro el ID del salón", {status: 400})
 
         }
 
@@ -93,7 +93,7 @@ export async function DELETE(req: Request,{params}:{params: {memberId: string}})
         
         if(!serverId){
 
-            return new NextResponse("No se encontro el ID del servidor", {status: 400})
+            return new NextResponse("No se encontro el ID del salón", {status: 400})
 
         }
 

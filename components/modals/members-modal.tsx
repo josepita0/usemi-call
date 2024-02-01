@@ -29,7 +29,7 @@ export const MembersModal = () => {
 
     const roleEs: Record<MemberRole, string> = {
         ADMIN: 'Administrador',
-        MODERATOR: 'Moderador',
+        MODERATOR: 'Delegado',
         GUEST: 'Invitado'
     }
 

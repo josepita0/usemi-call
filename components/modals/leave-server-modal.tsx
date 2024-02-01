@@ -28,7 +28,7 @@ export const LeaveServerModal = () => {
 
             showToast({
                 type:'loading', 
-                message: 'Saliendo del servidor'
+                message: 'Saliendo del salón'
             })
             
             await axios.patch(`/api/servers/${server?.id}/leave`)
@@ -42,14 +42,14 @@ export const LeaveServerModal = () => {
 
             showToast({
                 type:'success', 
-                message: 'Servidor abandonado exitosamente!'
+                message: 'Salón abandonado exitosamente!'
             })
             
         } catch (error) {
 
             showToast({
                 type:'error', 
-                message: 'No se pudo abandonar el servidor'
+                message: 'No se pudo abandonar el salón'
             })
             console.log(error);
             
@@ -67,7 +67,7 @@ export const LeaveServerModal = () => {
                 <DialogHeader className='pt-8 px-6'>
 
                     <DialogTitle className='text-2xl text-center font-bold'>
-                        Abandonar servidor
+                        Abandonar salón
                     </DialogTitle>
 
                     <DialogDescription>

@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
   if (!apiKey || !apiSecret || !wsUrl) {
     return NextResponse.json(
-      { error: "El servidor no ha sido configurado" },
+      { error: "El salón no ha sido configurado" },
       { status: 500 }
     );
   }

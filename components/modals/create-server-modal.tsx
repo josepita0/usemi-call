@@ -52,14 +52,14 @@ export const CreateServerModal = () => {
             onClose();
             showToast({
                 type:'success', 
-                message: 'Servidor creado exitosamente!'
+                message: 'Salón creado exitosamente!'
             })
 
         } catch (error) {
 
             showToast({
                 type:'error', 
-                message: 'El servidor no pudo ser creado'
+                message: 'El salón no pudo ser creado'
             })
             console.log({error});
             
@@ -81,11 +81,11 @@ export const CreateServerModal = () => {
                 <DialogHeader className='pt-8 px-6'>
 
                     <DialogTitle className='text-2xl text-center font-bold'>
-                        Crear servidor
+                        Crear salón
                     </DialogTitle>
 
                     <DialogDescription className='text-center text-zinc-500'>
-                        Personalizar el servidor con los datos de preferencia, por favor agregar una imagen y nombre
+                        Personalizar el salón con los datos de preferencia, por favor agregar una imagen y nombre
                     </DialogDescription>
 
                 </DialogHeader>
@@ -124,7 +124,7 @@ export const CreateServerModal = () => {
                                             <FormLabel
                                                 className='uppercase text-sm font-bold text-zinc-500 dark:text-secondary/70'
                                             >
-                                                Nombre del servidor 
+                                                Nombre del salón 
                                             </FormLabel>
 
                                             <FormControl>

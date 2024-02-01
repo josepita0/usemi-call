@@ -66,11 +66,11 @@ export const InitialModal = () => {
                 <DialogHeader className='pt-8 px-6'>
 
                     <DialogTitle className='text-2xl text-center font-bold'>
-                        Personalizar servidor
+                        Personalizar salón
                     </DialogTitle>
 
                     <DialogDescription className='text-center text-zinc-500'>
-                        Personalizar tu servidor con la imagen que prefieras
+                        Personalizar tu salón con la imagen que prefieras
                     </DialogDescription>
 
                 </DialogHeader>
@@ -109,7 +109,7 @@ export const InitialModal = () => {
                                             <FormLabel
                                                 className='uppercase text-sm font-bold text-zinc-500 dark:text-secondary/70'
                                             >
-                                                Nombre del servidor 
+                                                Nombre del salón 
                                             </FormLabel>
 
                                             <FormControl>

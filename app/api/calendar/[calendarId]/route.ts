@@ -27,7 +27,7 @@ export async function PATCH(
 
         if(!serverId){
 
-            return new NextResponse("No se encontro el ID del servidor", {status: 400})
+            return new NextResponse("No se encontro el ID del salón", {status: 400})
 
         }
 
