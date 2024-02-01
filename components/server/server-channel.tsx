@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils"
 import { Channel, MemberRole, Server } from "@prisma/client"
 import { Calendar, Edit, Hash, Home, Lock, Mic, Plus, Trash, Video } from "lucide-react"
-import { useParams } from "next/navigation"
+import { useParams, usePathname } from "next/navigation"
 import { useRouter } from 'next-nprogress-bar';
 import { ActionTooltip } from "@/components/action-tooltip"
 import { ModalType, useModal } from "@/hooks/use-modal-store"
@@ -31,6 +31,11 @@ export const ServerChannel = ({channel, server, role}: IServerChannelProps) => {
 
     const params = useParams()
 
+    const pathName = usePathname()
+
+    console.log({routeHome: pathName?.includes('home')});
+    console.log({routeCalendar: pathName?.includes('calendar')});
+    
     const router = useRouter()    
 
     const Icon = iconMap[channel.type]
@@ -69,13 +74,13 @@ export const ServerChannel = ({channel, server, role}: IServerChannelProps) => {
             onClick={onClick}
             className={cn(
                 "group px-2 py-2 rounded-md flex items-center gap-x-2 w-full    transition mb-1",
-                    params?.channelId === channel.id ? "bg-brand" : "hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50"
+                    params?.channelId === channel.id || (channel.name === 'Inicio' && pathName?.includes('home')) || (channel.name === 'Calendario' && pathName?.includes('calendar')) ? "bg-brand" : "hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50"
             )}
         >
-            <Icon className={cn("flex-shrink-0 w-5 h-5 text-zinc-500 dark:text-zinc-400", params?.channelId === channel.id && "text-white")} />
+            <Icon className={cn("flex-shrink-0 w-5 h-5 text-zinc-500 dark:text-zinc-400", (params?.channelId === channel.id || (channel.name === 'Inicio' && pathName?.includes('home')) || (channel.name === 'Calendario' && pathName?.includes('calendar'))) && "text-white")} />
             <p className={cn(
                 "line-clamp-1 font-semibold text-sm text-zinc-500  dark:text-zinc-400  transition",
-                    params?.channelId === channel.id ? "text-white" : "group-hover:text-zinc-600 dark:group-hover:text-zinc-300"
+                    params?.channelId === channel.id || (channel.name === 'Inicio' && pathName?.includes('home')) || (channel.name === 'Calendario' && pathName?.includes('calendar'))? "text-white" : "group-hover:text-zinc-600 dark:group-hover:text-zinc-300"
             )}>
                 {channel.name}
             </p>
