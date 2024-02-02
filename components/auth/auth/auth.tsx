@@ -286,6 +286,9 @@ export const  SignInForm = () => {
 
                     </form> 
                 </Form>
+
+                <div className="w-full flex flex-row justify-between">
+
                 <Label
                     className='text-xs text-zinc-500 dark:text-white'
                 >
@@ -293,6 +296,14 @@ export const  SignInForm = () => {
                       onClick={() => setIsAnimated(prev => !prev)}
                       className="font-bold underline dark:text-white hover:dark:text-[#DCE4F9] hover:text-primary hover:cursor-pointer">Registrarse</span> 
                 </Label>
+
+                <Label
+                    className='text-xs text-zinc-500 dark:text-white'
+                >
+                    <span 
+                      className="font-bold hover:text-primary">V 1.0.0</span> 
+                </Label>
+                </div>
 
               </div>
 
