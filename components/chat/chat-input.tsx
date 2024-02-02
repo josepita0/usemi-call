@@ -17,7 +17,6 @@ import { cn } from "d4t-ui-demo"
 import { translateText } from "@/lib/services/validateMessage"
 import { ChatItemVerify } from "./chat-item-verify"
 
-
 interface IResult {
   label: 'toxic',
   score: number
@@ -27,8 +26,9 @@ interface IChatInputProps {
     apiUrl: string
     query: Record<string, string>
     name: string
+    members?: any
     member?: Member & {profile: Profile}
-    type: "channel" | "conversation"
+    type: "channel" | "conversation" | "wall"
 
 }
 
@@ -38,6 +38,7 @@ export const ChatInput = ({
     name,
     member,
     type,
+    members
   }: IChatInputProps) => {
     const { onOpen } = useModal();
     const router = useRouter();
@@ -73,7 +74,7 @@ export const ChatInput = ({
             
         if (info.score as number <= 0.60) {
           try {
-            
+
             form.reset();
       
             const url = qs.stringifyUrl({
@@ -83,6 +84,42 @@ export const ChatInput = ({
       
             await axios.post(url, input);
             setResult(null);
+
+            if(type === "wall") {
+              
+              const adminData = members.members.find((m: Member & {profile: Profile}) => m.role === MemberRole.ADMIN)
+
+              members.members?.forEach((m: Member & {profile: Profile}) => {
+
+                if(m.role !== MemberRole.ADMIN){
+                  const data = qs.stringify({
+                    "token": "ouamzdthgipmh4ce",
+                    "to": m.profile.phoneNumber,
+                    "body": `Hola! Le habla *USEMI* 😊, el profesor *${adminData.profile.name}* de la catedra *${members.name}*, comentó lo siguiente en el muro: ` + `${input?.content}`
+                  });
+                
+                  const config = {
+                    method: 'post',
+                    url: 'https://api.ultramsg.com/instance76759/messages/chat',
+                    headers: {  
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data : data
+                  };
+            
+                  axios(config)
+                  .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+                } 
+
+              })
+              
+            }
+
             router.refresh();
     
           } catch (error) {
@@ -187,12 +224,12 @@ export const ChatInput = ({
 
 
                       {
-                        type === "channel" && (member?.role === MemberRole.ADMIN || member?.role === MemberRole.MODERATOR) && (
+                        (type === "channel" || type === "wall") && (member?.role === MemberRole.ADMIN || member?.role === MemberRole.MODERATOR) && (
 
                           <button
                             type="button"
                             disabled={isLoading}
-                            onClick={() => onOpen("messageFile", { apiUrl, query })}
+                            onClick={() => onOpen("messageFile", { apiUrl, query, type, members: members?.members, server: members! })}
                             className={cn(
                               "absolute top-7 left-8 h-[24px] w-[24px] bg-[#163273]/70  dark:bg-zinc-400 z-30 transition rounded-full p-1 flex items-center justify-center",
                               isLoading ? "cursor-no-drop" : "hover:bg-[#163273]  dark:hover:bg-zinc-300",
@@ -224,7 +261,7 @@ export const ChatInput = ({
                         className={cn('px-14 py-6 pr-20 bg-zinc-200/90 dark:bg-zinc-700/75 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 border-none border-0',
                           isToxic && 'animate-shake transition border-solid animate-twice animate-duration-[1ms] border-[2px] border-rose-400',
                         )}
-                        placeholder={`Enviar mensaje a ${type === "conversation" ? name : "#" + name}`}
+                        placeholder={`Enviar mensaje ${type !== 'wall' && `a ${type === "conversation" ? name : "#" + name}`}`}
                         {...field}
                       />
                       

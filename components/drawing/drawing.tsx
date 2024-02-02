@@ -6,10 +6,13 @@ import { useEffect, useState } from 'react'
 import { ChromePicker } from 'react-color'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { Eraser, Gavel, Palette, Pencil } from 'lucide-react'
+import { Download, Eraser, Gavel, Palette, Pencil } from 'lucide-react'
 import { cn } from 'd4t-ui-demo'
 import { ActionTooltip } from '../action-tooltip'
 import { useTheme } from 'next-themes'
+import { format } from 'date-fns'
+
+const DATE_FORMAT = "d/MM/yyyy, hh:mm aaaaa'm'"
 
 interface pageProps {}
 
@@ -38,6 +41,13 @@ export const Drawing = ({}:pageProps) => {
     ctx.beginPath()
     ctx.arc(startPoint.x, startPoint.y, 2, 0, 2 * Math.PI)
     ctx.fill()
+  }
+
+  const downloadDrawing = () => {
+        const link = document.createElement('a');
+        link.download = `Pizarra(${format(new Date(), DATE_FORMAT)}).png`;
+        link.href = (document.getElementById('canvas-drawing') as HTMLCanvasElement).toDataURL()
+        link.click();
   }
 
   useEffect(() => {
@@ -98,10 +108,24 @@ export const Drawing = ({}:pageProps) => {
                                     
                             </PopoverContent>
                     </Popover>
+
+                <ActionTooltip
+                    label='Descargar pizarra'
+                >
+                    <Download
+                        size={30}
+                        onClick={downloadDrawing}
+                        className={cn(
+                            "text-zinc-500  dark:text-zinc-400 cursor-pointer hover:text-zinc-600 dark:hover:text-zinc-300"
+
+                        )}
+                    />
+                </ActionTooltip>
                 
             </div>
             <canvas
                 ref={canvasRef}
+                id='canvas-drawing'
                 onMouseDown={onMouseDown}
                 width={1000}
                 height={1000}

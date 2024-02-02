@@ -33,9 +33,6 @@ export const ServerChannel = ({channel, server, role}: IServerChannelProps) => {
 
     const pathName = usePathname()
 
-    console.log({routeHome: pathName?.includes('home')});
-    console.log({routeCalendar: pathName?.includes('calendar')});
-    
     const router = useRouter()    
 
     const Icon = iconMap[channel.type]

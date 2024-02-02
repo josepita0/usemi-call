@@ -8,6 +8,7 @@ Table Profile {
   name String [not null]
   imageUrl String [not null]
   email String [not null]
+  phoneNumber String [not null]
   servers Server [not null]
   members Member [not null]
   channels Channel [not null]

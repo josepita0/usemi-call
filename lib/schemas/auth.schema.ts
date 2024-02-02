@@ -13,6 +13,8 @@ export const registerSchema = z.object({
     emailAddress: COMMON_VALIDATORS.EMAIL,
     firstName: COMMON_VALIDATORS.STRING,
     lastName: COMMON_VALIDATORS.STRING,
+    phoneNumber: COMMON_VALIDATORS.STRING,
+    phoneCode: COMMON_VALIDATORS.STRING,
     pidType: COMMON_VALIDATORS.STRING,
     pid: COMMON_VALIDATORS.STRING,
 }).superRefine(({confirmPassword, password}, ctx) => {
@@ -29,6 +31,12 @@ export const registerSchema = z.object({
 
   });
 
+  export const sendInvitationSchema = z.object({
+
+    phoneNumber: COMMON_VALIDATORS.STRING,
+    phoneCode: COMMON_VALIDATORS.STRING,
+   
+})
 
 
 export const setNewPasswordSchema = z
@@ -53,3 +61,4 @@ export const setNewPasswordSchema = z
 export interface IFormLogin extends z.infer<typeof loginSchema> {}
 export interface IFormRegister extends z.infer<typeof registerSchema> {}
 export interface IFormSetNewPassword extends z.infer<typeof setNewPasswordSchema> {}
+export interface IFormSendInvation extends z.infer<typeof sendInvitationSchema> {}

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useSignUp } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Label, formatCI } from "d4t-ui-demo";
+import { GenericSelect, Label, formatCI, formatCodePhoneLines, formatPhoneNumber } from "d4t-ui-demo";
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 
 import { handleOnlyNumbers } from "@/lib/handleNumbers";
@@ -29,7 +29,9 @@ const registerDefaultValues: IFormRegister = {
     emailAddress: "",
     pidType: "V",
     pid: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    phoneNumber: "",
+    phoneCode: "0424"
 };
 
 
@@ -63,21 +65,24 @@ export default function SignUpForm({setIsAnimated}: {setIsAnimated: Dispatch<Set
   const [showConfirmPassword, setConfirmShowPassword] = useState(false)
 
   const [pendingVerification, setPendingVerification] = useState(false);
+  
 
   const onSubmit = async (values:IFormRegister) => {
-    setIsLoading(true)
+    // setIsLoading(true)
 
     console.log({values});
 
     const { firstName, lastName, password, emailAddress, username} = values
 
     const pid: string = `${values.pidType}-${values.pid}`
+    const phone: string = `+58${values.phoneCode.substring(1)}${values.phoneNumber.replace(/\s/g,'')}`
+
+    console.log({phone});
+    
 
     if (!isLoaded) {
       return;
     }
-
-    
  
     try {
       await signUp.create({
@@ -87,7 +92,8 @@ export default function SignUpForm({setIsAnimated}: {setIsAnimated: Dispatch<Set
         lastName,
         username,
         unsafeMetadata: {
-            pid
+            pid,
+            phone
         }
       });
  
@@ -137,6 +143,14 @@ export default function SignUpForm({setIsAnimated}: {setIsAnimated: Dispatch<Set
     form.setValue("pid", number);
 
   };  
+
+  const handleOnKeyUpPhoneNumber = (event: any) => {
+    const { value } = event.target
+
+    const phoneNumberFormated = formatPhoneNumber(value)
+
+    form.setValue('phoneNumber', phoneNumberFormated)
+  }
 
   return (
 
@@ -392,7 +406,108 @@ export default function SignUpForm({setIsAnimated}: {setIsAnimated: Dispatch<Set
                             </FormItem>
                         )}
                     />
+
+                    <div className="flex flex-col gap-1 w-full justify-end">
+                                <FormLabel
+                                        className=' text-sm font-bold text-zinc-500 dark:text-white'
+                                    >
+                                        Número celular
+                                    </FormLabel>
+
+                        <div className="flex flex-row justify-start items-start gap-1 w-full">
+
+                            <FormField 
+                            disabled={isLoading}
+                                control={form.control}
+                                name='phoneCode'
+                                render={({field}) => (
+                                    <FormItem
+                                        className="w-[20%]"
+                                    >
+                                        
+
+                                        <Select
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                        >
+
+                                            <FormControl>
+
+                                                <SelectTrigger
+                                                    className='bg-zinc-300/50 border-0
+                                                    focus:ring-0 text-black ring-offset-0
+                                                    focus:ring-offset-0 outline-none' 
+                                                >
+
+                                                    <SelectValue className='text-zinc-500' placeholder=""/>
+
+                                                </SelectTrigger>
+
+                                            </FormControl>
+
+                                            <SelectContent>
+                                                {
+
+                                                        formatCodePhoneLines().map((type) => (
+
+                                                            <SelectItem
+                                                                key={type.label}
+                                                                value={type.value}
+                                                                className='capitalize'
+                                                            >
+                                                                {type.label}
+                                                            </SelectItem>
+
+                                                        
+
+                                                    ))
+
+                                                }
+                                            </SelectContent>
+
+                                        </Select>
+
+                                        <FormMessage />
+
+                                    </FormItem>
+                                )}
+                            />
+
+
+                            <FormField 
+                            disabled={isLoading}
+                                control={form.control}
+                                name='phoneNumber'
+                                render={({field}) => (
+                                    <FormItem
+                                        className="w-[80%]"
+                                    >
+
+                                        <FormControl>
+                                                <Input
+                                                    minLength={7}
+                                                    maxLength={7}
+                                                    disabled={isLoaded}
+                                                    id='phoneNumber'
+                                                    type='text'
+                                                    onKeyPress={handleOnlyNumbers}
+                                                    onKeyUp={handleOnKeyUpPhoneNumber}
+                                                    placeholder='000 0000'
+                                                    tabIndex={1}
+                                                    {...field}
+                                                />
+
+                                        </FormControl>
+                                        <FormMessage />
+
+                                    </FormItem>
+                                )}
+                            />
+
+                        
+                        </div>
                     
+                    </div>
 
 
                 </div>                      

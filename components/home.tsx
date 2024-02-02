@@ -5,19 +5,13 @@ import { CalendarEvents } from "./calendar/calendar"
 import { IAppoinments } from "@/lib/interface/appointnments"
 interface HomePageProps {
     channel: any
-    member: any
+    member: any,
+    members: any
  }
  
-export const HomeComponent = ({channel, member}: HomePageProps) => {
+export const HomeComponent = ({channel, member, members}: HomePageProps) => {
 
-    const appointments:IAppoinments[] = [
-        {
-          id: 0,
-          title: 'Website Re-Design Plan',
-          startDate: new Date(2024, 0, 10, 9, 35),
-          endDate: new Date(2024, 0, 10, 10, 30),
-        }, 
-      ];
+
       
 
     return (
@@ -29,6 +23,7 @@ export const HomeComponent = ({channel, member}: HomePageProps) => {
                 <Wall 
                     member={member}
                     channel={channel}
+                    members={members}
                 />
 
             </div>

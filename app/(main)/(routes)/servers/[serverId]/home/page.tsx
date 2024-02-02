@@ -43,6 +43,8 @@ const HomePage = async ({params}:HomePageProps) => {
     })
 
     const textChannels = server?.channels.filter((c) => c.type === ChannelType.TEXT)
+
+    const members = server
     
     const channelId = textChannels?.find(t => t.name === 'wall')?.id
     
@@ -50,14 +52,8 @@ const HomePage = async ({params}:HomePageProps) => {
     const channel = await db.channel.findUnique({
         where:{
             id: channelId
-        }
+        },
     })
-
-    // const channel = await db.channel.findUnique({
-    //     where:{
-    //         id: params.channelId
-    //     }
-    // })
 
     const member = await db.member.findFirst({
         where:{
@@ -81,6 +77,7 @@ const HomePage = async ({params}:HomePageProps) => {
 
             <HomeComponent
                 member={member}
+                members={members}
                 channel={channel}
             />
             

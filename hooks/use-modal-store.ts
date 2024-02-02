@@ -1,5 +1,5 @@
 import { AppointmentMeta } from "@devexpress/dx-react-scheduler";
-import { Calendar, Channel, ChannelType, Server } from "@prisma/client";
+import { Calendar, Channel, ChannelType, Member, Profile, Server } from "@prisma/client";
 import { create } from "zustand"
 
 export type ModalType = "createServer" | "invite" | "editServer" 
@@ -10,7 +10,9 @@ export type ModalType = "createServer" | "invite" | "editServer"
 interface ModalData {
     server?: Server
     channel?:Channel
-    channelType?:ChannelType | "CALENDAR"
+    members?: Member & {profile: Profile}[],
+    channelType?: ChannelType | "CALENDAR"
+    type?: string
     apiUrl?:string
     calendar?: AppointmentMeta,
     query?: Record<string, any>
