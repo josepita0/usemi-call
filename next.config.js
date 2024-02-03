@@ -9,9 +9,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'utfs.io',
               },
-        ]
+        ],
+        unoptimized: false,
         
-    },
+  },
     webpack: (config) => {
 
 
@@ -27,15 +28,11 @@ const nextConfig = {
 
         return config;
     },
-    reactStrictMode: true, // Enable React strict mode for improved error handling
-    swcMinify: true,      // Enable SWC minification for improved performance
+    reactStrictMode: true,
+    swcMinify: true,      
     compiler: {
-      removeConsole: process.env.NODE_ENV !== "development", // Remove console.log in production
+      removeConsole: process.env.NODE_ENV !== "development", 
     },
-    // output: 'standalone', 
-    // experimental: {
-    //     serverComponentsExternalPackages: ['sharp', 'onnxruntime-node'],
-    // },
 }
 
   

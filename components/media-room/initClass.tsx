@@ -33,7 +33,7 @@ export const InitClassButton = ({
 
                 const text = !initClass ? `Corre🫨! El profesor *${adminData.profile.name}* de la catedra *${className}*, acaba de comenzar clases en el canal *${channelName}*` : `Listo🫡! El profesor *${adminData.profile.name}* de la catedra *${className}*, culminó su clase en el canal *${channelName}*`
 
-            // if(m.role !== MemberRole.ADMIN){
+            if(m.role !== MemberRole.ADMIN){
                 const data = qs.stringify({
                 "token": "ouamzdthgipmh4ce",
                 "to": m.profile.phoneNumber,
@@ -51,21 +51,21 @@ export const InitClassButton = ({
         
                 axios(config)
                 .then(function (response) {
-                showToast({
-                    type: "success",
-                    message: "La notificación fue enviada a todos los integrantes exitosamente!"
-                })
-                console.log(JSON.stringify(response.data));
+                    console.log(JSON.stringify(response.data));
                 })
                 .catch(function (error) {
-                showToast({
-                    type: "error",
-                    message: "La notificación no pudo ser enviada"
-                })
-                console.log(error);
+                    showToast({
+                        type: "error",
+                        message: "La notificación no pudo ser enviada"
+                    })
+                    console.log(error);
                 });
-            // } 
-
+                } 
+                
+            })
+            showToast({
+                type: "success",
+                message: "La notificación fue enviada a todos los integrantes exitosamente!"
             })
 
     }
