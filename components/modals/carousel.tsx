@@ -15,7 +15,7 @@ import Autoplay from "embla-carousel-autoplay"
 
 export const CarouselHome = () => {
     return (
-        <div className="p-2 flex justify-center ">
+        <div className="p-2 flex justify-center w-full rounded-md dark:bg-[#484c52] bg-[#F2F3F5] ">
             <Carousel
                     plugins={[
                         Autoplay({
@@ -26,7 +26,7 @@ export const CarouselHome = () => {
                         align: "start",
                     }}
                     orientation="horizontal"
-                    className="sm:w-[50%]"
+                    className=""
             >
             <CarouselContent>
                 <CarouselItem>

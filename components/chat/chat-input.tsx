@@ -16,6 +16,7 @@ import { Member, MemberRole, Profile } from "@prisma/client"
 import { cn } from "d4t-ui-demo"
 import { translateText } from "@/lib/services/validateMessage"
 import { ChatItemVerify } from "./chat-item-verify"
+import { showToast } from "@/lib/showToast"
 
 interface IResult {
   label: 'toxic',
@@ -109,9 +110,17 @@ export const ChatInput = ({
             
                   axios(config)
                   .then(function (response) {
+                    showToast({
+                      type: "success",
+                      message: "La notificación fue enviada a todos los integrantes exitosamente!"
+                    })
                     console.log(JSON.stringify(response.data));
                   })
                   .catch(function (error) {
+                    showToast({
+                      type: "error",
+                      message: "La notificación no pudo ser enviada"
+                    })
                     console.log(error);
                   });
                 } 

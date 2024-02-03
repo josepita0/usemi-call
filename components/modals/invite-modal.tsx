@@ -19,6 +19,7 @@ import { formatCodePhoneLines, formatPhoneNumber } from 'd4t-ui-demo';
 import { handleOnlyNumbers } from '@/lib/handleNumbers';
 
 import qs from "query-string"
+import { showToast } from '@/lib/showToast';
 
 const defaultValues: IFormSendInvation = {
     phoneNumber: '',
@@ -108,10 +109,19 @@ export const InviteModal = () => {
           axios(config)
           .then(function (response) {
             setIsLoading(false)
+            form.reset()
+            showToast({
+                type: "success",
+                message: "La invitación fue enviada exitosamente!"
+              })
             console.log(JSON.stringify(response.data));
           })
           .catch(function (error) {
             setIsLoading(false)
+            showToast({
+                type: "success",
+                message: "La invitación no pudo ser enviada"
+              })
             console.log(error);
           });
         
@@ -190,7 +200,7 @@ export const InviteModal = () => {
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSend)}>
                                 <FormLabel
-                                        className=' text-sm font-bold text-zinc-500 dark:text-white'
+                                        className=' text-sm font-bold text-zinc-500 '
                                     >
                                         Número celular
                                     </FormLabel>
@@ -271,6 +281,9 @@ export const InviteModal = () => {
                                                             // disabled={isLoaded}
                                                             id='phoneNumber'
                                                             type='text'
+                                                            className='bg-zinc-300/50 border-0
+                                                            focus:ring-0 text-black ring-offset-0
+                                                            focus:ring-offset-0 outline-none'
                                                             onKeyPress={handleOnlyNumbers}
                                                             onKeyUp={handleOnKeyUpPhoneNumber}
                                                             placeholder='000 0000'

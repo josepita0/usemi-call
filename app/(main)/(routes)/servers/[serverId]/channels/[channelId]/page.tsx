@@ -24,6 +24,19 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
         return redirectToSignIn()
     }
 
+    const server = await db.server.findUnique({
+        where: {
+            id: params.serverId,
+        },
+        include: {
+            members: {
+                include: {
+                    profile: true
+                }
+            }
+        }
+    })
+
     const channel = await db.channel.findUnique({
         where:{
             id: params.channelId
@@ -94,6 +107,8 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
             {
                 channel.type === ChannelType.AUDIO && (
                     <MediaRoom
+                        server={server}
+                        channelName={channel.name}
                         member={member}
                         chatId={channel.id}
                         video={false}
@@ -105,6 +120,8 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
             {
                 channel.type === ChannelType.VIDEO && (
                     <MediaRoom
+                        server={server}
+                        channelName={channel.name}
                         member={member}
                         chatId={channel.id}
                         video={true}

@@ -6,18 +6,22 @@ import { Member, Server } from "@prisma/client";
 import { AssistanceButton } from "./asistanceButton";
 import { DrawingButton } from "./drawingButton";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { InitClassButton } from "./initClass";
 
 interface IControlBarProps {
   variation?: 'minimal' | 'verbose' | 'textOnly';
   controls?: {
     microphone?: boolean;
     camera?: boolean;
+    initClass?:boolean;
     chat?: boolean;
     drawing: boolean;
     assistance: boolean;
     screenShare?: boolean;
     leave?: boolean;
   }
+  name?: string
+  server?: any
   drawing?: boolean
   saveUserChoices?: boolean,
   member: Member & {server: Server},
@@ -29,6 +33,8 @@ export function ControlBar({
     variation,
     controls,
     member,
+    name,
+    server,
     activeDrawing,
     drawing,
     saveUserChoices = true,
@@ -164,16 +170,10 @@ export function ControlBar({
 
               <div className="flex flex-row gap-2">
                 
-                {visibleControls.assistance && (
-
-                    <AssistanceButton
-                      className={member.server.name}
-                    />
-                )}
 
 
                 {visibleControls.drawing && browserSupportsScreenSharing && (
-
+                  
                     <>
 
                       <TrackToggle
@@ -185,11 +185,29 @@ export function ControlBar({
                       <DrawingButton 
                         drawing={drawing}
                         activeDrawing={activeDrawing as Dispatch<SetStateAction<boolean>>}
-                      />
+                        />
            
                     </TrackToggle>
                     </>
                 )}
+                
+                {
+                  visibleControls.initClass && (
+                    <InitClassButton
+                        channelName={name as string}
+                        className={member.server.name}
+                        members={server.members}
+                    />
+                  )
+                }
+
+                {visibleControls.assistance && (
+
+                    <AssistanceButton
+                      className={member.server.name}
+                    />
+                )}
+
                 {visibleControls.leave && (
 
 

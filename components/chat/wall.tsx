@@ -10,7 +10,7 @@ interface HomePageProps {
 export const Wall = ({member, channel, members}: HomePageProps) => {
     
     return (
-        <div className="flex flex-col h-full max-h-[25rem] sm:max-h-[20rem] dark:bg-[#2B2D31] bg-[#F2F3F5] justify-center rounded-md border-2 border-[#163273] dark:border-[#083a63]  w-[90%] sm:w-[80%]">
+        <div className="flex flex-col h-full sm:max-h-[75vh] dark:bg-[#2B2D31] bg-[#F2F3F5] justify-center rounded-md border-2 border-[#163273] dark:border-[#083a63]">
              
             <ChatMessages
                 member={member}

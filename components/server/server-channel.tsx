@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import { Channel, MemberRole, Server } from "@prisma/client"
-import { Calendar, Edit, Hash, Home, Lock, Mic, Plus, Trash, Video } from "lucide-react"
+import { Calendar, Edit, Hash, Home, Lock, MessagesSquare, Mic, Plus, Trash, Video } from "lucide-react"
 import { useParams, usePathname } from "next/navigation"
 import { useRouter } from 'next-nprogress-bar';
 import { ActionTooltip } from "@/components/action-tooltip"
@@ -15,13 +15,12 @@ interface IServerChannelProps {
 }
 
 const iconMap = {
-    TEXT: Hash,
+    TEXT: MessagesSquare,
     AUDIO: Mic,
     VIDEO: Video,
     CALENDAR: Calendar, 
     HOME: Home
 }
-
 
 export const ServerChannel = ({channel, server, role}: IServerChannelProps) => {
 

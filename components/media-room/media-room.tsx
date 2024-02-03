@@ -17,12 +17,16 @@ import { cn } from "d4t-ui-demo";
 interface MediaRoomProps {
   chatId: string;
   video: boolean;
+  server?: any
+  channelName?: string;
   audio: boolean;
 };
 
 export const MediaRoom = ({
   member,
   chatId,
+  channelName,
+  server,
   video,
   audio
 }: MediaRoomProps & { member: Member & {server: Server} }) => {
@@ -41,6 +45,7 @@ export const MediaRoom = ({
   
   const haveAssistance:boolean = member.role === MemberRole.ADMIN || member.role === MemberRole.MODERATOR 
   const drawing:boolean = member.role === MemberRole.ADMIN
+  const initClass:boolean = member.role === MemberRole.ADMIN && server
 
   const microphoneOnChange = useCallback(
     (enabled: boolean, isUserInitiated: boolean) =>
@@ -55,6 +60,7 @@ export const MediaRoom = ({
       firstName: user?.firstName ? user?.firstName : "N/A",
       lastName: user?.lastName ? user?.lastName : "N/A",
       pid: user?.unsafeMetadata?.pid ? user?.unsafeMetadata?.pid : "N/A",
+      phoneNumber: user?.unsafeMetadata?.phone ? user?.unsafeMetadata?.phone : "N/A",
       role: member.role,
       email: user?.primaryEmailAddress?.emailAddress ? user?.primaryEmailAddress?.emailAddress : "N/A"
     }
@@ -105,11 +111,14 @@ export const MediaRoom = ({
             <RoomAudioRenderer />
             <MyVideoConference />
             <ControlBar
+              name={channelName}
               member={member}
+              server={server}
               controls={{
                 camera: true,
                 drawing:drawing,
                 assistance: haveAssistance,
+                initClass,
                 microphone: true,
                 screenShare: drawing,
                 leave: true

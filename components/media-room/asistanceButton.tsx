@@ -106,7 +106,7 @@ export const AssistanceButton = ({
             <button 
             onClick={() => onClick(participantsMapped)}
             style={{alignItems: "center"}}
-            className="lk-button-group lk-button flex"
+            className="lk-button-group  !bg-brand lk-button flex"
             >
             <FileDown size={20} />
             </button>
