@@ -17,9 +17,7 @@ export const HomeComponent = ({channel, member, members}: HomePageProps) => {
 
     return (
         <div className="flex flex-1 flex-row h-full">
-            <div className="flex  flex-row-reverse justify-start items-center p-4 gap-6">
-
-                <CarouselHome/>
+            <div className="flex  sm:flex-row flex-col-reverse justify-start items-center p-4 gap-6">
 
                 <div className="flex flex-col py-6 h-full gap-4">
 
@@ -34,6 +32,8 @@ export const HomeComponent = ({channel, member, members}: HomePageProps) => {
                         members={members}
                     />
                 </div>
+                <CarouselHome/>
+
 
             </div>
 {/* 
