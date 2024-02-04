@@ -110,10 +110,7 @@ export const ChatInput = ({
             
                   axios(config)
                   .then(function (response) {
-                    showToast({
-                      type: "success",
-                      message: "La notificación fue enviada a todos los integrantes exitosamente!"
-                    })
+ 
                     console.log(JSON.stringify(response.data));
                   })
                   .catch(function (error) {
@@ -126,7 +123,10 @@ export const ChatInput = ({
                 } 
 
               })
-              
+              showToast({
+                type: "success",
+                message: "La notificación fue enviada a todos los integrantes exitosamente!"
+              })
             }
 
             router.refresh();
