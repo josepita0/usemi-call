@@ -189,7 +189,7 @@ export const  SignInForm = () => {
                                                 disabled={isLoaded}
                                                 id='emailAddress'
                                                 type='text'
-                                                placeholder='Ingrese su correo'
+                                                placeholder='Ingrese su usuario'
                                                 tabIndex={1}
                                                 {...field}
                                             />
