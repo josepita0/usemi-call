@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { GenericSelect, Label, formatCI, formatCodePhoneLines, formatPhoneNumber } from "d4t-ui-demo";
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 
-import { handleOnlyNumbers } from "@/lib/handleNumbers";
+import { handleOnlyLetters, handleOnlyNumbers } from "@/lib/handleNumbers";
 import { IFormRegister, registerSchema } from "@/lib/schemas/auth.schema";
 
 import { cn } from "@/lib/utils";
@@ -187,6 +187,7 @@ export default function SignUpForm({setIsAnimated}: {setIsAnimated: Dispatch<Set
                                             placeholder='Ingrese su nombre'
                                             tabIndex={1}
                                             {...field}
+                                            onKeyPress={handleOnlyLetters}
                                         />
 
                                 </FormControl>
@@ -218,6 +219,7 @@ export default function SignUpForm({setIsAnimated}: {setIsAnimated: Dispatch<Set
                                             disabled={isLoaded}
                                             id='lastName'
                                             type='text'
+                                            onKeyPress={handleOnlyLetters}
                                             placeholder='Ingrese su apellido'
                                             tabIndex={1}
                                             {...field}

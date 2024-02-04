@@ -42,8 +42,8 @@ export const ServerHeader = ({server, role}:IServerHeaderProps) => {
                     { 
                         element: '#help-button',
                         popover: { 
-                            title: 'Dudas?', 
-                            description: 'Si tienes dudas, acá podrás ver nuestras funciones!', 
+                            title: 'Ayuda', 
+                            description: 'Si necesitas ayuda, acá podrás ver nuestras funciones!', 
                             side: "left", 
                             align: 'start',
                             popoverClass: 'my-custom-popover-class',

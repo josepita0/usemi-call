@@ -94,7 +94,7 @@ export const InviteModal = () => {
         const data = qs.stringify({
             "token": "ouamzdthgipmh4ce",
             "to": phone,
-            "body": `Hola! Le habla *USEMI* 😊, ha sido invitado al salón de clases de la catedra *${server?.name}*, para ingresar vaya al siguiente enlace: ${inviteUrl}`
+            "body": `Hola! Le habla *USEMI* 😊, ha sido invitado al salón de clases de la catedra *${server?.name.replace(/\s/g,'')}*, para ingresar vaya al siguiente enlace: ${inviteUrl}`
           });
         
           const config = {
