@@ -129,6 +129,8 @@ export const Drawing = ({}:pageProps) => {
                 onMouseDown={onMouseDown}
                 width={1000}
                 height={1000}
+                inputMode='text'
+                
                 className='rounded-md'
             />
 

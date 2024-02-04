@@ -176,18 +176,18 @@ export function ControlBar({
                   
                     <>
 
-                      <TrackToggle
+                      {/* <TrackToggle
                       source={Track.Source.ScreenShare}
                       captureOptions={{ audio: true, selfBrowserSurface: 'include' }}
                       showIcon={false}
                       onChange={onScreenShareChange}
-                      >
+                      > */}
                       <DrawingButton 
                         drawing={drawing}
                         activeDrawing={activeDrawing as Dispatch<SetStateAction<boolean>>}
                         />
            
-                    </TrackToggle>
+                    {/* </TrackToggle> */}
                     </>
                 )}
                 

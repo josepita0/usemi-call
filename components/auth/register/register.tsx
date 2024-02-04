@@ -536,7 +536,7 @@ export default function SignUpForm({setIsAnimated}: {setIsAnimated: Dispatch<Set
                                             maxLength={15}
                                             disabled={isLoaded}
                                             id='password'
-                                            placeholder='Ingrese su nombre de usuario'
+                                            placeholder='Ingrese su contraseña'
                                             tabIndex={1}
                                             {...field}
 
@@ -603,7 +603,7 @@ export default function SignUpForm({setIsAnimated}: {setIsAnimated: Dispatch<Set
                                             maxLength={15}
                                             disabled={isLoaded}
                                             id='password'
-                                            placeholder='Ingrese su nombre de usuario'
+                                            placeholder='Confirme su contraseña'
                                             tabIndex={1}
                                             {...field}
 
