@@ -2,7 +2,7 @@ import * as z from "zod";
 import { COMMON_VALIDATORS } from "./common.schema";
 
 export const loginSchema = z.object({
-  emailAddress: COMMON_VALIDATORS.EMAIL,
+  emailAddress: COMMON_VALIDATORS.STRING,
   password: COMMON_VALIDATORS.STRING,
 });
 

@@ -179,7 +179,7 @@ export const  SignInForm = () => {
                                     <FormLabel
                                         className=' text-sm font-bold text-zinc-500 dark:text-white'
                                     >
-                                        Correo electronico
+                                        Nombre de usuario
                                     </FormLabel>
 
                                     <FormControl>

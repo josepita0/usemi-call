@@ -138,6 +138,8 @@ export const EditChannelModal = () => {
 
                                             <FormControl>
                                                 <Input 
+                                                    maxLength={30}
+                                                    minLength={5}
                                                     disabled={isLoading}
                                                     className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
                                                     placeholder='Ingrese el nombre'

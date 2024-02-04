@@ -17,7 +17,7 @@ export const HomeComponent = ({channel, member, members}: HomePageProps) => {
 
     return (
         <div className="flex flex-1 flex-row h-full">
-            <div className="flex  sm:flex-row-reverse flex-col justify-start items-center p-4 gap-6">
+            <div className="flex  flex-row-reverse justify-start items-center p-4 gap-6">
 
                 <CarouselHome/>
 

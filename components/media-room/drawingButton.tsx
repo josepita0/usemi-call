@@ -21,7 +21,6 @@ export const DrawingButton = ({activeDrawing,drawing}:{  activeDrawing: Dispatch
                 drawing ? activeDrawing(false) : activeDrawing(true) 
             }}
             style={{alignItems: "center"}}
-            // className="lk-button-group lk-button flex"
             >
             <Pencil size={20} />
             </button>
