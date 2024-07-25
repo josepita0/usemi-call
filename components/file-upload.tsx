@@ -5,7 +5,7 @@ import Image from "next/image"
 
 import { UploadDropzone } from "@/lib/uploadthing"
 
-// import "@uploadthing/react/styles.css"
+import "@uploadthing/react/styles.css"
 
 interface IFileUploadProps {
     onChange: (url?:string) => void
@@ -64,6 +64,7 @@ export const FileUpload = ({ endpoint, onChange, value }:IFileUploadProps) => {
 
     return(
         <UploadDropzone
+            
             endpoint={endpoint}
             onClientUploadComplete={(res) => {
                 onChange(res?.[0].url)

@@ -2,7 +2,9 @@
 
 import qs from "query-string";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+
+import { useRouter } from 'next-nprogress-bar';
 
 import { Video, VideoOff } from "lucide-react";
 
@@ -40,7 +42,7 @@ export const ChatVideoButton = () => {
                 onClick={onClick}
                 className="hover:opacity-75 transition mr-4"
             >
-                <Icon className="h-6 w-6 text-zinc-500 dark:text-zinc-400" />
+                <Icon className="h-6 w-6 text-white sm:text-zinc-500 dark:text-zinc-400" />
             </button>
         </ActionTooltip>
     )

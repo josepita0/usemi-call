@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { ChannelType, MemberRole } from "@prisma/client";
-import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
+import { Calendar, ChevronRight, ChevronRightCircle, ChevronUpCircle, Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { currentProfile } from "@/lib/current-profile";
@@ -14,15 +14,18 @@ import { ServerSection } from "./server-section";
 import { ServerChannel } from "./server-channel";
 import { ServerMember } from "./server-member";
 import { useEffect } from "react";
+import { Button } from "../ui/button";
 
 interface IServerSidebarProps{
     serverId: string;
 }
 
 const iconMap: Record<ChannelType, React.ReactNode> = {
-    TEXT: <Hash className="mr-2 h-4 w-4"/>,
-    AUDIO: <Mic className="mr-2 h-4 w-4"/>,
-    VIDEO: <Video className="mr-2 h-4 w-4"/>
+    TEXT: <Hash className="mr-2 h-4 w-4" />,
+    AUDIO: <Mic className="mr-2 h-4 w-4" />,
+    VIDEO: <Video className="mr-2 h-4 w-4" />,
+    CALENDAR: <Calendar className="mr-2 h-4 w-4" />,
+    HOME: undefined
 }
 
 const roleIconMap: Record<MemberRole, React.ReactNode | null > = {
@@ -32,8 +35,6 @@ const roleIconMap: Record<MemberRole, React.ReactNode | null > = {
 }
 
 export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
-
-
 
     const profile = await currentProfile()
 
@@ -83,7 +84,7 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
             />
 
             <ScrollArea
-                className="flex-1 px-3"
+                className="flex-1 px-3 border-r-2 border-[#163273] dark:border-[#083a63]"
             >
                 <div
                     className="mt-2"
@@ -129,11 +130,69 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
                         ]}
                     />
                 </div>
+            
+                <Separator className="bg-brand dark:bg-zinc-700 rounded-md my-2"/>
 
-            <Separator className="bg-zinc-200 dark:bg-zinc-700 rounded-md my-2"/>
+            <div className="mb-2" id="home-btn">
+                    <ServerSection
+                        sectionType="channels"
+                        channelType={"HOME"}
+                        role={role}
+                        label=""
+                    />
+
+                    <div
+                        className="space-y-[2px]"
+                    >
+
+                        <ServerChannel 
+                            channel={{
+                                type:"HOME" as "TEXT",
+                                name: "Inicio",
+                                createdAt: new Date,
+                                id: '',
+                                profileId: profile.id,
+                                serverId, 
+                                updatedAt:new Date()
+                            }}
+                            server={server}
+                            role={role}
+                        />
+                    </div>
+
+            </div>
+
+            <div className="mb-2" id="calendar-btn">
+                    <ServerSection
+                        sectionType="channels"
+                        channelType={"CALENDAR"}
+                        role={role}
+                        label="Recursos"
+                    />
+
+                    <div
+                        className="space-y-[2px]"
+                    >
+
+                        <ServerChannel 
+                            channel={{
+                                type:"CALENDAR" as "TEXT",
+                                name: "Calendario",
+                                createdAt: new Date,
+                                id: '',
+                                profileId: profile.id,
+                                serverId, 
+                                updatedAt:new Date()
+                            }}
+                            server={server}
+                            role={role}
+                        />
+                    </div>
+
+            </div>
 
             {!!textChannels?.length && (
-                <div className="mb-2">
+                <div id="channels-text" className="mb-2">
                     <ServerSection
                         sectionType="channels"
                         channelType={ChannelType.TEXT}
@@ -145,14 +204,21 @@ export const ServerSidebar = async ({serverId}: IServerSidebarProps) => {
                         className="space-y-[2px]"
                     >
 
-                    {textChannels.map((channel)=> (
-                        <ServerChannel 
-                            key={channel.id}
-                            channel={channel}
-                            server={server}
-                            role={role}
-                        />
-                    ))}
+                    {textChannels.map((channel)=> {
+
+                        if(channel.name!== 'wall'){
+                            return (
+                                <ServerChannel 
+                                    key={channel.id}
+                                    channel={channel}
+                                    server={server}
+                                    role={role}
+                                />
+                            )
+                        } 
+                        
+                        }
+                    )}
                     </div>
 
                 </div>

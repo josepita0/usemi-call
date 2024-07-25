@@ -1,0 +1,28 @@
+{
+    "name": "USEMI CALL",
+    "short_name": "USEMI",
+    "theme_color": "#163273",
+    "background_color": "#163273",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "scope": "/",
+    "start_url": "/",
+    "icons": [
+        {
+          "src": "/icon-192.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        },
+        {
+          "src": "/icon-256.png",
+          "type": "image/png",
+          "sizes": "256x256"
+        },
+        {
+          "src": "/icon-512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+    ],
+    "splash_pages": null
+  }

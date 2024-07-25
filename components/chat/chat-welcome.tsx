@@ -21,16 +21,28 @@ export const ChatWelcome = ({name, type}:IChatWelcomeProps) => {
                 </div>
             )}
 
-            <p className="text-xl md:text-3xl font-bold">
-                {type === "channel" ? `Bienvenido a #` : ""}{name}
-            </p>
+            {name !== 'wall' ? (
+                    <p className="text-xl md:text-3xl font-bold">
+                        {type === "channel" ? `Bienvenido a #` : ""}{name}
+                    </p>
+                )
+                : (
+                    <p className="text-xl md:text-3xl font-bold">
+                        Bienvenido al muro
+                    </p>
+                )
+            }
 
-            <p className="text-zinc-600 dark:text-zinc-400 text-sm">
-               {type === "channel" 
-                    ? `Inicio del canal #${name}`
-                    : `Inicio de su conversación con ${name}`
-               }
-            </p>
+            {
+                name !== 'wall' &&
+                <p className="text-zinc-600 dark:text-zinc-400 text-sm">
+                {type === "channel" 
+                        ? `Inicio del canal #${name}`
+                        : `Inicio de su conversación con ${name}`
+                }
+                </p>
+            }
+
 
 
         </div>

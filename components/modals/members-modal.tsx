@@ -12,7 +12,8 @@ import { Check, Gavel, Loader2, MoreHorizontal, Shield, ShieldAlert, ShieldCheck
 import { useState } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
+import { showToast } from '@/lib/showToast';
 
 const roleIconMap: Record<MemberRole, React.ReactNode | null > = {
     ADMIN: <ShieldAlert className='h-4 w-4 ml-2 text-rose-500'/>,
@@ -28,7 +29,7 @@ export const MembersModal = () => {
 
     const roleEs: Record<MemberRole, string> = {
         ADMIN: 'Administrador',
-        MODERATOR: 'Moderador',
+        MODERATOR: 'Delegado',
         GUEST: 'Invitado'
     }
 
@@ -61,12 +62,20 @@ export const MembersModal = () => {
             
             const response = await axios.patch(url, {role})
 
+            showToast({
+                type:'success', 
+                message: 'El rol del integrante fue cambiado con éxito'
+            })
+
             router.refresh()
 
             onOpen('members', {server: response.data})
 
         } catch (error) {
-
+            showToast({
+                type:'error', 
+                message: 'El rol del integrante no pudo ser cambiado'
+            })
             console.log(error);
             
         } finally {
@@ -90,6 +99,7 @@ export const MembersModal = () => {
         try {
 
             setIsLoadingId(memberId)
+            
 
             const url = qs.stringifyUrl({
                 url: `/api/members/${memberId}`,
@@ -98,8 +108,13 @@ export const MembersModal = () => {
                     
                 }
             })
-
+            
             const response = await axios.delete(url)
+
+            showToast({
+                type:'success', 
+                message: 'Integrante expulsado exitosamente!'
+            })
 
             onNewInviteCode()
 
@@ -108,6 +123,11 @@ export const MembersModal = () => {
             onOpen('members', {server: response.data})
 
         } catch (error) {
+
+            showToast({
+                type:'error', 
+                message: 'El integrantes no pudo ser expulsado'
+            })
 
             console.log(error);
             

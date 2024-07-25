@@ -10,7 +10,7 @@ import { ChatItem } from "./chat-item"
 import { useChatSocket } from "@/hooks/use-chat-socket"
 import { useChatScrol } from "@/hooks/use-chat-scroll"
 
-const DATE_FORMAT = "d MMM yyyy, HH:mm"
+const DATE_FORMAT = "d/MM/yyyy, hh:mm aaaaa'm'"
 
 type MessageWithMemberWithProfile = Message & {
     member: Member & {
@@ -131,7 +131,7 @@ export const ChatMessages = ({
             <div className="flex flex-col-reverse mt-auto">
                 {data?.pages?.map((group, i) => (
                     <Fragment key={i}>
-                        {group.items.map((message: MessageWithMemberWithProfile) => (
+                        {group?.items.map((message: MessageWithMemberWithProfile) => (
 
                             <ChatItem
                                 key={message.id}

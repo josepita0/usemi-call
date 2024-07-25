@@ -1,0 +1,145 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Profile {
+  id String [pk]
+  userId String [unique, not null]
+  name String [not null]
+  imageUrl String [not null]
+  email String [not null]
+  phoneNumber String [not null]
+  servers Server [not null]
+  members Member [not null]
+  channels Channel [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Server {
+  id String [pk]
+  name String [not null]
+  imageUrl String [not null]
+  inviteCode String [unique, not null]
+  profileId String [not null]
+  profile Profile [not null]
+  members Member [not null]
+  channels Channel [not null]
+  calendar Calendar [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Member {
+  id String [pk]
+  role MemberRole [not null, default: 'GUEST']
+  profileId String [not null]
+  profile Profile [not null]
+  serverId String [not null]
+  server Server [not null]
+  messages Message [not null]
+  directMessage DirectMessage [not null]
+  conversationsInitiated Conversation [not null]
+  conversationsReceived Conversation [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Channel {
+  id String [pk]
+  name String [not null]
+  type ChannelType [not null, default: 'TEXT']
+  profileId String [not null]
+  profile Profile [not null]
+  messages Message [not null]
+  serverId String [not null]
+  server Server [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Message {
+  id String [pk]
+  content String [not null]
+  fileUrl String
+  memberId String [not null]
+  member Member [not null]
+  channelId String [not null]
+  channel Channel [not null]
+  deleted Boolean [not null, default: false]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Conversation {
+  id String [pk]
+  memberOneId String [not null]
+  memberOne Member [not null]
+  memberTwoId String [not null]
+  memberTwp Member [not null]
+  directMessages DirectMessage [not null]
+
+  indexes {
+    (memberOneId, memberTwoId) [unique]
+  }
+}
+
+Table DirectMessage {
+  id String [pk]
+  content String [not null]
+  fileUrl String
+  memberId String [not null]
+  member Member [not null]
+  conversationsId String [not null]
+  conversation Conversation [not null]
+  deleted Boolean [not null, default: false]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Calendar {
+  id String [pk]
+  title String [not null]
+  startDate DateTime [not null]
+  endDate DateTime [not null]
+  serverId String [not null]
+  server Server [not null]
+}
+
+Enum MemberRole {
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+Enum ChannelType {
+  TEXT
+  AUDIO
+  VIDEO
+  CALENDAR
+  HOME
+}
+
+Ref: Server.profileId > Profile.id [delete: Cascade]
+
+Ref: Member.profileId > Profile.id [delete: Cascade]
+
+Ref: Member.serverId > Server.id [delete: Cascade]
+
+Ref: Channel.profileId > Profile.id [delete: Cascade]
+
+Ref: Channel.serverId > Server.id [delete: Cascade]
+
+Ref: Message.memberId > Member.id [delete: Cascade]
+
+Ref: Message.channelId > Channel.id [delete: Cascade]
+
+Ref: Conversation.memberOneId > Member.id [delete: Cascade]
+
+Ref: Conversation.memberTwoId > Member.id [delete: Cascade]
+
+Ref: DirectMessage.memberId > Member.id [delete: Cascade]
+
+Ref: DirectMessage.conversationsId > Conversation.id [delete: Cascade]
+
+Ref: Calendar.serverId > Server.id [delete: Cascade]

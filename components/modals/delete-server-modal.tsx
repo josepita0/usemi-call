@@ -5,7 +5,8 @@ import { useModal } from '@/hooks/use-modal-store';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const DeleteServerModal = () => {
@@ -25,13 +26,29 @@ export const DeleteServerModal = () => {
         try {
             setIsLoading(true)
             
+            showToast({
+                type:'loading', 
+                message: 'Eliminando recurso'
+            })
+
             await axios.delete(`/api/servers/${server?.id}`)
+            dismissToast()
 
-            onClose()
-
+            
             router.refresh()
             router.push("/")
+            onClose()
+
+            showToast({
+                type:'success', 
+                message: 'Salón eliminado exitosamente!'
+            })
+
         } catch (error) {
+            showToast({
+                type:'error', 
+                message: 'El salón no pudo ser eliminado'
+            })
             console.log(error);
             
         } finally {
@@ -48,7 +65,7 @@ export const DeleteServerModal = () => {
                 <DialogHeader className='pt-8 px-6'>
 
                     <DialogTitle className='text-2xl text-center font-bold'>
-                        Eliminar servidor
+                        Eliminar salón
                     </DialogTitle>
 
                     <DialogDescription>

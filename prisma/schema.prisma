@@ -1,20 +1,23 @@
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
-
 
 model Profile {
   id String @id @default(uuid())
   userId String @unique
   name String
   imageUrl String @db.Text
+
   email String @db.Text
+  phoneNumber String @db.Text
 
   servers Server[]
   members Member[]
@@ -35,6 +38,7 @@ model Server {
 
   members Member[]
   channels Channel[]
+  calendar Calendar[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -77,6 +81,8 @@ enum ChannelType{
   TEXT 
   AUDIO
   VIDEO
+  CALENDAR
+  HOME
 }
 
 model Channel {
@@ -161,5 +167,20 @@ model DirectMessage {
   @@index([memberId])
   @@index([conversationsId])
 
+
+}
+
+model Calendar {
+  id String @id @default(uuid())
+
+  title String @db.Text
+
+  startDate DateTime 
+  endDate DateTime 
+
+  serverId String
+  server Server @relation(fields:[serverId], references: [id], onDelete:Cascade)
+
+  @@index([serverId])
 
 }

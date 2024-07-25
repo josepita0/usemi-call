@@ -20,7 +20,7 @@ body,
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
  
-    --primary: 24 9.8% 10%;
+    --primary: 222 68% 27%;
     --primary-foreground: 60 9.1% 97.8%;
  
     --secondary: 60 4.8% 95.9%;
@@ -40,6 +40,11 @@ body,
     --ring: 20 14.3% 4.1%;
  
     --radius: 0.5rem;
+
+    --primary-brand: 222 68% 27%;
+    --primary-brand-text: 222 68% 27%;
+    --secondary-brand:223 71% 92%
+
   }
  
   .dark {
@@ -70,9 +75,156 @@ body,
     --border: 12 6.5% 15.1%;
     --input: 12 6.5% 15.1%;
     --ring: 24 5.7% 82.9%;
+
+    --primary-brand: 207 85% 21%;
+    --primary-brand-text: 207 85% 21%;
+    --secondary-brand:223 71% 92%
   }
 }
- 
+
+/* Code Verification Input */
+/* Code Input */
+code {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+}
+
+.pin-field-container {
+  display: grid;
+  grid-auto-columns: max-content;
+  grid-auto-flow: column;
+  justify-content: center;
+}
+
+.pin-field {
+  border: 1px solid #d3d3d3;
+  border-right: none;
+  font-size: 2rem;
+  height: 4rem;
+  outline: none;
+  text-align: center;
+  transition-duration: 250ms;
+  transition-property: color, border, box-shadow, transform;
+  width: 4rem;
+}
+.pin-field:disabled {
+  @apply text-muted-foreground;
+}
+.pin-field:first-of-type {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+.pin-field:last-of-type {
+  border-radius: 0 0.5rem 0.5rem 0;
+  border-right: 1px solid #d3d3d3;
+}
+.pin-field:focus {
+  border-color: #686de0;
+  box-shadow: 0 0 0.25rem rgba(104, 109, 224, 0.5);
+  outline: none;
+}
+.pin-field:focus + .pin-field {
+  border-left-color: #686de0;
+}
+.pin-field:invalid {
+  animation: shake 5 linear 75ms;
+  border-color: #dc3545;
+  box-shadow: 0 0 0.25rem rgba(220, 53, 69, 0.5);
+}
+.pin-field:invalid + .pin-field {
+  border-left-color: #dc3545;
+}
+.pin-field.complete {
+  border-color: #6ab04c;
+  color: #6ab04c;
+}
+.pin-field.complete[disabled] {
+  background: rgba(106, 176, 76, 0.1);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.pin-field.complete + .pin-field {
+  border-left-color: #6ab04c;
+}
+
+
+/* DriverJs */
+.my-custom-popover-class{
+
+}
+
+/* Class assigned to popover wrapper */
+.driver-popover {}
+
+/* Arrow pointing towards the highlighted element */
+.driver-popover-arrow {}
+
+/* Title and description */
+.driver-popover-title {
+  
+  font-size: 25px !important
+
+}
+.driver-popover-description {
+  font-size: 16px !important;
+  
+}
+
+/* Close button displayed on the top right corner */
+.driver-popover-close-btn {
+
+}
+
+/* Footer of the popover displaying progress and navigation buttons */
+.driver-popover-footer {}
+.driver-popover-progress-text {}
+
+.driver-popover-prev-btn,
+.driver-popover-next-btn{
+  /* background-color: hsl(var(--primary)) !important;
+  color: #ffffff !important; 
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  border-radius: 0.375rem !important; 
+  font-size: 1rem !important; 
+  font-weight: 500 !important;
+  --tw-ring-offset-color: var(--background) !important;
+  transition-property: background-color, border-color, color, fill, stroke !important;
+  transition-duration: 150ms !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important; */
+}
+
+.driver-popover-prev-btn,
+.driver-popover-next-btn
+:hover{
+  background-color: var(--primary-foreground) !important;
+  
+}
+
+.authLayout-container {
+  position: relative;
+}
+
+.authLayout_sidebar {
+  /* background-color: var(--secondary) !important; */
+  display: none;
+  width: 100%;
+  position: fixed;
+  @apply w-full h-screen overflow-y-auto hidden transform top-0 left-0 overflow-auto ease-in-out transition-all duration-300 text-gray-700 z-10 xl:flex flex-col justify-start items-center;
+}
+
+@media screen and (min-width: 1040px) {
+  .authLayout-container {
+      display: grid;
+      /* grid-template-columns: 250px minmax(0,1fr); */
+  }
+
+  .authLayout_sidebar {
+      position: sticky;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;

@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const room = req.nextUrl.searchParams.get("room");
   const username = req.nextUrl.searchParams.get("username");
+  const metadata = req.nextUrl.searchParams.get("metadata");
   if (!room) {
     return NextResponse.json(
       { error: 'Missing "room" query parameter' },
@@ -22,12 +23,12 @@ export async function GET(req: NextRequest) {
 
   if (!apiKey || !apiSecret || !wsUrl) {
     return NextResponse.json(
-      { error: "El servidor no ha sido configurado" },
+      { error: "El salón no ha sido configurado" },
       { status: 500 }
     );
   }
 
-  const at = new AccessToken(apiKey, apiSecret, { identity: username });
+  const at = new AccessToken(apiKey, apiSecret, { identity: username, metadata: metadata as string });
 
   at.addGrant({ room, roomJoin: true, canPublish: true, canSubscribe: true });
 

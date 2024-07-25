@@ -1,7 +1,8 @@
 import { ChatHeader } from "@/components/chat/chat-header"
 import { ChatInput } from "@/components/chat/chat-input"
+import { ChatItemVerify } from "@/components/chat/chat-item-verify"
 import { ChatMessages } from "@/components/chat/chat-messages"
-import { MediaRoom } from "@/components/media-room"
+import { MediaRoom } from "@/components/media-room/media-room"
 import { currentProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db"
 import { redirectToSignIn } from "@clerk/nextjs"
@@ -23,6 +24,19 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
         return redirectToSignIn()
     }
 
+    const server = await db.server.findUnique({
+        where: {
+            id: params.serverId,
+        },
+        include: {
+            members: {
+                include: {
+                    profile: true
+                }
+            }
+        }
+    })
+
     const channel = await db.channel.findUnique({
         where:{
             id: params.channelId
@@ -33,9 +47,14 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
         where:{
             serverId: params.serverId,
             profileId: profile.id
+        },
+        include:{
+            server: true,
+            profile: true
         }
     })
  
+    
 
     if(!channel || !member){
         redirect(`/`)
@@ -50,6 +69,8 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
                 serverId={channel.serverId}
                 type="channel"
             />
+
+            {/* <Test/> */}
 
             {
                 channel.type === ChannelType.TEXT && (
@@ -69,15 +90,16 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
                         paramValue={channel.id}
                     />
 
-                    <ChatInput
-                        apiUrl="/api/socket/messages"
-                        type="channel"
-                        name={channel.name}
-                        query={{
-                            channelId: channel.id,
-                            serverId: channel.serverId
-                        }}
-                    />
+                        <ChatInput
+                            member={member}
+                            apiUrl="/api/socket/messages"
+                            type="channel"
+                            name={channel.name}
+                            query={{
+                                channelId: channel.id,
+                                serverId: channel.serverId
+                            }}
+                        />
                     </>
                 )
             }
@@ -85,6 +107,9 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
             {
                 channel.type === ChannelType.AUDIO && (
                     <MediaRoom
+                        server={server}
+                        channelName={channel.name}
+                        member={member}
                         chatId={channel.id}
                         video={false}
                         audio={true}
@@ -95,6 +120,9 @@ const ChannelIdPage = async ({params}:IChannelIdPage) => {
             {
                 channel.type === ChannelType.VIDEO && (
                     <MediaRoom
+                        server={server}
+                        channelName={channel.name}
+                        member={member}
                         chatId={channel.id}
                         video={true}
                         audio={true}

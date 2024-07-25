@@ -17,7 +17,9 @@ import qs from "query-string"
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useModal } from "@/hooks/use-modal-store";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useRouter } from 'next-nprogress-bar';
+
 
 interface IChatItemProps {
     id: string;
@@ -42,7 +44,7 @@ const roleIconMap: Record<MemberRole, React.ReactNode | null > = {
 
 const roleEs: Record<MemberRole, string> = {
     ADMIN: 'Administrador',
-    MODERATOR: 'Moderador',
+    MODERATOR: 'Delegado',
     GUEST: 'Invitado'
 }
 
@@ -247,9 +249,6 @@ export const ChatItem = ({
 
                             </form>
 
-                            <span className="text-[10px] mt-1 text-zinc-500 dark:text-zinc-400">
-                                Seleccione 
-                            </span>
                         </Form>
                     )}
 

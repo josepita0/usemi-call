@@ -27,7 +27,7 @@ export default async function handler(
         }
 
         if(!serverId){
-            return res.status(401).json({ error: "No se encontro el ID del servidor" })
+            return res.status(401).json({ error: "No se encontro el ID del salón" })
         }
 
 
@@ -51,7 +51,7 @@ export default async function handler(
 
 
         if(!server){
-            return res.status(401).json({ error: "No se encontro el servidor" })
+            return res.status(401).json({ error: "No se encontro el salón" })
         }
 
         const channel = await db.channel.findFirst({

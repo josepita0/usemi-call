@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import axios from 'axios';
 import qs from "query-string"
-import { useRouter } from 'next/navigation';
-
+import { useRouter } from 'next-nprogress-bar';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 export const DeleteChannelModal = () => {
 
@@ -34,13 +34,26 @@ export const DeleteChannelModal = () => {
                 }
             })
             
+            showToast({
+                type:'loading', 
+                message: 'Eliminando recurso'
+            })
+            
             await axios.delete(url)
-
-            onClose()
+            dismissToast()
 
             router.refresh()
             router.push(`/servers/${server?.id}`)
+            onClose()
+            showToast({
+                type:'success', 
+                message: 'Canal eliminado exitosamente!'
+            })
         } catch (error) {
+            showToast({
+                type:'error', 
+                message: 'El canal no pudo ser eliminados'
+            })
             console.log(error);
             
         } finally {

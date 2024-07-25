@@ -10,11 +10,15 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormLabel, FormItem, FormField, FormMessage} from '@/components/ui/form'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
+
+import { useRouter } from 'next-nprogress-bar';
+
 import { useModal } from '@/hooks/use-modal-store';
 import { ChannelType } from '@prisma/client';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { useEffect } from 'react';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const CreateChannelModal = () => {
@@ -22,7 +26,9 @@ export const CreateChannelModal = () => {
     const typeChannelEs: Record<ChannelType, string> = {
         TEXT: 'Texto',
         AUDIO: 'Audio',
-        VIDEO: 'Video'
+        VIDEO: 'Video',
+        CALENDAR: 'Calendario',
+        HOME: 'Inicio'
     }
     
     
@@ -65,16 +71,29 @@ export const CreateChannelModal = () => {
                     serverId: params?.serverId
                 }
             })
+            
+            showToast({
+                type:'loading', 
+                message: 'Creando recurso'
+            })
 
             await axios.post(url, values)
+
+            dismissToast()
 
             form.reset()
             router.refresh()
             onClose();
-            
-        } catch (error) {
+            showToast({
+                type:'success', 
+                message: 'Canal creado exitosamente!'
+            })
 
-            console.log({error});
+        } catch (error) {
+            showToast({
+                type:'error', 
+                message: 'El canal no pudo ser creado'
+            })
             
         }
         
@@ -118,6 +137,8 @@ export const CreateChannelModal = () => {
 
                                             <FormControl>
                                                 <Input 
+                                                    maxLength={30}
+                                                    minLength={5}
                                                     disabled={isLoading}
                                                     className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
                                                     placeholder='Ingrese el nombre'
@@ -163,17 +184,20 @@ export const CreateChannelModal = () => {
 
                                                 <SelectContent>
                                                     {
-                                                        Object.values(ChannelType).map((type) => (
+                                                        Object.values(ChannelType).map((type) => {
 
-                                                            <SelectItem
-                                                                key={typeChannelEs[type]}
-                                                                value={type}
-                                                                className='capitalize'
-                                                            >
-                                                                {typeChannelEs[type]}
-                                                            </SelectItem>
+                                                            if(type !== "CALENDAR" && type !== "HOME"){
+                                                                return    <SelectItem
+                                                                    key={typeChannelEs[type]}
+                                                                    value={type}
+                                                                    className='capitalize'
+                                                                >
+                                                                    {typeChannelEs[type]}
+                                                                </SelectItem>
 
-                                                        ))
+                                                            }
+
+                                                        })
 
                                                     }
                                                 </SelectContent>

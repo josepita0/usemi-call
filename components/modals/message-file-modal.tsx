@@ -9,15 +9,17 @@ import { Button } from '@/components/ui/button'
 import { FileUpload } from '@/components/file-upload';
 import { Form, FormControl, FormItem, FormField} from '@/components/ui/form'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 import { useModal } from '@/hooks/use-modal-store';
+import { showToast } from '@/lib/showToast';
+import { Member, MemberRole, Profile } from '@prisma/client';
 
 
 export const MessageFileModal = () => {
 
     const { isOpen,data, onClose, type } = useModal()
 
-    const { apiUrl, query} = data
+    const { apiUrl, query, type: typeChannel, server, members} = data
 
     const isModalOpen =  isOpen && type === "messageFile"
 
@@ -46,7 +48,48 @@ export const MessageFileModal = () => {
                 query
             })
 
+            
             await axios.post(url, {...values, content: values.fileUrl})
+           
+
+            
+            showToast({
+                type:'success', 
+                message: 'Recurso cargado exitosamente!'
+            })
+
+            if(typeChannel){
+                const adminData = members?.find((m: any) => m.role === MemberRole.ADMIN)
+
+                members?.forEach((m: any) => {
+  
+                  if(m.role !== MemberRole.ADMIN){
+                    const data = qs.stringify({
+                      "token": "ouamzdthgipmh4ce",
+                      "to": m.profile.phoneNumber,
+                      "body": `Hola! Le habla *USEMI* 😊, el profesor *${adminData?.profile.name}* de la catedra *${server?.name}*, agregó el siguiente recurso al muro: ` + `${values.fileUrl}`
+                    });
+                  
+                    const config = {
+                      method: 'post',
+                      url: 'https://api.ultramsg.com/instance76759/messages/chat',
+                      headers: {  
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                      },
+                      data : data
+                    };
+              
+                    axios(config)
+                    .then(function (response) {
+                      console.log(JSON.stringify(response.data));
+                    })
+                    .catch(function (error) {
+                      console.log(error);
+                    });
+                  } 
+  
+                })
+            }
 
             form.reset()
             router.refresh()
@@ -54,6 +97,12 @@ export const MessageFileModal = () => {
             handleClose()
             
         } catch (error) {
+
+            showToast({
+                type:'error', 
+                message: 'El recurso no pudo ser cargado'
+            })
+
 
             console.log({error});
             

@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button'
 import { FileUpload } from '@/components/file-upload';
 import { Form, FormControl, FormLabel, FormItem, FormField, FormMessage} from '@/components/ui/form'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 
 
 export const InitialModal = () => {
@@ -66,11 +66,11 @@ export const InitialModal = () => {
                 <DialogHeader className='pt-8 px-6'>
 
                     <DialogTitle className='text-2xl text-center font-bold'>
-                        Personalizar servidor
+                        Personalizar salón
                     </DialogTitle>
 
                     <DialogDescription className='text-center text-zinc-500'>
-                        Personalizar tu servidor con la imagen que prefieras
+                        Personalizar tu salón con la imagen que prefieras
                     </DialogDescription>
 
                 </DialogHeader>
@@ -109,11 +109,13 @@ export const InitialModal = () => {
                                             <FormLabel
                                                 className='uppercase text-sm font-bold text-zinc-500 dark:text-secondary/70'
                                             >
-                                                Nombre del servidor 
+                                                Nombre del salón 
                                             </FormLabel>
 
                                             <FormControl>
                                                 <Input 
+                                                    maxLength={30}
+                                                    minLength={5}
                                                     disabled={isLoading}
                                                     className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
                                                     placeholder='Ingrese el nombre'

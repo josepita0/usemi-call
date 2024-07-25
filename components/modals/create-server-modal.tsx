@@ -10,8 +10,9 @@ import { Button } from '@/components/ui/button'
 import { FileUpload } from '@/components/file-upload';
 import { Form, FormControl, FormLabel, FormItem, FormField, FormMessage} from '@/components/ui/form'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 import { useModal } from '@/hooks/use-modal-store';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const CreateServerModal = () => {
@@ -37,14 +38,29 @@ export const CreateServerModal = () => {
 
         try {
 
+            showToast({
+                type:'loading', 
+                message: 'Creando recurso'
+            })
+            
             await axios.post("/api/servers", values)
+            
+            dismissToast()
 
             form.reset()
             router.refresh()
             onClose();
-            
+            showToast({
+                type:'success', 
+                message: 'Salón creado exitosamente!'
+            })
+
         } catch (error) {
 
+            showToast({
+                type:'error', 
+                message: 'El salón no pudo ser creado'
+            })
             console.log({error});
             
         }
@@ -65,11 +81,11 @@ export const CreateServerModal = () => {
                 <DialogHeader className='pt-8 px-6'>
 
                     <DialogTitle className='text-2xl text-center font-bold'>
-                        Crear servidor
+                        Crear salón
                     </DialogTitle>
 
                     <DialogDescription className='text-center text-zinc-500'>
-                        Personalizar el servidor con los datos de preferencia, por favor agregar una imagen y nombre
+                        Personalizar el salón con los datos de preferencia, por favor agregar una imagen y nombre
                     </DialogDescription>
 
                 </DialogHeader>
@@ -108,11 +124,13 @@ export const CreateServerModal = () => {
                                             <FormLabel
                                                 className='uppercase text-sm font-bold text-zinc-500 dark:text-secondary/70'
                                             >
-                                                Nombre del servidor 
+                                                Nombre del salón 
                                             </FormLabel>
 
                                             <FormControl>
                                                 <Input 
+                                                    maxLength={30}
+                                                    minLength={5}
                                                     disabled={isLoading}
                                                     className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
                                                     placeholder='Ingrese el nombre'

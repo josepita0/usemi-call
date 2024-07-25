@@ -5,7 +5,8 @@ import { useModal } from '@/hooks/use-modal-store';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
+import { dismissToast, showToast } from '@/lib/showToast';
 
 
 export const LeaveServerModal = () => {
@@ -24,15 +25,32 @@ export const LeaveServerModal = () => {
     const onClick = async () => {
         try {
             setIsLoading(true)
+
+            showToast({
+                type:'loading', 
+                message: 'Saliendo del salón'
+            })
             
             await axios.patch(`/api/servers/${server?.id}/leave`)
 
-            onClose()
+            dismissToast()
 
             router.refresh()
-            // window.location.reload()
             router.push("/")
+
+            onClose()
+
+            showToast({
+                type:'success', 
+                message: 'Salón abandonado exitosamente!'
+            })
+            
         } catch (error) {
+
+            showToast({
+                type:'error', 
+                message: 'No se pudo abandonar el salón'
+            })
             console.log(error);
             
         } finally {
@@ -49,7 +67,7 @@ export const LeaveServerModal = () => {
                 <DialogHeader className='pt-8 px-6'>
 
                     <DialogTitle className='text-2xl text-center font-bold'>
-                        Abandonar servidor
+                        Abandonar salón
                     </DialogTitle>
 
                     <DialogDescription>
