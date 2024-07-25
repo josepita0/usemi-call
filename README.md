@@ -1,7 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 
-## About USEMI
+## About USEMI 🌐
 
 Usemi app was developed for the university santa maria, for the presentation of the special work of degree, in order to provide both students and teachers the ability to have their own application.
 
@@ -9,7 +9,7 @@ It has a date management, attendance pass to the video calls generating a pdf fi
 
 This project obtained the maximum grade, together with the publication of this degree work. 
 
-## Technologies
+## Technologies 💻
 
 In this app, were used:
 
@@ -27,7 +27,7 @@ UploadThing as storage
 
 Were use a database cloud on supabase and the whole project was deployed in Vercel
 
-## Getting Started
+## Getting Started 🏃🏻‍♂️‍➡️
 
 First, install packages:
 
